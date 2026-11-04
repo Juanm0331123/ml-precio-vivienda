@@ -1,0 +1,50 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# --- Entornos virtuales ---
+.venv/
+venv/
+env/
+.conda/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Modelos y artefactos pesados (se regeneran con el código) ---
+models/*.joblib
+models/*.pkl
+*.h5
+
+# --- Datos externos o temporales (data/raw y data/processed sí se versionan) ---
+data/external/
+data/tmp/
+
+# --- R / RStudio (trabajo previo de Inferencia) ---
+.Rhistory
+.RData
+.Rproj.user/
+
+# --- LaTeX ---
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# --- Office: archivos temporales de bloqueo ---
+~$*
+
+# --- Sistema operativo y editores ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# --- Secretos ---
+.env
+*.key

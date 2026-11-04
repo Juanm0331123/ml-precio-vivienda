@@ -1,0 +1,26 @@
+# Dependencias del proyecto (compatibles con Google Colab y Python 3.10+).
+# En la entrega final (T29) se fijan las versiones exactas usadas.
+
+# Datos y cálculo
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+
+# Visualización
+matplotlib>=3.7
+seaborn>=0.13
+
+# Modelado y estadística
+scikit-learn>=1.3
+statsmodels>=0.14
+xgboost>=2.0
+lightgbm>=4.0
+
+# Interpretabilidad (entrega final)
+shap>=0.44
+
+# Notebooks y exportación
+jupyter>=1.0
+ipykernel>=6.0
+nbconvert>=7.0
+openpyxl>=3.1
