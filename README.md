@@ -9,7 +9,7 @@ El proyecto estima el precio de venta de una vivienda a partir de sus atributos 
 | Integrante | Rol(es) | GitHub |
 |---|---|---|
 | Juan Miguel León Gómez | Project Manager · Reporting Lead | [@Juanm0331123](https://github.com/Juanm0331123) |
-| Mauricio José Mozo Terán | Data Engineer | pendiente |
+| Mauricio José Mozo Terán | Data Engineer | [@Ironjaber26](https://github.com/Ironjaber26) |
 | Brandon Eduardo Tobar Sánchez | Model Developer · Evaluation Lead | [@brandon5254](https://github.com/brandon5254) |
 
 Las tareas se gestionan en el tablero de Trello **"Proyecto ML · Predicción del precio de vivienda"** (privado; pedir acceso al PM). Cada tarjeta tiene un ID (`T01`…`T31`) que se usa en ramas, commits y Pull Requests. Ver [CONTRIBUTING.md](CONTRIBUTING.md).
