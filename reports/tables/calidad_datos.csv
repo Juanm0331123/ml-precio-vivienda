@@ -1,0 +1,14 @@
+variable,tipo_dato,nulos,pct_nulos,completitud_pct,cardinalidad_unicos,dominio_esperado,cumple_validez,atipicos_iqr,pct_clase_minoritaria,observaciones
+price,int64,0,0.0,100.0,219,Entero > 0 (unidades de Kaggle = CAD de 1987 × 70),True,15,N/A,15 atípicos superiores (1.5×IQR). Se conservan por validez económica.
+area,int64,0,0.0,100.0,284,Entero > 0 (sqft),True,12,N/A,12 atípicos superiores (1.5×IQR). Distribución sesgada a la derecha.
+bedrooms,int64,0,0.0,100.0,6,"Entero en [1, 6]",True,12,N/A,Calidad óptima
+bathrooms,int64,0,0.0,100.0,4,"Entero en [1, 4]",True,1,N/A,Calidad óptima
+stories,int64,0,0.0,100.0,4,"Entero en [1, 4]",True,41,N/A,Calidad óptima
+mainroad,str,0,0.0,100.0,2,"{'yes', 'no'}",True,0,14.13,Calidad óptima
+guestroom,str,0,0.0,100.0,2,"{'yes', 'no'}",True,0,17.8,Calidad óptima
+basement,str,0,0.0,100.0,2,"{'yes', 'no'}",True,0,35.05,Calidad óptima
+hotwaterheating,str,0,0.0,100.0,2,"{'yes', 'no'}",True,0,4.59,Desbalance severo (4.59 % 'yes'). Riesgo de varianza en submuestras.
+airconditioning,str,0,0.0,100.0,2,"{'yes', 'no'}",True,0,31.56,Calidad óptima
+parking,int64,0,0.0,100.0,4,"Entero en [0, 3]",True,12,N/A,Calidad óptima
+prefarea,str,0,0.0,100.0,2,"{'yes', 'no'}",True,0,23.49,Calidad óptima
+furnishingstatus,str,0,0.0,100.0,3,"{'unfurnished', 'semi-furnished', 'furnished'}",True,0,25.69,Calidad óptima
