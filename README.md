@@ -18,9 +18,10 @@ Las tareas se gestionan en el tablero de Trello **"Proyecto ML · Predicción de
 
 | Archivo | Descripción |
 |---|---|
-| `data/raw/Housing.csv` | *Housing Prices Dataset* (Kaggle, Yasser H.): 545 viviendas × 13 variables. Archivo original, **no se modifica**. |
+| `data/raw/Housing.csv` | *Housing Prices Dataset* (Kaggle, Yasser H.): 545 viviendas × 13 variables. Archivo de trabajo principal, **no se modifica**. |
+| `data/raw/HousePrices_Windsor_1987_AER.csv` | *HousePrices* (paquete R AER / Rdatasets, Anglin & Gençay 1996): 546 viviendas × 12 variables. Archivo histórico original de referencia para verificación de procedencia. |
 
-La ficha técnica completa (procedencia, diccionario de datos, calidad y licencia) se documenta en la tarjeta **T05** → `data/README.md`.
+La ficha técnica completa (procedencia, genealogía con el dataset original, diccionario de datos, calidad y licencia) se documenta en la tarjeta **T05** → `data/README.md`.
 
 ## Estructura del repositorio
 
