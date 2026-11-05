@@ -1,5 +1,5 @@
 variable,tipo_dato,nulos,pct_nulos,completitud_pct,cardinalidad_unicos,dominio_esperado,cumple_validez,atipicos_iqr,pct_clase_minoritaria,observaciones
-price,int64,0,0.0,100.0,219,Entero > 0 (CAD),True,15,N/A,15 atípicos superiores (1.5×IQR). Se conservan por validez económica.
+price,int64,0,0.0,100.0,219,Entero > 0 (unidades de Kaggle = CAD de 1987 × 70),True,15,N/A,15 atípicos superiores (1.5×IQR). Se conservan por validez económica.
 area,int64,0,0.0,100.0,284,Entero > 0 (sqft),True,12,N/A,12 atípicos superiores (1.5×IQR). Distribución sesgada a la derecha.
 bedrooms,int64,0,0.0,100.0,6,"Entero en [1, 6]",True,12,N/A,Calidad óptima
 bathrooms,int64,0,0.0,100.0,4,"Entero en [1, 4]",True,1,N/A,Calidad óptima
