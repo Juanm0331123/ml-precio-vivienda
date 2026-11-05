@@ -74,15 +74,29 @@ Diccionario formal para el dataset de trabajo `data/raw/Housing.csv` (545 filas 
 
 * **Completitud y ausencia de nulos:** El archivo `data/raw/Housing.csv` cuenta con completitud del 100 % (0 valores nulos en sus 545 registros y 13 variables).
 * **Consistencia de duplicados:** Dentro de `Housing.csv` no existen filas duplicadas completas (0 duplicados en las 545 observaciones). El archivo histórico original de Windsor sí contenía un registro duplicado (filas 318 y 535), el cual fue depurado en la compilación de Kaggle.
-* **Alcance de este informe:** Las pruebas exhaustivas de distribución, detección de outliers, correlaciones bivariadas y partición analítica train/test corresponden al flujo de calidad y preparación desarrollado en la tarjeta **T06** (`notebooks/01_procedencia_y_calidad.ipynb` / `data/processed/`).
+* **Alcance y auditoría formal (T06):** En la tarjeta **T06** (`notebooks/01_procedencia_y_calidad.ipynb`) se midió formalmente la calidad del dataset:
+  - **Completitud:** 100.0 % (0 valores nulos).
+  - **Unicidad:** 0 duplicados globales. Se identificaron 6 casos de vectores de atributos explicativos repetidos con distinto precio (16 casos si se ignora `furnishingstatus`), evidenciando empíricamente la presencia de **ruido irreducible** ($\sigma_\epsilon^2$).
+  - **Validez:** 100 % de cumplimiento de rangos y dominios inmobiliarios.
+  - **Atípicos:** 15 observaciones superiores por 1.5×IQR en `price` (conservadas formalmente para evitar sesgo de truncamiento en viviendas de alta gama).
+  - **Desbalance:** Se identificó y anotó el riesgo metodológico en `hotwaterheating` (4.59 % de casos positivos).
+  - **Artefacto de orden:** Se documentó que el CSV original viene ordenado descendentemente por precio, mitigado mediante barajado estratificado.
+  - **Scorecard de calidad:** Consolidado en `reports/tables/calidad_datos.csv`.
 
 ---
 
-## 5. Integridad Criptográfica (Checksums SHA-256)
+## 5. Datos Procesados y Partición Sellada (Tarjeta T06)
+
+* **Dataset limpio (`data/processed/housing_limpio.csv`):** 545 filas × 14 columnas (`id` + 13 variables numéricas). Variables binarias codificadas a `1`/`0`; `furnishingstatus` ordenado (`unfurnished`: 0, `semi-furnished`: 1, `furnished`: 2). Estrictamente sin fuga de información (escalado reservado para pipelines de entrenamiento).
+* **Partición sellada (`data/processed/particion.csv`):** Asignación oficial para todo el proyecto (`id`, `conjunto`). Partición 80/20 estratificada por quintiles de precio con semilla fija `5007` (436 en `entrenamiento` y 109 en `prueba`). El conjunto de prueba queda sellado hasta la tarjeta T25.
+
+---
+
+## 6. Integridad Criptográfica (Checksums SHA-256)
 
 Para garantizar la inmutabilidad y la reproducibilidad de los análisis en cualquier entorno, se registran las huellas digitales SHA-256 (en minúsculas y sin caracteres adicionales):
 
-* **Archivo de trabajo (`Housing.csv`):**
+* **Archivo de trabajo crudo (`Housing.csv`):**
   `a8ef508351b4d6e87b23a831cf316a3d53c794ed9d969c7b697a865a60a3d65f`
 * **Archivo de referencia histórico (`HousePrices_Windsor_1987_AER.csv`):**
   `4c7f6df4c6264cf6f57ea6ec5157958c4033efe1f51b2855efb18e297274bfe3`
