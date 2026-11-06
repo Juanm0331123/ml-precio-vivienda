@@ -81,6 +81,11 @@ def escribir_hoja(ws):
     ws.auto_filter.ref = ws.dimensions
 
 
+def lista(nivel):
+    """Identificadores de los estudios con un nivel de verificación dado, para los textos de Word."""
+    return ", ".join(i for i in IDS if V[i]["nivel"] == nivel)
+
+
 def conteos():
     return Counter(NIVELES[v["nivel"]] for v in V.values())
 
@@ -158,7 +163,7 @@ def tabla(d, encabezados, anchos_cm, filas_):
 
 def nr(t):
     """Abrevia 'No reportado en lo leído' y el token NR como 'n. r.' para las tablas de Word."""
-    return re.sub(r"NR", "n. r.", t)
+    return re.sub(r"\bNR\b", "n. r.", t.replace(NR, "n. r."))
 
 
 def parrafo(d, texto, estilo=None, negrita_inicio=None, titulo_tabla=False):
@@ -224,8 +229,8 @@ def generar_word():
 
     c = conteos()
     bloque = []
-    bloque.append(parrafo(d, f"Nivel de verificación (T10, 5–6 nov. 2026): texto completo, {c['Texto completo']} estudios (E20, E26); "
-                          f"solo resumen, {c['Solo resumen']}; solo metadatos, {c['Solo metadatos']} (E01, E15, E19). \"n. r.\" significa no reportado en lo leído: "
+    bloque.append(parrafo(d, f"Nivel de verificación (T10, 5–6 nov. 2026): texto completo, {c['Texto completo']} estudios ({lista('TC')}); "
+                          f"solo resumen, {c['Solo resumen']}; solo metadatos, {c['Solo metadatos']} ({lista('META')}). \"n. r.\" significa no reportado en lo leído: "
                           "el dato no apareció en el texto al que se tuvo acceso. Los hallazgos de T09 no verificados se señalan como tales.")._p)
     p6 = parrafo(d, "Tabla 6. Matriz de estudios incluidos", titulo_tabla=True)
     p6.paragraph_format.page_break_before = True  # evita que la tabla empiece con una sola fila al pie de la página
@@ -253,7 +258,7 @@ def generar_word():
     bloque.append(parrafo(d, "")._p)
     bloque.append(parrafo(d, "Tabla 8. Verificación de identificadores y observaciones sobre los metadatos de T09", titulo_tabla=True)._p)
     f8 = [[i, doi_url(META[i][6]), V[i]["fuente"], V[i]["obs"]] for i in IDS]
-    bloque.append(tabla(d, ["ID", "DOI o URL (T09)", "Fuente consultada", "Observaciones"], [1.0, 7.2, 4.4, 9.8], f8)._tbl)
+    bloque.append(tabla(d, ["ID", "DOI o URL", "Fuente consultada", "Observaciones"], [1.0, 7.2, 4.4, 9.8], f8)._tbl)
     bloque.append(parrafo(d, "")._p)
     mover(bloque, ancla)
 
@@ -288,9 +293,9 @@ def generar_word():
     lim = [
         ("Verificación de T10:", f" de los 26 estudios, {c['Texto completo']} se leyeron completos, {c['Solo resumen']} solo en resumen y {c['Solo metadatos']} solo en metadatos. "
          "Las páginas de ScienceDirect, MDPI, Taylor & Francis, Wiley y Springer bloquearon el acceso al texto completo. Los campos sin dato dicen \"n. r.\"."),
-        ("Hallazgos de T09 sin confirmar:", " el orden de Random Forest y Ridge en [25], los R² de [18], el error < 2 % de [15], la ventaja de GB y RF en [19], "
+        ("Hallazgos de T09 sin confirmar:", " la inconsistencia interna de [25] entre el resumen (Ridge 0,34; RF 0,35) y la Figura 10 (RF con el menor MAPE), los R² de [18], el error < 2 % de [15], la ventaja de GB y RF en [19], "
          "la ciudad de [13] y la etiqueta \"ML vs hedónico\" de [21]."),
-        ("Referencias:", " no se modificaron las de T09; las diferencias de DOI, volumen y páginas están en la tabla 8 para decidir su corrección."),
+        ("Referencias:", " solo se corrigieron las de T09 con evidencia de Crossref: [7] (el DOI era el de la fe de erratas), [23] (art. 32 en lugar de pp. 1–28) y se agregó el DOI en [8], [18] y [22]. El detalle está en la tabla 8 y en t10_corregir_referencias.py."),
     ]
     mover([parrafo(d, t, estilo="List Bullet", negrita_inicio=b)._p for b, t in lim], ancla)
 

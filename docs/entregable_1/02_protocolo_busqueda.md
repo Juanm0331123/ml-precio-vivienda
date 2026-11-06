@@ -192,9 +192,9 @@ Hallazgo preliminar tomado del resumen y los metadatos. La matriz con todas las 
 
 [6] E. A. Antipov and E. B. Pokryshevskaya, "Mass appraisal of residential apartments: An application of Random forest for valuation and a CART-based approach for model diagnostics," *Expert Systems with Applications*, vol. 39, no. 2, pp. 1772–1778, 2012, [Online]. Available: https://www.sciencedirect.com/science/article/abs/pii/S0957417411011894.
 
-[7] B. Park and J. K. Bae, "Using machine learning algorithms for housing price prediction: The case of Fairfax County, Virginia housing data," *Expert Systems with Applications*, vol. 42, no. 6, pp. 2928–2934, 2015, doi: 10.1016/j.eswa.2015.03.005.
+[7] B. Park and J. K. Bae, "Using machine learning algorithms for housing price prediction: The case of Fairfax County, Virginia housing data," *Expert Systems with Applications*, vol. 42, no. 6, pp. 2928–2934, 2015, doi: 10.1016/j.eswa.2014.11.040.
 
-[8] N. Kok, E.-L. Koponen, and C. A. Martínez-Barbosa, "Big data in real estate? From manual appraisal to automated valuation," *Journal of Portfolio Management*, vol. 43, no. 6, pp. 202–211, 2017, [Online]. Available: https://cris.maastrichtuniversity.nl/en/publications/big-data-in-real-estate-from-manual-appraisal-to-automated-valuat/.
+[8] N. Kok, E.-L. Koponen, and C. A. Martínez-Barbosa, "Big data in real estate? From manual appraisal to automated valuation," *Journal of Portfolio Management*, vol. 43, no. 6, pp. 202–211, 2017, doi: 10.3905/jpm.2017.43.6.202. [Online]. Available: https://cris.maastrichtuniversity.nl/en/publications/big-data-in-real-estate-from-manual-appraisal-to-automated-valuat/.
 
 [9] S. Mullainathan and J. Spiess, "Machine learning: An applied econometric approach," *Journal of Economic Perspectives*, vol. 31, no. 2, pp. 87–106, 2017, doi: 10.1257/jep.31.2.87.
 
@@ -214,7 +214,7 @@ Hallazgo preliminar tomado del resumen y los metadatos. La matriz con todas las 
 
 [17] Ş. Yalpır, S. Şişman, A. U. Akar, and F. B. Ünel, "Feature selection applications and model validation for mass real estate valuation systems," *Land Use Policy*, vol. 108, art. 105539, 2021, doi: 10.1016/j.landusepol.2021.105539.
 
-[18] R.-T. Mora-Garcia, M.-F. Cespedes-Lopez, and V. R. Perez-Sanchez, "Housing price prediction using machine learning algorithms in COVID-19 times," *Land*, vol. 11, no. 11, art. 2100, 2022, [Online]. Available: https://www.mdpi.com/2073-445X/11/11/2100.
+[18] R.-T. Mora-Garcia, M.-F. Cespedes-Lopez, and V. R. Perez-Sanchez, "Housing price prediction using machine learning algorithms in COVID-19 times," *Land*, vol. 11, no. 11, art. 2100, 2022, doi: 10.3390/land11112100. [Online]. Available: https://www.mdpi.com/2073-445X/11/11/2100.
 
 [19] Q. Gao, V. Shi, C. Pettit, and H. Han, "Property valuation using machine learning algorithms on statistical areas in Greater Sydney, Australia," *Land Use Policy*, vol. 123, art. 106409, 2022, doi: 10.1016/j.landusepol.2022.106409.
 
@@ -222,9 +222,9 @@ Hallazgo preliminar tomado del resumen y los metadatos. La matriz con todas las 
 
 [21] S. S. Bilgilioğlu and H. M. Yılmaz, "Comparison of different machine learning models for mass appraisal of real estate," *Survey Review*, vol. 55, no. 388, pp. 32–43, 2023, doi: 10.1080/00396265.2021.1996799.
 
-[22] W. Kim and J. Hong, "Stacked ensemble model for the automatic valuation of residential properties in South Korea: A case study on Jeju Island," *Land*, vol. 13, no. 9, art. 1436, 2024, [Online]. Available: https://www.mdpi.com/2073-445X/13/9/1436.
+[22] W. Kim and J. Hong, "Stacked ensemble model for the automatic valuation of residential properties in South Korea: A case study on Jeju Island," *Land*, vol. 13, no. 9, art. 1436, 2024, doi: 10.3390/land13091436. [Online]. Available: https://www.mdpi.com/2073-445X/13/9/1436.
 
-[23] L. Deng and X. Zhang, "Boosting the accuracy of property valuation with ensemble learning and explainable artificial intelligence: The case of Hong Kong," *The Annals of Regional Science*, vol. 74, no. 1, pp. 1–28, 2025, doi: 10.1007/s00168-025-01365-7.
+[23] L. Deng and X. Zhang, "Boosting the accuracy of property valuation with ensemble learning and explainable artificial intelligence: The case of Hong Kong," *The Annals of Regional Science*, vol. 74, no. 1, art. 32, 2025, doi: 10.1007/s00168-025-01365-7.
 
 [24] J. I. Pérez-Rave, F. González-Echavarría, and J. C. Correa-Morales, "Modeling of apartment prices in a Colombian context from a machine learning approach with stable-important attributes," *DYNA*, vol. 87, no. 212, pp. 63–72, 2020, doi: 10.15446/dyna.v87n212.80202.
 
