@@ -350,8 +350,7 @@ def build_full_dataset_document() -> Path:
             "0 duplicados globales, la presencia de ruido irreducible (cota de Bayes σ_ε² en 6 pares idénticos), 15 atípicos superiores "
             "conservados por validez de mercado, desbalance en calentador a gas (4.59 %) y un sesgo de orden descendente en el archivo crudo. "
             "El EDA evidencia que log(price) reduce la asimetría un 88.4 % (de 1.21 a 0.14) y corrige la heterocedasticidad en abanico frente al área. "
-            "Finalmente, se sella la partición estratificada 80/20 por quintiles de precio (semilla 5007) sin fuga de datos, contando con "
-            "el dictamen favorable y aval del Project Manager para alcanzar el nivel Sobresaliente (4.5–5.0) en el Entregable 1."
+            "Finalmente, se sella la partición estratificada 80/20 por quintiles de precio (semilla 5007) sin fuga de datos."
         ),
     )
 
@@ -860,50 +859,7 @@ def build_full_dataset_document() -> Path:
         row.cells[2].paragraphs[0].text = t8_data[i][2]
         format_row(row, is_header=(i == 0), is_alternate=(i % 2 == 1 and i > 0), font_size=7.0)
 
-    add_heading_1(doc, "9. Revisión y Dictamen de Conformidad del Project Manager")
-    add_callout_box(
-        doc,
-        title="DICTAMEN DE REVISIÓN Y APROBACIÓN TÉCNICA · JUAN MIGUEL LEÓN GÓMEZ",
-        text=(
-            "Como Project Manager y Reporting Lead del proyecto, he revisado integralmente este documento técnico "
-            "y los artefactos de código en src/ y notebooks/. Certifico que este informe satisface cabalmente todos los criterios "
-            "exigidos para el nivel Sobresaliente (rango 4.5 – 5.0) en el criterio 'Descripción detallada y precisa del conjunto de datos' "
-            "(40 % de la nota del Entregable 1 de la rúbrica oficial): origen Windsor-AER-Kaggle con factor ×70 comprobado, tamaño y formatos "
-            "exactos, tipos y diccionario completo, calidad en 6 dimensiones (ruido irreducible demostrado y outliers justificados), "
-            "limpieza sin data leakage y partición sellada 80/20 con semilla 5007. Tablas y figuras numeradas con citas IEEE. "
-            "Emito DICTAMEN FAVORABLE Y APROBACIÓN DEFINITIVA para su radicación oficial en el Entregable 1."
-        ),
-    )
-
-    add_heading_3(doc, "Tabla 9: Matriz de auditoría de cumplimiento de la rúbrica oficial (Entregable 1 · 40 %)")
-    t9_data = [
-        ["Elemento Evaluado (Rúbrica)", "Evidencia en el Documento", "Soporte Computacional", "Calificación / Estado"],
-        ["1. Origen del dataset", "Sección 2: Cadena Windsor 1987 → JAE → AER → Kaggle, factor ×70", "01_procedencia_y_calidad.ipynb", "Sobresaliente (5.0 / 5.0)"],
-        ["2. Tamaño y dimensiones", "Sección 1 y 2: 545 observaciones × 13 variables, formatos, memoria", "src/datos.py / Housing.csv", "Sobresaliente (5.0 / 5.0)"],
-        ["3. Tipos y variables", "Sección 3: Diccionario completo de 13 variables, unidades, rangos y roles", "reports/tables/diccionario_datos.csv", "Sobresaliente (5.0 / 5.0)"],
-        ["4. Calidad de datos", "Sección 4: 6 dimensiones (completitud, unicidad, validez, outliers, desbalance, orden)", "reports/tables/calidad_datos.csv", "Sobresaliente (5.0 / 5.0)"],
-        ["5. Limpieza y preparación", "Sección 6: Pipeline sin data leakage, partición sellada 80/20 quintiles (5007)", "data/processed/particion.csv", "Sobresaliente (5.0 / 5.0)"],
-        ["6. Análisis exploratorio (EDA)", "Sección 5: 6 figuras clave de alta resolución (300 DPI) analizadas a fondo", "02_eda.ipynb / reports/figures/", "Sobresaliente (5.0 / 5.0)"],
-        ["7. Código comentado", "Docstrings completos en español, tipado estricto y pruebas unitarias", "src/datos.py, src/eda.py, tests/", "Sobresaliente (5.0 / 5.0)"],
-        ["8. Formato y referencias", "Documento en Word y PDF, figuras/tablas referenciadas, referencias IEEE", "docs/entregable_1/", "Sobresaliente (5.0 / 5.0)"],
-    ]
-
-    tbl9 = doc.add_table(rows=len(t9_data), cols=4)
-    tbl9.alignment = WD_TABLE_ALIGNMENT.CENTER
-    set_table_borders(tbl9)
-    tbl9.columns[0].width = Inches(1.8)
-    tbl9.columns[1].width = Inches(2.5)
-    tbl9.columns[2].width = Inches(1.6)
-    tbl9.columns[3].width = Inches(1.1)
-
-    for i, row in enumerate(tbl9.rows):
-        row.cells[0].paragraphs[0].text = t9_data[i][0]
-        row.cells[1].paragraphs[0].text = t9_data[i][1]
-        row.cells[2].paragraphs[0].text = t9_data[i][2]
-        row.cells[3].paragraphs[0].text = t9_data[i][3]
-        format_row(row, is_header=(i == 0), is_alternate=(i % 2 == 1 and i > 0), font_size=7.0)
-
-    add_heading_1(doc, "10. Referencias Bibliográficas (Formato IEEE)")
+    add_heading_1(doc, "9. Referencias Bibliográficas (Formato IEEE)")
     referencias = [
         "[1] S. Rosen, \"Hedonic prices and implicit markets: product differentiation in pure competition,\" Journal of Political Economy, vol. 82, no. 1, pp. 34–55, 1974.",
         "[2] P. M. Anglin and R. Gençay, \"Semiparametric estimation of a hedonic price function,\" Journal of Applied Econometrics, vol. 11, no. 6, pp. 633–648, Nov. 1996.",
