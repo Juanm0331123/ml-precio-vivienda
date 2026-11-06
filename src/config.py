@@ -25,8 +25,20 @@ DIR_FIGURAS = RAIZ / "reports" / "figures"
 DIR_TABLAS = RAIZ / "reports" / "tables"
 DIR_MODELOS = RAIZ / "models"
 
-# Archivo de datos original (solo lectura).
+# Archivo de datos de trabajo (Kaggle, solo lectura).
 RUTA_DATOS_CRUDOS = DIR_DATOS_CRUDOS / "Housing.csv"
 
-# Huella SHA-256 del archivo original, para verificar su integridad.
+# Huella SHA-256 del archivo de trabajo, para verificar su integridad.
 SHA256_DATOS_CRUDOS = "a8ef508351b4d6e87b23a831cf316a3d53c794ed9d969c7b697a865a60a3d65f"
+
+# Archivo de referencia histórico (Windsor 1987 / AER, solo lectura) para validación de procedencia.
+RUTA_DATOS_ORIGINAL_AER = DIR_DATOS_CRUDOS / "HousePrices_Windsor_1987_AER.csv"
+SHA256_DATOS_ORIGINAL_AER = "4c7f6df4c6264cf6f57ea6ec5157958c4033efe1f51b2855efb18e297274bfe3"
+
+# Archivos procesados y de partición (Tarjeta T06).
+RUTA_DATOS_LIMPIOS = DIR_DATOS_PROCESADOS / "housing_limpio.csv"
+RUTA_PARTICION = DIR_DATOS_PROCESADOS / "particion.csv"
+
+# Tablas de auditoría y calidad (Tarjeta T06).
+RUTA_TABLA_CALIDAD = DIR_TABLAS / "calidad_datos.csv"
+
