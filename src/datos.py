@@ -65,7 +65,7 @@ COLUMNAS_BINARIAS = [
 ]
 
 DOMINIOS_ESPERADOS = {
-    "price": "Entero > 0 (CAD)",
+    "price": "Entero > 0 (unidades de Kaggle = CAD de 1987 × 70)",
     "area": "Entero > 0 (sqft)",
     "bedrooms": "Entero en [1, 6]",
     "bathrooms": "Entero en [1, 4]",
@@ -423,7 +423,7 @@ def verificar_artefacto_orden(df: pd.DataFrame, columna: str = "price") -> Dict[
 
     explicacion = (
         "El archivo Housing.csv original viene estrictamente ordenado en forma descendente por precio "
-        f"(de {serie.iloc[0]:,} a {serie.iloc[-1]:,} CAD). "
+        f"(de {serie.iloc[0]:,} a {serie.iloc[-1]:,} en unidades de Kaggle). "
         "Riesgo crítico: Si se realiza una partición secuencial o no barajada (shuffle=False), "
         "el conjunto de entrenamiento recibiría exclusivamente las casas más caras (80 % superior), "
         "mientras que el conjunto de prueba quedaría compuesto únicamente por las propiedades más baratas "
