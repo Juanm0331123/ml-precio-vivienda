@@ -832,7 +832,7 @@ def build_full_dataset_document() -> Path:
         doc,
         "El proyecto se rige por trazabilidad total: repositorio oficial en GitHub (github.com/Juanm0331123/ml-precio-vivienda), notebooks "
         "ejecutables localmente y en Google Colab, y semilla global SEMILLA = 5007 fijada en 'src/config.py'. En la Tabla 8 se registran "
-        "los checksums SHA-256 inmutables de los archivos maestros."
+        "los checksums SHA-256 de los archivos maestros, calculados sobre los archivos tal como están en el repositorio (fin de línea LF)."
     )
 
     add_heading_3(doc, "Tabla 8: Trazabilidad criptográfica e integridad de archivos clave (SHA-256)")
@@ -840,10 +840,10 @@ def build_full_dataset_document() -> Path:
         ["Archivo del Repositorio", "Tipo y Alcance", "Huella Digital Criptográfica (SHA-256 Oficial)"],
         ["data/raw/Housing.csv", "Datos crudos de trabajo (Kaggle)", "a8ef508351b4d6e87b23a831cf316a3d53c794ed9d969c7b697a865a60a3d65f"],
         ["data/raw/HousePrices_Windsor_1987_AER.csv", "Datos históricos de referencia (AER)", "4c7f6df4c6264cf6f57ea6ec5157958c4033efe1f51b2855efb18e297274bfe3"],
-        ["data/processed/housing_limpio.csv", "Dataset procesado reproducible (T06)", "e69841956c4328574faa12d5888d056a48ebd55bb5ff0ece69c9c6ba60bb53d5"],
-        ["data/processed/particion.csv", "Partición sellada 80/20 train/test (T06)", "7c34c251279e7f15b21853d58b37f953f37d56f7aead93a3ef99c50d24013f1f"],
-        ["reports/tables/calidad_datos.csv", "Scorecard formal de calidad de datos", "5504eb075be984c1254c65d02f72e3be72a16b5bde094ff19222538c87e40d7e"],
-        ["reports/tables/diccionario_datos.csv", "Diccionario formal de variables", "f822307e10426b73e7505ef60919847e3d86a60c9d03f09228bf5f28b1edce0a"],
+        ["data/processed/housing_limpio.csv", "Dataset procesado reproducible (T06)", "26b609d04237e4b8e69adcef22fc13368a3163d488d58d9c8f656012f09358b4"],
+        ["data/processed/particion.csv", "Partición sellada 80/20 train/test (T06)", "16413b3207343d81d5251861f417edcce3bf6de29a2bd18fa3493840fc1ed009"],
+        ["reports/tables/calidad_datos.csv", "Scorecard formal de calidad de datos", "05a7fb1631061743996d3b6982fbffb11ddfb03d2af138fcc13eaa4e3a9b99d9"],
+        ["reports/tables/diccionario_datos.csv", "Diccionario formal de variables", "e7f6aa193b90a40ad46b38feb3bd37e86d4a3c34f35b9c18bc326d079f08ba0d"],
     ]
 
     tbl8 = doc.add_table(rows=len(t8_data), cols=3)
