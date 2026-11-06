@@ -27,7 +27,7 @@ El texto completo de cada intervención va en las **notas del orador de Canva**.
 | 3 | Juan Miguel | 0:40–1:30 | Valorar viviendas importa: riqueza de los hogares, catastro desactualizado y avalúos automáticos que ya compiten con el manual. |
 | 4 | Juan Miguel | 1:30–2:15 | Es regresión supervisada: 12 atributos predicen el precio; también modelamos log(precio). |
 | 5 | Juan Miguel | 2:15–3:10 | Pregunta, cuatro objetivos y tres hipótesis que vamos a contrastar. |
-| 6 | Juan Miguel | 3:10–3:50 | La búsqueda fue sistemática y reproducible: de 192 registros a 26 estudios. |
+| 6 | Juan Miguel | 3:10–3:50 | La búsqueda fue sistemática y reproducible: de 192 registros a 26 estudios. Decirlo de frente: las bases se cubrieron con un buscador filtrado por dominio y la elegibilidad se evaluó por resumen; la lectura completa va en la matriz. |
 | 7 | Juan Miguel | 3:50–4:30 | Los ensambles suelen ganar, pero en Windsor el hedónico es competitivo: es una línea base fuerte. |
 | 8 | Brandon | 4:30–6:00 | Cómo fluye el proceso de punta a punta y en qué punto se evita la fuga de datos. *(Guion: Brandon)* |
 | 9 | Brandon | 6:00–7:30 | Qué se compara (3 preprocesamientos × 6 modelos), con qué validación y qué métricas. *(Guion: Brandon)* |
@@ -63,56 +63,62 @@ El aporte está en el diseño de la comparación: el hedónico como línea base 
 **4. ¿Cómo se usaría en la práctica?**
 Como un modelo automático de valoración de apoyo: da una estimación del precio y explica qué atributos la empujan. Sirve para avalúos masivos o para priorizar la revisión del perito, no para reemplazarlo.
 
-**5. ¿Cómo garantizan que la revisión de literatura es sistemática?**
-Seguimos PRISMA 2020: 11 fuentes, 6 cadenas en inglés y español, criterios de inclusión y exclusión explícitos, y un registro de búsquedas con tamizaje y scripts en el repositorio. Para el paper replicamos las cadenas booleanas en Scopus y Web of Science con el acceso de la biblioteca de la UAO.
+**5. ¿Cómo garantizan que la revisión de literatura es sistemática? ¿Consultaron directamente las bases?**
+Seguimos PRISMA 2020: 6 cadenas en inglés y español, criterios de inclusión y exclusión explícitos, y un registro de búsquedas con tamizaje y scripts en el repositorio. Las 11 fuentes no se consultaron desde su propio buscador: usamos un buscador web filtrado por el dominio de cada base, y así lo reportamos, porque los conteos dependen de ese buscador. Para el paper replicamos las cadenas booleanas en Scopus y Web of Science con el acceso de la biblioteca de la UAO.
 
-**6. ¿Y si el aprendizaje automático no supera al hedónico?**
+**6. ¿Leyeron completos los 26 estudios?**
+No todavía, y lo decimos en el documento. La elegibilidad se evaluó con el resumen y los metadatos verificados en la página de la editorial. La lectura completa se hace al construir la matriz de literatura; si algún estudio no cumple al leerlo completo, se excluye y se actualizan los conteos del PRISMA.
+
+**7. ¿Qué tan confiable es el 9 % de error de los avalúos automáticos?**
+Es la cifra que reportan Kok et al. (2017) para activos multifamiliares en Estados Unidos, y dos de los autores trabajan en una empresa que vende ese tipo de modelos. La usamos como referencia del orden de magnitud, no como un resultado que se transfiera a nuestro caso.
+
+**8. ¿Y si el aprendizaje automático no supera al hedónico?**
 También es un resultado válido. La literatura sobre estos mismos datos anticipa que un modelo paramétrico bien especificado es competitivo, y por eso las hipótesis se contrastan con pruebas estadísticas y no se dan por ciertas.
 
 ### Solución y metodología · responde Brandon
 
-**7. ¿Por qué no deep learning?**
+**9. ¿Por qué no deep learning?**
 Son 545 observaciones tabulares. En datos tabulares de tamaño pequeño o medio, los modelos de árboles siguen siendo el estado del arte (Grinsztajn et al., 2022), con menos costo y más interpretabilidad. Una red profunda tendría alto riesgo de sobreajuste.
 
-**8. ¿Cómo evitan la fuga de datos?**
+**10. ¿Cómo evitan la fuga de datos?**
 La partición de prueba (20 %) se sella al inicio y no se toca hasta la evaluación final. Todo escalado, transformación y selección de variables va dentro de un `Pipeline` que se ajusta solo con los datos de entrenamiento de cada pliegue.
 
-**9. ¿Por qué validación cruzada repetida y anidada?**
+**11. ¿Por qué validación cruzada repetida y anidada?**
 La anidada separa la elección de hiperparámetros, en los pliegues internos, de la estimación del error, en los externos, y así el error no sale optimista. Repetirla con distintas particiones da una medida de la variabilidad, que es la que necesitan las pruebas estadísticas.
 
-**10. ¿Cómo sabrán si un modelo es mejor de verdad y no por azar?**
+**12. ¿Cómo sabrán si un modelo es mejor de verdad y no por azar?**
 Comparamos los modelos sobre los mismos pliegues y usamos una prueba t corregida para validación cruzada repetida (α = 0,05). Una diferencia pequeña en el RMSE promedio no basta.
 
-**11. ¿Por qué modelar el log del precio?**
+**13. ¿Por qué modelar el log del precio?**
 El precio es asimétrico, con una cola de valores altos. Con el logaritmo se estabiliza la varianza y el error pasa a ser relativo, lo que ayuda sobre todo a los modelos lineales y de distancia. La hipótesis H2 lo contrasta comparando el mismo modelo con y sin la transformación.
 
-**12. ¿Cómo medirán la complejidad?**
+**14. ¿Cómo medirán la complejidad?**
 En dos frentes: la teórica, con el orden de costo de entrenamiento y predicción de cada modelo, y la empírica, con los tiempos de entrenamiento y predicción y el número de parámetros. Así se ve cuánto se gana en error por cada unidad de costo.
 
-**13. ¿Cómo explican lo que predice un ensamble?**
+**15. ¿Cómo explican lo que predice un ensamble?**
 Con importancia por permutación para el efecto global de cada atributo y con SHAP para explicar predicciones individuales. Así comparamos lo que aprende el ensamble con los coeficientes del modelo hedónico.
 
-**14. ¿545 observaciones alcanzan?**
+**16. ¿545 observaciones alcanzan?**
 Es un tamaño pequeño, y por eso el diseño es conservador: validación cruzada repetida, modelos regularizados y curvas de aprendizaje en el piloto para ver si más datos cambiarían el resultado.
 
 ### Dataset · responde Mauricio
 
-**15. ¿De dónde salen los datos y cómo saben que son confiables?**
+**17. ¿De dónde salen los datos y cómo saben que son confiables?**
 Son las 546 ventas de Windsor, Ontario, entre julio y septiembre de 1987, publicadas por Anglin y Gençay (1996) en el *Journal of Applied Econometrics* y disponibles en el paquete AER de R. La versión de Kaggle tiene 545 filas: comprobamos que coincide fila por fila con el original y que la fila que falta era un duplicado.
 
-**16. ¿Por qué este dataset no viola la regla de no usar datasets de scikit-learn?**
+**18. ¿Por qué este dataset no viola la regla de no usar datasets de scikit-learn?**
 scikit-learn trae, por ejemplo, California Housing y antes traía Boston. El nuestro es el de Windsor, que viene del archivo del *Journal of Applied Econometrics* y del paquete AER de R, y lo usamos en su versión publicada en Kaggle.
 
-**17. ¿Por qué el precio está multiplicado por 70?**
+**19. ¿Por qué el precio está multiplicado por 70?**
 Kaggle no lo documenta, pero al dividir entre 70 las 545 filas coinciden exactamente con el precio original en dólares canadienses de 1987. Para el modelo no cambia nada, porque es una escala; para interpretar los errores en dinero se divide entre 70, y el MAPE no depende de la escala.
 
-**18. ¿Qué pasa con `furnishingstatus`, si fue añadida en Kaggle?**
+**20. ¿Qué pasa con `furnishingstatus`, si fue añadida en Kaggle?**
 No existe en el original y su origen no está documentado, así que la tratamos con cautela. La hipótesis H3 la evalúa con una ablación: entrenamos con y sin la variable y comparamos el RMSE.
 
-**19. ¿Qué hacen con los atípicos?**
+**21. ¿Qué hacen con los atípicos?**
 Hay 15 precios atípicos altos según la regla de 1,5 × IQR. Son ventas reales, así que los conservamos. Para que no dominen el ajuste modelamos log(precio) y, en uno de los preprocesamientos, aplicamos winsorización ajustada dentro de cada pliegue.
 
-**20. ¿Qué significan realmente las variables?**
+**22. ¿Qué significan realmente las variables?**
 Varios nombres de Kaggle engañan:
 - `area` es el tamaño del lote, no el área construida;
 - `mainroad` indica si hay entrada vehicular;
