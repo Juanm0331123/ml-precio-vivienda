@@ -1,0 +1,2 @@
+# Los datos crudos se guardan byte a byte. Si Git les cambia el fin de línea (Windows con core.autocrlf), la huella SHA-256 deja de coincidir.
+data/raw/** -text
