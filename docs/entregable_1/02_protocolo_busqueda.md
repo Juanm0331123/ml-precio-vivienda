@@ -20,17 +20,19 @@ Identificar las soluciones publicadas al problema de estimar el precio de venta 
 
 ## 2.2 Fuentes de información
 
-Se consultaron **11 fuentes académicas**:
+La búsqueda cubrió **11 fuentes académicas**:
 - Editoriales con revisión por pares: IEEE Xplore, ScienceDirect (Elsevier), SpringerLink, MDPI, Taylor & Francis, Emerald y Wiley Online Library.
 - Repositorios: arXiv y RePEc (IDEAS/EconPapers).
 - Índices latinoamericanos: SciELO y Redalyc.
+
+**Cómo se accedió a las fuentes:** las bases no se consultaron desde su propio buscador ni desde Scopus o Web of Science. Cada búsqueda se hizo en un motor de búsqueda web restringido al dominio de la base (operador `site:`), así que los conteos son los resultados que devolvió el motor para ese dominio, no el total de registros de la base.
 
 Se complementó con **búsqueda por citas** (bola de nieve hacia atrás y hacia adelante) desde los estudios recuperados, en particular las réplicas del *Journal of Applied Econometrics* sobre los datos de Windsor.
 
 ## 2.3 Estrategia de búsqueda
 
 **Procedimiento:**
-- Cada cadena se ejecutó en un motor de búsqueda académico/web con filtro por dominio (operador `site:`) para cada base.
+- Cada cadena se ejecutó en un motor de búsqueda web con filtro por dominio (operador `site:`), una vez por base. No se usaron los buscadores internos de las bases ni sus filtros (año, tipo de documento, área).
 - Se registraron los primeros resultados por relevancia (hasta 10 por búsqueda), con título, URL y posición.
 - Cada cadena tiene su equivalente booleano para replicarla en Scopus o Web of Science.
 
@@ -89,8 +91,9 @@ Se complementó con **búsqueda por citas** (bola de nieve hacia atrás y hacia 
 
 1. **Eliminación de duplicados:** por título normalizado (sin tildes, mayúsculas ni signos). Además se eliminó una publicación indexada en dos idiomas.
 2. **Tamizaje** por título y resumen con los criterios E1–E7.
-3. **Recuperación y verificación:** de cada registro que pasó el tamizaje se verificaron los metadatos (autores, año, revista, volumen y DOI o URL del editor) y se leyó el resumen. Los registros sin acceso al resumen o con metadatos no verificables se marcaron como *no recuperados*.
+3. **Recuperación y verificación (evaluación por resumen):** de cada registro que pasó el tamizaje se verificaron los metadatos (autores, año, revista, volumen y DOI o URL del editor) en la página del editor y se leyó el resumen. La elegibilidad se decidió con el resumen y esos metadatos; en esta etapa no se leyó el texto completo. Los registros sin acceso al resumen o con metadatos no verificables se marcaron como *no recuperados*.
 4. **Búsqueda por citas** desde los estudios verificados, con el mismo procedimiento de verificación.
+5. **Lectura del texto completo:** la hace T10 al llenar la matriz. Si un estudio no cumple los criterios al leerlo completo, se excluye y se actualizan los conteos.
 
 ## 2.6 Resultados (PRISMA 2020)
 
@@ -109,6 +112,8 @@ Se complementó con **búsqueda por citas** (bola de nieve hacia atrás y hacia 
 | Reportes no recuperados (búsqueda por citas) | **1** |
 | Reportes evaluados (búsqueda por citas) | **9** |
 | Total de estudios incluidos en la revisión | **26** |
+
+*Reportes evaluados para elegibilidad* quiere decir evaluados con el resumen y los metadatos verificados, no con el texto completo (ver 2.5).
 
 **Composición de los 26 estudios incluidos** (1974–2025; 20 publicados desde 2015):
 
@@ -169,9 +174,9 @@ Hallazgo preliminar tomado del resumen y los metadatos. La matriz con todas las 
 
 ## 2.9 Limitaciones y siguientes pasos
 
-- **Alcance de la búsqueda:** el motor devuelve los resultados más relevantes de cada base, no el universo completo. Para el paper final se replicarán las cadenas booleanas en Scopus o Web of Science con el acceso de la biblioteca UAO, y se actualizarán los conteos.
+- **Alcance de la búsqueda:** las bases no se consultaron directamente; el motor devuelve los resultados más relevantes de cada dominio, no el universo completo. Para el paper final se replicarán las cadenas booleanas en Scopus o Web of Science con el acceso de la biblioteca UAO, y se actualizarán los conteos.
 - **Reportes no recuperados (19 + 1):** se intentarán recuperar con el acceso institucional. Si cumplen los criterios, se agregan en T10.
-- **Extracción de datos:** los hallazgos de esta tabla son preliminares, a partir del resumen. T10 los verifica contra el texto completo y completa la matriz.
+- **Evaluación por resumen:** la elegibilidad y los hallazgos de la tabla 2.7 se basan en el resumen y los metadatos. T10 los verifica contra el texto completo y completa la matriz.
 
 ## Referencias
 

@@ -74,11 +74,13 @@ filas = [
  ("RQ3", "¿Qué esquemas de validación y métricas de desempeño se reportan?"),
  ("RQ4", "¿Qué técnicas de interpretabilidad se aplican a los modelos?"),
  ("Fuentes", "IEEE Xplore, ScienceDirect, SpringerLink, MDPI, Taylor & Francis, Emerald, arXiv, SciELO, Redalyc, Wiley Online Library y RePEc, más búsqueda por citas (bola de nieve) desde los estudios recuperados."),
- ("Procedimiento", "Cada cadena se ejecutó en un motor de búsqueda académico/web con filtro por dominio (operador site:) para cada base. Se registraron los primeros resultados por relevancia (hasta 10 por búsqueda), se eliminaron duplicados por título normalizado y se tamizaron por título y resumen."),
+ ("Acceso a las fuentes", "Las bases no se consultaron desde su propio buscador ni desde Scopus o Web of Science. Cada búsqueda se hizo en un motor de búsqueda web restringido al dominio de la base (operador site:), así que los conteos son los resultados que devolvió el motor para ese dominio, no el total de registros de la base."),
+ ("Procedimiento", "Cada cadena se ejecutó en un motor de búsqueda web con filtro por dominio (operador site:), una vez por base. Se registraron los primeros resultados por relevancia (hasta 10 por búsqueda), se eliminaron duplicados por título normalizado y se tamizaron por título y resumen."),
+ ("Elegibilidad", "Se evaluó con el resumen y los metadatos verificados en la página del editor, sin leer el texto completo. La lectura completa se hace en T10 al llenar la matriz."),
  ("Periodo", "Sin límite inferior para estudios clásicos y del dataset de Windsor; foco en 2015–2026 para métodos de aprendizaje automático."),
  ("Idiomas", "Inglés y español"),
  ("Tipo de documento", "Artículos de revista, actas de conferencia con revisión por pares y capítulos académicos"),
- ("Limitación", "El motor devuelve los resultados más relevantes de cada base, no el universo completo. Para la entrega final se recomienda replicar las cadenas booleanas de la hoja 'Busquedas' en Scopus o Web of Science mediante la biblioteca UAO."),
+ ("Limitación", "Las bases no se consultaron directamente: el motor devuelve los resultados más relevantes de cada dominio, no el universo completo. Para la entrega final se recomienda replicar las cadenas booleanas de la hoja 'Busquedas' en Scopus o Web of Science mediante la biblioteca UAO."),
 ]
 for f in filas:
     ws.append(f)

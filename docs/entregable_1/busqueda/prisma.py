@@ -15,7 +15,7 @@ v = {r[0].strip(): r[1] for r in load_workbook(xlsx, data_only=True)["PRISMA"].i
 g = lambda k: v[k]
 mot = {k.split(":")[0]: val for k, val in v.items() if k[:1] == "E" and k[1].isdigit()}
 
-plt.rcParams["font.family"] = "Inter"
+plt.rcParams["font.family"] = "IBM Plex Sans"
 fig, ax = plt.subplots(figsize=(13, 11.5), dpi=200)
 ax.set_xlim(0, 130); ax.set_ylim(0, 115); ax.axis("off")
 TINTA, SEC, BORDE, AZUL, FONDO = "#0b0b0b", "#52514e", "#c3c2b7", "#2a78d6", "#fcfcfb"
@@ -43,7 +43,7 @@ ax.text(111, 106.5, "Identificación por otros métodos", ha="center", fontsize=
 # Identificación
 fase(83, 21, "Identificación")
 caja(9, 86, 46, 16, f"Registros identificados (n = {g('Registros identificados en bases de datos')})\n"
-     f"{g('Búsquedas ejecutadas en bases de datos')} búsquedas en 11 fuentes: IEEE Xplore,\nScienceDirect, SpringerLink, MDPI, Taylor & Francis,\nEmerald, arXiv, SciELO, Redalyc, Wiley, RePEc")
+     f"{g('Búsquedas ejecutadas en bases de datos')} búsquedas con filtro de dominio en 11 fuentes:\nIEEE Xplore, ScienceDirect, SpringerLink, MDPI,\nTaylor & Francis, Emerald, arXiv, SciELO, Redalyc,\nWiley y RePEc")
 caja(62, 88, 30, 12, f"Registros eliminados antes\ndel tamizaje: duplicados\n(n = {g('Duplicados eliminados antes del tamizaje')})")
 caja(98, 89, 28, 10, f"Registros identificados por\nbúsqueda por citas (n = {g('Registros identificados por búsqueda por citas')})")
 flecha(55, 94, 62, 94)
@@ -61,12 +61,12 @@ flecha(32, 86, 32, 78); flecha(55, 73, 62, 73)
 caja(9, 48, 46, 9, f"Reportes buscados para recuperación\n(n = {g('Reportes buscados para recuperación (bases de datos)')})")
 caja(62, 47.5, 30, 10, f"Reportes no recuperados (n = {g('Reportes no recuperados (bases de datos)')})\nsin acceso al resumen o metadatos\nno verificables", tam=8.6)
 flecha(32, 68, 32, 57); flecha(55, 52.5, 62, 52.5)
-caja(9, 31, 46, 9, f"Reportes evaluados para elegibilidad\n(n = {g('Reportes evaluados para elegibilidad (bases de datos)')})")
+caja(9, 31, 46, 9, f"Reportes evaluados para elegibilidad\npor resumen y metadatos (n = {g('Reportes evaluados para elegibilidad (bases de datos)')})")
 caja(62, 31, 30, 9, f"Reportes excluidos\n(n = {g('Reportes excluidos en elegibilidad (bases de datos)')})")
 flecha(32, 48, 32, 40); flecha(55, 35.5, 62, 35.5)
 # Otros métodos
 caja(98, 48, 28, 13, f"Reportes buscados para\nrecuperación (n = {g('Reportes buscados (búsqueda por citas)')})\n\nNo recuperados (n = {g('Reportes no recuperados (búsqueda por citas)')})")
-caja(98, 31, 28, 9, f"Reportes evaluados para\nelegibilidad (n = {g('Reportes evaluados (búsqueda por citas)')})")
+caja(98, 31, 28, 9, f"Evaluados por resumen\ny metadatos (n = {g('Reportes evaluados (búsqueda por citas)')})")
 flecha(112, 89, 112, 61); flecha(112, 48, 112, 40)
 
 # Incluidos
