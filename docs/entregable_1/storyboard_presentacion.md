@@ -27,7 +27,15 @@
 | 17 | Referencias | Anexo; no se presenta | T13 · Juan Miguel | — | — |
 | 18 | Diagrama de flujo PRISMA 2020 | Anexo para preguntas; no se presenta | T09 · Juan Miguel | — | — |
 
-Las diapositivas 7 a 14 tienen un recuadro **Pendiente** con lo que debe contener cada una, quién la prepara y quién la presenta.
+Las diapositivas 7 a 14 tienen en Canva un recuadro **Pendiente** que cada responsable reemplaza. Todo el contenido que necesitan ya está en `main`:
+
+| Diapositivas | Prepara | Material en el repositorio |
+|---|---|---|
+| 7 (matriz de estudios clave) | Brandon | `docs/entregable_1/resumen_diapositiva_7_literatura.md` y `matriz_literatura.xlsx` |
+| 8 y 9 (solución y metodología) | Brandon | `docs/entregable_1/resumen_T11_canva.md`, `03_metodologia.md` y `docs/diagramas/pipeline.png` |
+| 10 (piloto de viabilidad) | Brandon | `docs/entregable_1/resumen_T12_canva.md`, `reports/figures/fig_piloto_*.png`, `fig_curva_aprendizaje.png` y `reports/tables/piloto_resultados.csv` |
+| 11 y 12 (origen, calidad y partición) | Mauricio | `docs/entregable_1/Descripcion_Dataset.pdf`, `reports/tables/calidad_datos.csv` y `reports/figures/fig01` y `fig02` |
+| 13 y 14 (EDA) | Mauricio | `notebooks/02_eda.ipynb` y `reports/figures/fig03` a `fig11` |
 
 ## Cómo se trabaja la presentación
 
