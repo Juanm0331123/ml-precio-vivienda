@@ -1,0 +1,12 @@
+{
+  "python": "3.12.10",
+  "sistema": "Windows 11",
+  "procesador": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "nucleos_logicos": 16,
+  "numpy": "2.5.4",
+  "pandas": "3.1.1",
+  "scipy": "1.18.1",
+  "scikit-learn": "1.9.1",
+  "xgboost": "3.4.1",
+  "semilla": 5007
+}
