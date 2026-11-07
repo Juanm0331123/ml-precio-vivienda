@@ -1,0 +1,1400 @@
+{
+ "busquedas": [
+  {
+   "id": "B01",
+   "cadena": "C1",
+   "base": "IEEE Xplore",
+   "dominio": "ieeexplore.ieee.org"
+  },
+  {
+   "id": "B02",
+   "cadena": "C1",
+   "base": "ScienceDirect",
+   "dominio": "sciencedirect.com"
+  },
+  {
+   "id": "B03",
+   "cadena": "C1",
+   "base": "SpringerLink",
+   "dominio": "link.springer.com"
+  },
+  {
+   "id": "B04",
+   "cadena": "C1",
+   "base": "MDPI",
+   "dominio": "mdpi.com"
+  },
+  {
+   "id": "B05",
+   "cadena": "C1",
+   "base": "arXiv",
+   "dominio": "arxiv.org"
+  },
+  {
+   "id": "B06",
+   "cadena": "C2",
+   "base": "ScienceDirect",
+   "dominio": "sciencedirect.com"
+  },
+  {
+   "id": "B07",
+   "cadena": "C2",
+   "base": "SpringerLink",
+   "dominio": "link.springer.com"
+  },
+  {
+   "id": "B08",
+   "cadena": "C2",
+   "base": "MDPI",
+   "dominio": "mdpi.com"
+  },
+  {
+   "id": "B09",
+   "cadena": "C2",
+   "base": "Taylor & Francis",
+   "dominio": "tandfonline.com"
+  },
+  {
+   "id": "B10",
+   "cadena": "C3",
+   "base": "ScienceDirect",
+   "dominio": "sciencedirect.com"
+  },
+  {
+   "id": "B11",
+   "cadena": "C3",
+   "base": "MDPI",
+   "dominio": "mdpi.com"
+  },
+  {
+   "id": "B12",
+   "cadena": "C3",
+   "base": "Taylor & Francis",
+   "dominio": "tandfonline.com"
+  },
+  {
+   "id": "B13",
+   "cadena": "C3",
+   "base": "Emerald",
+   "dominio": "emerald.com"
+  },
+  {
+   "id": "B14",
+   "cadena": "C4",
+   "base": "IEEE Xplore",
+   "dominio": "ieeexplore.ieee.org"
+  },
+  {
+   "id": "B15",
+   "cadena": "C4",
+   "base": "ScienceDirect",
+   "dominio": "sciencedirect.com"
+  },
+  {
+   "id": "B16",
+   "cadena": "C4",
+   "base": "MDPI",
+   "dominio": "mdpi.com"
+  },
+  {
+   "id": "B17",
+   "cadena": "C5",
+   "base": "SciELO",
+   "dominio": "scielo.org.co / scielo.cl / scielo.org.mx"
+  },
+  {
+   "id": "B18",
+   "cadena": "C5",
+   "base": "Redalyc",
+   "dominio": "redalyc.org"
+  },
+  {
+   "id": "B19",
+   "cadena": "C6",
+   "base": "Wiley Online Library",
+   "dominio": "onlinelibrary.wiley.com"
+  },
+  {
+   "id": "B20",
+   "cadena": "C6",
+   "base": "RePEc (IDEAS/EconPapers)",
+   "dominio": "ideas.repec.org"
+  }
+ ],
+ "registros": [
+  {
+   "busqueda": "B01",
+   "pos": 1,
+   "titulo": "Using ensemble methods of machine learning to predict real estate prices",
+   "url": "https://arxiv.org/pdf/2504.04303",
+   "clave": "using ensemble methods of machine learning to predict real estate prices"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 2,
+   "titulo": "Predicting housing prices and analyzing real estate market in the Chicago suburbs using Machine Learning",
+   "url": "https://arxiv.org/pdf/2210.06261",
+   "clave": "predicting housing prices and analyzing real estate market in the chicago suburbs using machine learning"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 3,
+   "titulo": "A Comparative Regression Analysis of House Price Prediction using Machine Learning Models",
+   "url": "https://ieeexplore.ieee.org/document/11070863/",
+   "clave": "a comparative regression analysis of house price prediction using machine learning models"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 4,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 5,
+   "titulo": "House Price Prediction Using Machine Learning",
+   "url": "https://ieeexplore.ieee.org/document/10911228",
+   "clave": "house price prediction using machine learning"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 6,
+   "titulo": "Predicting House Price Model: A Comprehensive Analysis with Random Forest and Decision Tree Method",
+   "url": "https://ieeexplore.ieee.org/document/10511732/",
+   "clave": "predicting house price model a comprehensive analysis with random forest and decision tree method"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 7,
+   "titulo": "Housing Price Prediction Using Machine Learning Techniques",
+   "url": "https://ieeexplore.ieee.org/document/10629723/",
+   "clave": "housing price prediction using machine learning techniques"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 8,
+   "titulo": "Predicting Listing Prices In Dynamic Short Term Rental Markets Using Machine Learning Models",
+   "url": "https://arxiv.org/pdf/2308.06929",
+   "clave": "predicting listing prices in dynamic short term rental markets using machine learning models"
+  },
+  {
+   "busqueda": "B01",
+   "pos": 9,
+   "titulo": "Predicting Rental Price of Lane Houses in Shanghai with Machine Learning Methods and Large Language Models",
+   "url": "https://arxiv.org/pdf/2405.17505",
+   "clave": "predicting rental price of lane houses in shanghai with machine learning methods and large language models"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 1,
+   "titulo": "A hybrid machine learning framework for forecasting house price",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0957417423014835",
+   "clave": "a hybrid machine learning framework for forecasting house price"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 2,
+   "titulo": "Property valuation using machine learning algorithms on statistical areas in Greater Sydney, Australia",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0264837722004367",
+   "clave": "property valuation using machine learning algorithms on statistical areas in greater sydney australia"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 3,
+   "titulo": "Housing Price Prediction via Improved Machine Learning Techniques",
+   "url": "https://www.sciencedirect.com/science/article/pii/S1877050920316318",
+   "clave": "housing price prediction via improved machine learning techniques"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 4,
+   "titulo": "A Multi-Source Information Learning Framework for Airbnb Price Prediction",
+   "url": "https://arxiv.org/pdf/2301.01222",
+   "clave": "a multi source information learning framework for airbnb price prediction"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 5,
+   "titulo": "Boosting House Price Predictions using Geo-Spatial Network Embedding",
+   "url": "https://arxiv.org/pdf/2009.00254",
+   "clave": "boosting house price predictions using geo spatial network embedding"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 6,
+   "titulo": "Predicting housing prices and analyzing real estate market in the Chicago suburbs using Machine Learning",
+   "url": "https://arxiv.org/pdf/2210.06261",
+   "clave": "predicting housing prices and analyzing real estate market in the chicago suburbs using machine learning"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 7,
+   "titulo": "Housing price prediction incorporating spatio-temporal dependency into machine learning algorithms",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0264275122003808",
+   "clave": "housing price prediction incorporating spatio temporal dependency into machine learning algorithms"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 8,
+   "titulo": "Unraveling nonlinear relationship of built environment on pre-sale and second-hand housing prices using multi-source big data and machine learning",
+   "url": "https://www.sciencedirect.com/science/article/pii/S209526352500086X",
+   "clave": "unraveling nonlinear relationship of built environment on pre sale and second hand housing prices using multi source big data and machine learning"
+  },
+  {
+   "busqueda": "B02",
+   "pos": 9,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 1,
+   "titulo": "House Price Prediction by Machine Learning Technique—An Empirical Study",
+   "url": "https://link.springer.com/chapter/10.1007/978-981-99-5354-7_7",
+   "clave": "house price prediction by machine learning techniquean empirical study"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 2,
+   "titulo": "A Multi-Source Information Learning Framework for Airbnb Price Prediction",
+   "url": "https://arxiv.org/pdf/2301.01222",
+   "clave": "a multi source information learning framework for airbnb price prediction"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 3,
+   "titulo": "Boosting House Price Predictions using Geo-Spatial Network Embedding",
+   "url": "https://arxiv.org/pdf/2009.00254",
+   "clave": "boosting house price predictions using geo spatial network embedding"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 4,
+   "titulo": "Predicting housing prices and analyzing real estate market in the Chicago suburbs using Machine Learning",
+   "url": "https://arxiv.org/pdf/2210.06261",
+   "clave": "predicting housing prices and analyzing real estate market in the chicago suburbs using machine learning"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 5,
+   "titulo": "Bengaluru House Price Prediction Using Machine Learning: A Comparative Study of Six Models in a Full-Stack Framework",
+   "url": "https://link.springer.com/chapter/10.1007/978-3-032-19300-1_6",
+   "clave": "bengaluru house price prediction using machine learning a comparative study of six models in a full stack framework"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 6,
+   "titulo": "Feature Importance Analysis and Model Performance Evaluation for Real Estate Price Prediction",
+   "url": "https://link.springer.com/chapter/10.1007/978-3-031-64776-5_46",
+   "clave": "feature importance analysis and model performance evaluation for real estate price prediction"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 7,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 8,
+   "titulo": "Carbon price prediction based on decomposition technique and extreme gradient boosting optimized by the grey wolf optimizer algorithm",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10611815/",
+   "clave": "carbon price prediction based on decomposition technique and extreme gradient boosting optimized by the grey wolf optimizer algorithm"
+  },
+  {
+   "busqueda": "B03",
+   "pos": 9,
+   "titulo": "Predicting Rental Price of Lane Houses in Shanghai with Machine Learning Methods and Large Language Models",
+   "url": "https://arxiv.org/pdf/2405.17505",
+   "clave": "predicting rental price of lane houses in shanghai with machine learning methods and large language models"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 1,
+   "titulo": "Using ensemble methods of machine learning to predict real estate prices",
+   "url": "https://arxiv.org/pdf/2504.04303",
+   "clave": "using ensemble methods of machine learning to predict real estate prices"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 2,
+   "titulo": "Predicting housing prices and analyzing real estate market in the Chicago suburbs using Machine Learning",
+   "url": "https://arxiv.org/pdf/2210.06261",
+   "clave": "predicting housing prices and analyzing real estate market in the chicago suburbs using machine learning"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 3,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 4,
+   "titulo": "Predicting Listing Prices In Dynamic Short Term Rental Markets Using Machine Learning Models",
+   "url": "https://arxiv.org/pdf/2308.06929",
+   "clave": "predicting listing prices in dynamic short term rental markets using machine learning models"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 5,
+   "titulo": "Predicting Rental Price of Lane Houses in Shanghai with Machine Learning Methods and Large Language Models",
+   "url": "https://arxiv.org/pdf/2405.17505",
+   "clave": "predicting rental price of lane houses in shanghai with machine learning methods and large language models"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 6,
+   "titulo": "Carbon price prediction based on decomposition technique and extreme gradient boosting optimized by the grey wolf optimizer algorithm",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10611815/",
+   "clave": "carbon price prediction based on decomposition technique and extreme gradient boosting optimized by the grey wolf optimizer algorithm"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 7,
+   "titulo": "Boosting House Price Predictions using Geo-Spatial Network Embedding",
+   "url": "https://arxiv.org/pdf/2009.00254",
+   "clave": "boosting house price predictions using geo spatial network embedding"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 8,
+   "titulo": "Machine Learning Applications for Sustainable Housing Policy: Understanding Price Determinants to Inform Affordable Housing Strategies",
+   "url": "https://www.mdpi.com/1999-4893/19/2/98",
+   "clave": "machine learning applications for sustainable housing policy understanding price determinants to inform affordable housing strategies"
+  },
+  {
+   "busqueda": "B04",
+   "pos": 9,
+   "titulo": "Housing Price Prediction Using Machine Learning Algorithms in COVID-19 Times",
+   "url": "https://www.mdpi.com/2073-445X/11/11/2100",
+   "clave": "housing price prediction using machine learning algorithms in covid 19 times"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 1,
+   "titulo": "Machine Learning Approaches to Real Estate Market Prediction Problem: A Case",
+   "url": "https://arxiv.org/pdf/2008.09922",
+   "clave": "machine learning approaches to real estate market prediction problem a case"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 2,
+   "titulo": "Predicting House Rental Prices in Ghana Using Machine Learning",
+   "url": "https://arxiv.org/pdf/2501.06241",
+   "clave": "predicting house rental prices in ghana using machine learning"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 3,
+   "titulo": "An Optimal House Price Prediction Algorithm: XGBoost",
+   "url": "https://arxiv.org/pdf/2402.04082",
+   "clave": "an optimal house price prediction algorithm xgboost"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 4,
+   "titulo": "Predicting housing prices and analyzing real estate market in the Chicago suburbs using Machine Learning",
+   "url": "https://arxiv.org/pdf/2210.06261",
+   "clave": "predicting housing prices and analyzing real estate market in the chicago suburbs using machine learning"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 5,
+   "titulo": "A Multi-Modal Deep Learning Based Approach for House Price Prediction",
+   "url": "https://arxiv.org/html/2409.05335v1",
+   "clave": "a multi modal deep learning based approach for house price prediction"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 6,
+   "titulo": "Optimised Support Vector Regression for California Housing Price Prediction: The Critical Role of Feature Engineering and Hyperparameter Tuning",
+   "url": "https://arxiv.org/html/2605.08660",
+   "clave": "optimised support vector regression for california housing price prediction the critical role of feature engineering and hyperparameter tuning"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 7,
+   "titulo": "A Multi-Source Information Learning Framework for Airbnb Price Prediction",
+   "url": "https://arxiv.org/pdf/2301.01222",
+   "clave": "a multi source information learning framework for airbnb price prediction"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 8,
+   "titulo": "Boosting House Price Predictions using Geo-Spatial Network Embedding",
+   "url": "https://arxiv.org/pdf/2009.00254",
+   "clave": "boosting house price predictions using geo spatial network embedding"
+  },
+  {
+   "busqueda": "B05",
+   "pos": 9,
+   "titulo": "Predicting Rental Price of Lane Houses in Shanghai with Machine Learning Methods and Large Language Models",
+   "url": "https://arxiv.org/pdf/2405.17505",
+   "clave": "predicting rental price of lane houses in shanghai with machine learning methods and large language models"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 1,
+   "titulo": "Learning Real Estate Automated Valuation Models from Heterogeneous Data Sources",
+   "url": "https://arxiv.org/pdf/1909.00704",
+   "clave": "learning real estate automated valuation models from heterogeneous data sources"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 2,
+   "titulo": "Determinants of house prices in Turkey: Hedonic regression versus artificial neural network",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0957417408000596",
+   "clave": "determinants of house prices in turkey hedonic regression versus artificial neural network"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 3,
+   "titulo": "Machine Learning, Deep Learning, and Hedonic Methods for Real Estate Price Prediction",
+   "url": "https://arxiv.org/pdf/2110.07151",
+   "clave": "machine learning deep learning and hedonic methods for real estate price prediction"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 4,
+   "titulo": "Understanding house price appreciation using multi-source big geo-data and machine learning",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0264837719316746",
+   "clave": "understanding house price appreciation using multi source big geo data and machine learning"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 5,
+   "titulo": "Take a Look Around: Using Street View and Satellite Images to Estimate House Prices",
+   "url": "https://arxiv.org/pdf/1807.07155",
+   "clave": "take a look around using street view and satellite images to estimate house prices"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 6,
+   "titulo": "Housing Price Prediction Model Selection Based on Lorenz and Concentration Curves: Empirical Evidence from Tehran Housing Market",
+   "url": "https://arxiv.org/pdf/2112.06192",
+   "clave": "housing price prediction model selection based on lorenz and concentration curves empirical evidence from tehran housing market"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 7,
+   "titulo": "House Price Determinants and Market Segmentation in Boulder, Colorado: A Hedonic Price Approach",
+   "url": "https://arxiv.org/pdf/2108.02442",
+   "clave": "house price determinants and market segmentation in boulder colorado a hedonic price approach"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 8,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B06",
+   "pos": 9,
+   "titulo": "Effects of neighborhood streetscape on the single-family housing price: Focusing on nonlinear and interaction effects using interpretable machine learning",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12094770/",
+   "clave": "effects of neighborhood streetscape on the single family housing price focusing on nonlinear and interaction effects using interpretable machine learning"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 1,
+   "titulo": "Toward transparent and accurate housing price appraisal: Hedonic price models versus machine learning algorithms",
+   "url": "https://link.springer.com/article/10.1186/s40854-025-00874-w",
+   "clave": "toward transparent and accurate housing price appraisal hedonic price models versus machine learning algorithms"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 2,
+   "titulo": "Learning Real Estate Automated Valuation Models from Heterogeneous Data Sources",
+   "url": "https://arxiv.org/pdf/1909.00704",
+   "clave": "learning real estate automated valuation models from heterogeneous data sources"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 3,
+   "titulo": "Machine Learning Applications in Real Estate: Critical Review of Recent Development",
+   "url": "https://link.springer.com/chapter/10.1007/978-3-031-08337-2_20",
+   "clave": "machine learning applications in real estate critical review of recent development"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 4,
+   "titulo": "Machine Learning, Deep Learning, and Hedonic Methods for Real Estate Price Prediction",
+   "url": "https://arxiv.org/pdf/2110.07151",
+   "clave": "machine learning deep learning and hedonic methods for real estate price prediction"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 5,
+   "titulo": "Take a Look Around: Using Street View and Satellite Images to Estimate House Prices",
+   "url": "https://arxiv.org/pdf/1807.07155",
+   "clave": "take a look around using street view and satellite images to estimate house prices"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 6,
+   "titulo": "Housing Price Prediction Model Selection Based on Lorenz and Concentration Curves: Empirical Evidence from Tehran Housing Market",
+   "url": "https://arxiv.org/pdf/2112.06192",
+   "clave": "housing price prediction model selection based on lorenz and concentration curves empirical evidence from tehran housing market"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 7,
+   "titulo": "A Machine Learning Approach to Price Indices: Applications in Commercial Real Estate",
+   "url": "https://link.springer.com/article/10.1007/s11146-022-09893-1",
+   "clave": "a machine learning approach to price indices applications in commercial real estate"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 8,
+   "titulo": "Boosting the accuracy of property valuation with ensemble learning and explainable artificial intelligence: The case of Hong Kong",
+   "url": "https://link.springer.com/article/10.1007/s00168-025-01365-7",
+   "clave": "boosting the accuracy of property valuation with ensemble learning and explainable artificial intelligence the case of hong kong"
+  },
+  {
+   "busqueda": "B07",
+   "pos": 9,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 1,
+   "titulo": "Learning Real Estate Automated Valuation Models from Heterogeneous Data Sources",
+   "url": "https://arxiv.org/pdf/1909.00704",
+   "clave": "learning real estate automated valuation models from heterogeneous data sources"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 2,
+   "titulo": "Machine Learning, Deep Learning, and Hedonic Methods for Real Estate Price Prediction",
+   "url": "https://arxiv.org/pdf/2110.07151",
+   "clave": "machine learning deep learning and hedonic methods for real estate price prediction"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 3,
+   "titulo": "Housing Price Prediction Model Selection Based on Lorenz and Concentration Curves: Empirical Evidence from Tehran Housing Market",
+   "url": "https://arxiv.org/pdf/2112.06192",
+   "clave": "housing price prediction model selection based on lorenz and concentration curves empirical evidence from tehran housing market"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 4,
+   "titulo": "Take a Look Around: Using Street View and Satellite Images to Estimate House Prices",
+   "url": "https://arxiv.org/pdf/1807.07155",
+   "clave": "take a look around using street view and satellite images to estimate house prices"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 5,
+   "titulo": "House Price Determinants and Market Segmentation in Boulder, Colorado: A Hedonic Price Approach",
+   "url": "https://arxiv.org/pdf/2108.02442",
+   "clave": "house price determinants and market segmentation in boulder colorado a hedonic price approach"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 6,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 7,
+   "titulo": "Effects of neighborhood streetscape on the single-family housing price: Focusing on nonlinear and interaction effects using interpretable machine learning",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12094770/",
+   "clave": "effects of neighborhood streetscape on the single family housing price focusing on nonlinear and interaction effects using interpretable machine learning"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 8,
+   "titulo": "Real Estate Property Valuation using Self-Supervised Vision Transformers",
+   "url": "https://arxiv.org/pdf/2302.00117",
+   "clave": "real estate property valuation using self supervised vision transformers"
+  },
+  {
+   "busqueda": "B08",
+   "pos": 9,
+   "titulo": "A Multi-Modal Deep Learning Based Approach for House Price Prediction",
+   "url": "https://arxiv.org/pdf/2409.05335",
+   "clave": "a multi modal deep learning based approach for house price prediction"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 1,
+   "titulo": "Machine learning for inference: using gradient boosting decision tree to assess non-linear effects of bus rapid transit on house prices",
+   "url": "https://www.tandfonline.com/doi/full/10.1080/19475683.2021.1906746",
+   "clave": "machine learning for inference using gradient boosting decision tree to assess non linear effects of bus rapid transit on house prices"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 2,
+   "titulo": "Model agnostic interpretable machine learning for residential property valuation",
+   "url": "https://www.tandfonline.com/doi/abs/10.1080/00396265.2023.2293366",
+   "clave": "model agnostic interpretable machine learning for residential property valuation"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 3,
+   "titulo": "Learning Real Estate Automated Valuation Models from Heterogeneous Data Sources",
+   "url": "https://arxiv.org/pdf/1909.00704",
+   "clave": "learning real estate automated valuation models from heterogeneous data sources"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 4,
+   "titulo": "Machine Learning, Deep Learning, and Hedonic Methods for Real Estate Price Prediction",
+   "url": "https://arxiv.org/pdf/2110.07151",
+   "clave": "machine learning deep learning and hedonic methods for real estate price prediction"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 5,
+   "titulo": "Take a Look Around: Using Street View and Satellite Images to Estimate House Prices",
+   "url": "https://arxiv.org/pdf/1807.07155",
+   "clave": "take a look around using street view and satellite images to estimate house prices"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 6,
+   "titulo": "Housing Price Prediction Model Selection Based on Lorenz and Concentration Curves: Empirical Evidence from Tehran Housing Market",
+   "url": "https://arxiv.org/pdf/2112.06192",
+   "clave": "housing price prediction model selection based on lorenz and concentration curves empirical evidence from tehran housing market"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 7,
+   "titulo": "Metrics for evaluating the performance of machine learning based automated valuation models",
+   "url": "https://www.tandfonline.com/doi/full/10.1080/09599916.2020.1858937",
+   "clave": "metrics for evaluating the performance of machine learning based automated valuation models"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 8,
+   "titulo": "Residential Price Modeling using Spatially Validated Machine Learning Methods: A Comparison Across Geographic Contexts",
+   "url": "https://arxiv.org/pdf/2609.00375",
+   "clave": "residential price modeling using spatially validated machine learning methods a comparison across geographic contexts"
+  },
+  {
+   "busqueda": "B09",
+   "pos": 9,
+   "titulo": "Metrics for evaluating the performance of machine learning based automated valuation models",
+   "url": "https://www.tandfonline.com/doi/pdf/10.1080/09599916.2020.1858937",
+   "clave": "metrics for evaluating the performance of machine learning based automated valuation models"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 1,
+   "titulo": "Automated machine learning for residential property valuation",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0952197625020433",
+   "clave": "automated machine learning for residential property valuation"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 2,
+   "titulo": "Feature selection applications and model validation for mass real estate valuation systems",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0264837721002623",
+   "clave": "feature selection applications and model validation for mass real estate valuation systems"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 3,
+   "titulo": "Homogeneous Feature Transfer and Heterogeneous Location Fine-tuning for Cross-City Property Appraisal Framework",
+   "url": "https://arxiv.org/pdf/1812.05486",
+   "clave": "homogeneous feature transfer and heterogeneous location fine tuning for cross city property appraisal framework"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 4,
+   "titulo": "Multimodal Machine Learning for Real Estate Appraisal: A Comprehensive Survey",
+   "url": "https://arxiv.org/pdf/2503.22119",
+   "clave": "multimodal machine learning for real estate appraisal a comprehensive survey"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 5,
+   "titulo": "Automating property valuation at the macro scale of suburban level: A multi-step method based on spatial imputation techniques, machine learning and deep learning",
+   "url": "https://www.sciencedirect.com/science/article/pii/S0197397524000754",
+   "clave": "automating property valuation at the macro scale of suburban level a multi step method based on spatial imputation techniques machine learning and deep learning"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 6,
+   "titulo": "The Spatially-Conscious Machine Learning Model",
+   "url": "https://arxiv.org/pdf/1902.00562",
+   "clave": "the spatially conscious machine learning model"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 7,
+   "titulo": "Mass appraisal of residential apartments: An application of Random forest for valuation and a CART-based approach for model diagnostics",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0957417411011894",
+   "clave": "mass appraisal of residential apartments an application of random forest for valuation and a cart based approach for model diagnostics"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 8,
+   "titulo": "Real estate price estimation through a fuzzy partition-driven genetic algorithm",
+   "url": "https://www.sciencedirect.com/science/article/pii/S0020025524003554",
+   "clave": "real estate price estimation through a fuzzy partition driven genetic algorithm"
+  },
+  {
+   "busqueda": "B10",
+   "pos": 9,
+   "titulo": "Property valuation using machine learning algorithms on statistical areas in Greater Sydney, Australia",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0264837722004367",
+   "clave": "property valuation using machine learning algorithms on statistical areas in greater sydney australia"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 1,
+   "titulo": "Homogeneous Feature Transfer and Heterogeneous Location Fine-tuning for Cross-City Property Appraisal Framework",
+   "url": "https://arxiv.org/pdf/1812.05486",
+   "clave": "homogeneous feature transfer and heterogeneous location fine tuning for cross city property appraisal framework"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 2,
+   "titulo": "Multimodal Machine Learning for Real Estate Appraisal: A Comprehensive Survey",
+   "url": "https://arxiv.org/pdf/2503.22119",
+   "clave": "multimodal machine learning for real estate appraisal a comprehensive survey"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 3,
+   "titulo": "The Spatially-Conscious Machine Learning Model",
+   "url": "https://arxiv.org/pdf/1902.00562",
+   "clave": "the spatially conscious machine learning model"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 4,
+   "titulo": "Real estate valuation with multi-source image fusion and enhanced machine learning pipeline",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12088074/",
+   "clave": "real estate valuation with multi source image fusion and enhanced machine learning pipeline"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 5,
+   "titulo": "From human business to machine learning—methods for automating real estate appraisals and their practical implications",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9294847/",
+   "clave": "from human business to machine learningmethods for automating real estate appraisals and their practical implications"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 6,
+   "titulo": "Sensitivity Analysis of Machine Learning Models for the Mass Appraisal of Real Estate. Case Study of Residential Units in Nicosia, Cyprus",
+   "url": "https://www.mdpi.com/2072-4292/11/24/3047",
+   "clave": "sensitivity analysis of machine learning models for the mass appraisal of real estate case study of residential units in nicosia cyprus"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 7,
+   "titulo": "Housing Price Prediction Using Machine Learning Algorithms in COVID-19 Times",
+   "url": "https://www.mdpi.com/2073-445X/11/11/2100",
+   "clave": "housing price prediction using machine learning algorithms in covid 19 times"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 8,
+   "titulo": "Property valuation model and visualization (patente US 11551317)",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11551317",
+   "clave": "property valuation model and visualization"
+  },
+  {
+   "busqueda": "B11",
+   "pos": 9,
+   "titulo": "Stacked Ensemble Model for the Automatic Valuation of Residential Properties in South Korea: A Case Study on Jeju Island",
+   "url": "https://www.mdpi.com/2073-445X/13/9/1436",
+   "clave": "stacked ensemble model for the automatic valuation of residential properties in south korea a case study on jeju island"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 1,
+   "titulo": "Automated valuation models: improving model performance by choosing the optimal spatial training level",
+   "url": "https://www.tandfonline.com/doi/abs/10.1080/09599916.2023.2206823",
+   "clave": "automated valuation models improving model performance by choosing the optimal spatial training level"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 2,
+   "titulo": "Journal of Real Estate Research (documento sin título identificable)",
+   "url": "https://www.tandfonline.com/doi/pdf/10.1080/08965803.2025.2587313",
+   "clave": "journal of real estate research"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 3,
+   "titulo": "Automated Valuation Services: A case study for Aberdeen in Scotland",
+   "url": "https://www.tandfonline.com/doi/abs/10.1080/09599916.2020.1861066",
+   "clave": "automated valuation services a case study for aberdeen in scotland"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 4,
+   "titulo": "Homogeneous Feature Transfer and Heterogeneous Location Fine-tuning for Cross-City Property Appraisal Framework",
+   "url": "https://arxiv.org/pdf/1812.05486",
+   "clave": "homogeneous feature transfer and heterogeneous location fine tuning for cross city property appraisal framework"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 5,
+   "titulo": "Multimodal Machine Learning for Real Estate Appraisal: A Comprehensive Survey",
+   "url": "https://arxiv.org/pdf/2503.22119",
+   "clave": "multimodal machine learning for real estate appraisal a comprehensive survey"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 6,
+   "titulo": "Comparison of different machine learning models for mass appraisal of real estate",
+   "url": "https://www.tandfonline.com/doi/abs/10.1080/00396265.2021.1996799",
+   "clave": "comparison of different machine learning models for mass appraisal of real estate"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 7,
+   "titulo": "The Spatially-Conscious Machine Learning Model",
+   "url": "https://arxiv.org/pdf/1902.00562",
+   "clave": "the spatially conscious machine learning model"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 8,
+   "titulo": "Real estate valuation with multi-source image fusion and enhanced machine learning pipeline",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12088074/",
+   "clave": "real estate valuation with multi source image fusion and enhanced machine learning pipeline"
+  },
+  {
+   "busqueda": "B12",
+   "pos": 9,
+   "titulo": "From human business to machine learning—methods for automating real estate appraisals and their practical implications",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9294847/",
+   "clave": "from human business to machine learningmethods for automating real estate appraisals and their practical implications"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 1,
+   "titulo": "Homogeneous Feature Transfer and Heterogeneous Location Fine-tuning for Cross-City Property Appraisal Framework",
+   "url": "https://arxiv.org/pdf/1812.05486",
+   "clave": "homogeneous feature transfer and heterogeneous location fine tuning for cross city property appraisal framework"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 2,
+   "titulo": "Multimodal Machine Learning for Real Estate Appraisal: A Comprehensive Survey",
+   "url": "https://arxiv.org/pdf/2503.22119",
+   "clave": "multimodal machine learning for real estate appraisal a comprehensive survey"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 3,
+   "titulo": "Who performs better? AVMs vs hedonic models",
+   "url": "https://www.emerald.com/jpif/article/38/3/213/229178/Who-performs-better-AVMs-vs-hedonic-models",
+   "clave": "who performs better avms vs hedonic models"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 4,
+   "titulo": "The Spatially-Conscious Machine Learning Model",
+   "url": "https://arxiv.org/pdf/1902.00562",
+   "clave": "the spatially conscious machine learning model"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 5,
+   "titulo": "Real estate valuation with multi-source image fusion and enhanced machine learning pipeline",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12088074/",
+   "clave": "real estate valuation with multi source image fusion and enhanced machine learning pipeline"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 6,
+   "titulo": "From human business to machine learning—methods for automating real estate appraisals and their practical implications",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9294847/",
+   "clave": "from human business to machine learningmethods for automating real estate appraisals and their practical implications"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 7,
+   "titulo": "Who performs better? AVMs vs hedonic models",
+   "url": "https://www.emerald.com/insight/content/doi/10.1108/JPIF-12-2019-0157/full/pdf",
+   "clave": "who performs better avms vs hedonic models"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 8,
+   "titulo": "Property valuation model and visualization (patente US 11551317)",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11551317",
+   "clave": "property valuation model and visualization"
+  },
+  {
+   "busqueda": "B13",
+   "pos": 9,
+   "titulo": "Multi-use artificial intelligence-based ensemble model (patente US 11816122)",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11816122",
+   "clave": "multi use artificial intelligence based ensemble model"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 1,
+   "titulo": "Data storytelling meets interpretable machine learning: Decoding AI decisions for non-experts without revealing sensitive data and model details",
+   "url": "https://arxiv.org/pdf/2609.15722",
+   "clave": "data storytelling meets interpretable machine learning decoding ai decisions for non experts without revealing sensitive data and model details"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 2,
+   "titulo": "American Option Pricing using Self-Attention GRU and Shapley Value Interpretation",
+   "url": "https://arxiv.org/pdf/2310.12500",
+   "clave": "american option pricing using self attention gru and shapley value interpretation"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 3,
+   "titulo": "Predictability and Comprehensibility in Post-Hoc XAI Methods: A User-Centered Analysis",
+   "url": "https://arxiv.org/pdf/2309.11987",
+   "clave": "predictability and comprehensibility in post hoc xai methods a user centered analysis"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 4,
+   "titulo": "Model Transparency and Interpretability: Survey and Application to the Insurance Industry",
+   "url": "https://arxiv.org/pdf/2209.00562",
+   "clave": "model transparency and interpretability survey and application to the insurance industry"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 5,
+   "titulo": "A Hybrid Statistical-Machine Learning Approach for Analysing Online Customer Behavior: An Empirical Study",
+   "url": "https://arxiv.org/pdf/2212.02255",
+   "clave": "a hybrid statistical machine learning approach for analysing online customer behavior an empirical study"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 6,
+   "titulo": "Privacy-preserving Federated Adversarial Domain Adaption over Feature Groups for Interpretability",
+   "url": "https://arxiv.org/pdf/2111.10934",
+   "clave": "privacy preserving federated adversarial domain adaption over feature groups for interpretability"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 7,
+   "titulo": "Shedding Light on Black Box Machine Learning Algorithms: Development of an Axiomatic Framework to Assess the Quality of Methods that Explain Individual Predictions",
+   "url": "https://arxiv.org/pdf/1808.05054",
+   "clave": "shedding light on black box machine learning algorithms development of an axiomatic framework to assess the quality of methods that explain individual predictions"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 8,
+   "titulo": "Multi-Window Evaluation of Transformer Architectures for Stock Price Forecasting Using Walk-Forward Validation and SHAP-Based Explainability",
+   "url": "https://ieeexplore.ieee.org/abstract/document/11666712/",
+   "clave": "multi window evaluation of transformer architectures for stock price forecasting using walk forward validation and shap based explainability"
+  },
+  {
+   "busqueda": "B14",
+   "pos": 9,
+   "titulo": "Predicting Residential Rents in Dakar Using Machine Learning",
+   "url": "https://arxiv.org/pdf/2608.30865",
+   "clave": "predicting residential rents in dakar using machine learning"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 1,
+   "titulo": "Exploring housing price dynamics in sustainable cities through a cooperated big data driven machine learning method: case study on a typical city in China",
+   "url": "https://www.sciencedirect.com/science/article/pii/S2590252025000376",
+   "clave": "exploring housing price dynamics in sustainable cities through a cooperated big data driven machine learning method case study on a typical city in china"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 2,
+   "titulo": "Data storytelling meets interpretable machine learning: Decoding AI decisions for non-experts without revealing sensitive data and model details",
+   "url": "https://arxiv.org/pdf/2609.15722",
+   "clave": "data storytelling meets interpretable machine learning decoding ai decisions for non experts without revealing sensitive data and model details"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 3,
+   "titulo": "Incorporating neighborhoods with explainable artificial intelligence for modeling fine-scale housing prices",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0143622823001637",
+   "clave": "incorporating neighborhoods with explainable artificial intelligence for modeling fine scale housing prices"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 4,
+   "titulo": "American Option Pricing using Self-Attention GRU and Shapley Value Interpretation",
+   "url": "https://arxiv.org/pdf/2310.12500",
+   "clave": "american option pricing using self attention gru and shapley value interpretation"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 5,
+   "titulo": "A Comprehensive Dataset for Uncovering Housing Price Drivers in Emerging Cities: Nanning as a Case Study",
+   "url": "https://www.sciencedirect.com/science/article/pii/S2352340926004361",
+   "clave": "a comprehensive dataset for uncovering housing price drivers in emerging cities nanning as a case study"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 6,
+   "titulo": "Predictability and Comprehensibility in Post-Hoc XAI Methods: A User-Centered Analysis",
+   "url": "https://arxiv.org/pdf/2309.11987",
+   "clave": "predictability and comprehensibility in post hoc xai methods a user centered analysis"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 7,
+   "titulo": "A Hybrid Statistical-Machine Learning Approach for Analysing Online Customer Behavior: An Empirical Study",
+   "url": "https://arxiv.org/pdf/2212.02255",
+   "clave": "a hybrid statistical machine learning approach for analysing online customer behavior an empirical study"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 8,
+   "titulo": "Privacy-preserving Federated Adversarial Domain Adaption over Feature Groups for Interpretability",
+   "url": "https://arxiv.org/pdf/2111.10934",
+   "clave": "privacy preserving federated adversarial domain adaption over feature groups for interpretability"
+  },
+  {
+   "busqueda": "B15",
+   "pos": 9,
+   "titulo": "Comparison of Model Performance on Housing Business Using Linear Regression, Random Forest Regressor, SVR, and Neural Network",
+   "url": "https://www.sciencedirect.com/science/article/pii/S187705092403151X",
+   "clave": "comparison of model performance on housing business using linear regression random forest regressor svr and neural network"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 1,
+   "titulo": "American Option Pricing using Self-Attention GRU and Shapley Value Interpretation",
+   "url": "https://arxiv.org/pdf/2310.12500",
+   "clave": "american option pricing using self attention gru and shapley value interpretation"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 2,
+   "titulo": "Explainable AI for Earth Observation: Current Methods, Open Challenges, and Opportunities",
+   "url": "https://arxiv.org/pdf/2311.04491",
+   "clave": "explainable ai for earth observation current methods open challenges and opportunities"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 3,
+   "titulo": "Unveiling Location-Specific Price Drivers: A Two-Stage Cluster Analysis for Interpretable House Price Predictions",
+   "url": "https://arxiv.org/pdf/2508.03156",
+   "clave": "unveiling location specific price drivers a two stage cluster analysis for interpretable house price predictions"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 4,
+   "titulo": "Designing Explainable Predictive Machine Learning Artifacts: Methodology and Practical Demonstration",
+   "url": "https://arxiv.org/pdf/2306.11771",
+   "clave": "designing explainable predictive machine learning artifacts methodology and practical demonstration"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 5,
+   "titulo": "Privacy-Preserving Model and Preprocessing Verification for Machine Learning",
+   "url": "https://arxiv.org/pdf/2501.08236",
+   "clave": "privacy preserving model and preprocessing verification for machine learning"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 6,
+   "titulo": "A Transparent House Price Prediction Framework Using Ensemble Learning, Genetic Algorithm-Based Tuning, and ANOVA-Based Feature Analysis",
+   "url": "https://www.mdpi.com/2674-1032/4/3/33",
+   "clave": "a transparent house price prediction framework using ensemble learning genetic algorithm based tuning and anova based feature analysis"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 7,
+   "titulo": "Understanding electricity prices beyond the merit order principle using explainable AI",
+   "url": "https://arxiv.org/pdf/2212.04805",
+   "clave": "understanding electricity prices beyond the merit order principle using explainable ai"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 8,
+   "titulo": "A Hybrid Statistical-Machine Learning Approach for Analysing Online Customer Behavior: An Empirical Study",
+   "url": "https://arxiv.org/pdf/2212.02255",
+   "clave": "a hybrid statistical machine learning approach for analysing online customer behavior an empirical study"
+  },
+  {
+   "busqueda": "B16",
+   "pos": 9,
+   "titulo": "Real Estate Market Forecasting for Enterprises in First-Tier Cities: Based on Explainable Machine Learning Models",
+   "url": "https://www.mdpi.com/2079-8954/13/7/513",
+   "clave": "real estate market forecasting for enterprises in first tier cities based on explainable machine learning models"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 1,
+   "titulo": "Infraestructura pública y precios de vivienda: una aplicación de regresión geográficamente ponderada en el contexto de precios hedónicos",
+   "url": "http://www.scielo.org.co/scielo.php?script=sci_arttext&pid=S1657-42062011000200005",
+   "clave": "infraestructura publica y precios de vivienda una aplicacion de regresion geograficamente ponderada en el contexto de precios hedonicos"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 2,
+   "titulo": "Modelización de precios de apartamentos en un contexto colombiano desde un enfoque machine learning con atributos estables-importantes",
+   "url": "http://www.scielo.org.co/scielo.php?pid=S0012-73532020000100063&script=sci_abstract&tlng=es",
+   "clave": "modelizacion de precios de apartamentos en un contexto colombiano desde un enfoque machine learning con atributos estables importantes"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 3,
+   "titulo": "Análisis comparativo de modelos tradicionales y modernos (RIDE, México)",
+   "url": "https://www.scielo.org.mx/pdf/ride/v12n24/2007-7467-ride-12-24-e048.pdf",
+   "clave": "analisis comparativo de modelos tradicionales y modernos"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 4,
+   "titulo": "Modeling of apartment prices in a Colombian context from a machine learning approach with stable-important attributes",
+   "url": "http://www.scielo.org.co/pdf/dyna/v87n212/0012-7353-dyna-87-212-63.pdf",
+   "clave": "modeling of apartment prices in a colombian context from a machine learning approach with stable important attributes"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 5,
+   "titulo": "Análisis de precios hedónicos de viviendas (Revista Ingeniería de Construcción, PDF)",
+   "url": "https://www.scielo.cl/pdf/ric/v34n2/0718-5073-ric-34-02-215.pdf",
+   "clave": "analisis de precios hedonicos de viviendas"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 6,
+   "titulo": "Análisis de precios hedónicos de viviendas",
+   "url": "https://www.scielo.cl/scielo.php?script=sci_arttext&pid=S0718-50732019000200215",
+   "clave": "analisis de precios hedonicos de viviendas"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 7,
+   "titulo": "Un modelo para seleccionar atributos de un edificio residencial que maximiza el precio de venta",
+   "url": "https://www.scielo.cl/scielo.php?script=sci_arttext&pid=S0718-28132016000100005",
+   "clave": "un modelo para seleccionar atributos de un edificio residencial que maximiza el precio de venta"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 8,
+   "titulo": "Desarrollo de un modelo de valoración inmobiliaria mediante análisis estadístico clásico y espacial en Guadalajara, Jalisco, México",
+   "url": "https://www.scielo.org.mx/scielo.php?pid=S2663-39812025000100167&script=sci_arttext",
+   "clave": "desarrollo de un modelo de valoracion inmobiliaria mediante analisis estadistico clasico y espacial en guadalajara jalisco mexico"
+  },
+  {
+   "busqueda": "B17",
+   "pos": 9,
+   "titulo": "Metodología para obtención y análisis de datos inmobiliarios usando fuentes alternativas: estudio de caso en tres ciudades intermedias de Colombia",
+   "url": "http://www.scielo.org.co/scielo.php?script=sci_arttext&pid=S0121-750X2022000300400",
+   "clave": "metodologia para obtencion y analisis de datos inmobiliarios usando fuentes alternativas estudio de caso en tres ciudades intermedias de colombia"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 1,
+   "titulo": "Un análisis del mercado de la vivienda a través de redes neuronales artificiales",
+   "url": "https://www.redalyc.org/pdf/301/30118210.pdf",
+   "clave": "un analisis del mercado de la vivienda a traves de redes neuronales artificiales"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 2,
+   "titulo": "Sistema de proyección de la demanda. Caso práctico",
+   "url": "https://www.redalyc.org/pdf/6722/672271530002.pdf",
+   "clave": "sistema de proyeccion de la demanda caso practico"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 3,
+   "titulo": "Modeling of apartment prices in a Colombian context from a machine learning approach with stable-important attributes",
+   "url": "https://www.redalyc.org/journal/496/49663642008/",
+   "clave": "modeling of apartment prices in a colombian context from a machine learning approach with stable important attributes"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 4,
+   "titulo": "Metodología para obtención y análisis de datos inmobiliarios usando fuentes alternativas: estudio de caso en tres ciudades intermedias de Colombia",
+   "url": "https://www.redalyc.org/journal/4988/498873733011/html/",
+   "clave": "metodologia para obtencion y analisis de datos inmobiliarios usando fuentes alternativas estudio de caso en tres ciudades intermedias de colombia"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 5,
+   "titulo": "Determinantes del precio de la vivienda nueva en Medellín: un modelo estructural",
+   "url": "https://www.redalyc.org/journal/2821/282161174005/html/",
+   "clave": "determinantes del precio de la vivienda nueva en medellin un modelo estructural"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 6,
+   "titulo": "Ingeniería y Ciencia (Universidad EAFIT), documento sin título identificable",
+   "url": "https://www.redalyc.org/pdf/835/83582470002.pdf",
+   "clave": "ingenieria y ciencia documento sin titulo identificable"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 7,
+   "titulo": "Opción (Universidad del Zulia), documento sin título identificable",
+   "url": "https://www.redalyc.org/pdf/310/31048902009.pdf",
+   "clave": "opcion documento sin titulo identificable"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 8,
+   "titulo": "Estimation of housing prices in Ecuador using hedonic and geostatistical models",
+   "url": "https://www.redalyc.org/journal/5736/573670796007/573670796007.pdf",
+   "clave": "estimation of housing prices in ecuador using hedonic and geostatistical models"
+  },
+  {
+   "busqueda": "B18",
+   "pos": 9,
+   "titulo": "Pharos (Universidad de Las Américas), documento sin título identificable",
+   "url": "https://www.redalyc.org/pdf/208/20807205.pdf",
+   "clave": "pharos documento sin titulo identificable"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 1,
+   "titulo": "Semiparametric estimation of a hedonic price function",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-1255(199611)11:6%3C633::AID-JAE414%3E3.0.CO;2-T",
+   "clave": "semiparametric estimation of a hedonic price function"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 2,
+   "titulo": "Closing the Rent Index Gap",
+   "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/tesg.12607",
+   "clave": "closing the rent index gap"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 3,
+   "titulo": "Nonparametric Kernel Methods of Estimation and Hypothesis Testing",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/9780470996249.ch21",
+   "clave": "nonparametric kernel methods of estimation and hypothesis testing"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 4,
+   "titulo": "On nonparametric estimation of a hedonic price function",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1002/jae.1186",
+   "clave": "on nonparametric estimation of a hedonic price function"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 5,
+   "titulo": "Convenient links for the estimation of hedonic price indexes: the case of unique, infrequently traded assets",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/stan.12024",
+   "clave": "convenient links for the estimation of hedonic price indexes the case of unique infrequently traded assets"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 6,
+   "titulo": "Hedonic Price of Housing Space",
+   "url": "https://onlinelibrary.wiley.com/doi/10.1111/1540-6229.12298",
+   "clave": "hedonic price of housing space"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 7,
+   "titulo": "The impact of mixed land use on residential property values",
+   "url": "https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9787.2012.00776.x",
+   "clave": "the impact of mixed land use on residential property values"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 8,
+   "titulo": "Predicting home sale prices: A review of existing methods and illustration of data stream methods for improved performance",
+   "url": "https://wires.onlinelibrary.wiley.com/doi/10.1002/widm.1435",
+   "clave": "predicting home sale prices a review of existing methods and illustration of data stream methods for improved performance"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 9,
+   "titulo": "On the Use of Spline Smoothing in Estimating Hedonic Housing Price Models: Empirical Evidence Using Hong Kong Data",
+   "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1080-8620.2004.00100.x",
+   "clave": "on the use of spline smoothing in estimating hedonic housing price models empirical evidence using hong kong data"
+  },
+  {
+   "busqueda": "B19",
+   "pos": 10,
+   "titulo": "Calibration and evaluation of Quigley's hybrid housing price model in Microsoft Excel",
+   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6483207/",
+   "clave": "calibration and evaluation of quigley s hybrid housing price model in microsoft excel"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 1,
+   "titulo": "Paul Anglin (perfil de autor RePEc)",
+   "url": "https://ideas.repec.org/f/c/pan503.html",
+   "clave": "paul anglin"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 2,
+   "titulo": "Hedonic pricing models and residual house price volatility",
+   "url": "https://ideas.repec.org/a/spr/lsprsc/v12y2019i2d10.1007_s12076-019-00232-2.html",
+   "clave": "hedonic pricing models and residual house price volatility"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 3,
+   "titulo": "Real estate appraisals, hedonic models and the measurement of house price dispersion",
+   "url": "https://ideas.repec.org/a/eei/journl/v56y2013i1p61-73.html",
+   "clave": "real estate appraisals hedonic models and the measurement of house price dispersion"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 4,
+   "titulo": "Additive Hedonic Regression Models with Spatial Scaling Factors: An Application for Rents in Vienna",
+   "url": "https://ideas.repec.org/p/inn/wpaper/2008-17.html",
+   "clave": "additive hedonic regression models with spatial scaling factors an application for rents in vienna"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 5,
+   "titulo": "The impact of hazardous industrial facilities on housing prices: A comparison of parametric and semiparametric hedonic price models",
+   "url": "https://ideas.repec.org/a/eee/regeco/v49y2014icp93-107.html",
+   "clave": "the impact of hazardous industrial facilities on housing prices a comparison of parametric and semiparametric hedonic price models"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 6,
+   "titulo": "Location, Location, Location: Extracting Location Value from House Prices",
+   "url": "https://ideas.repec.org/p/diw/diwwpp/dp1216.html",
+   "clave": "location location location extracting location value from house prices"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 7,
+   "titulo": "Estimating Hedonic Models: Implications of the Theory",
+   "url": "https://ideas.repec.org/p/nbr/nberte/0271.html",
+   "clave": "estimating hedonic models implications of the theory"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 8,
+   "titulo": "Property Value Models",
+   "url": "https://ideas.repec.org/h/eee/envchp/2-16.html",
+   "clave": "property value models"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 9,
+   "titulo": "The Role of Spatial and Temporal Structure for Residential Rent Predictions",
+   "url": "https://ideas.repec.org/p/usg/sfwpfi/201523.html",
+   "clave": "the role of spatial and temporal structure for residential rent predictions"
+  },
+  {
+   "busqueda": "B20",
+   "pos": 10,
+   "titulo": "Land value appraisal using statistical methods",
+   "url": "https://ideas.repec.org/p/zbw/forlwp/072019.html",
+   "clave": "land value appraisal using statistical methods"
+  }
+ ]
+}
