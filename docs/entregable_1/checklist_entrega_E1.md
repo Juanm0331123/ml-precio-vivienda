@@ -7,25 +7,25 @@
 
 | Archivo | Tarjeta | Estado |
 |---|---|---|
-| `docs/entregable_1/Propuesta_ML_Precio_Vivienda.pdf` (y `.pptx`), exportados de Canva | T13 | [ ] versión final integrada (sáb 10:00 a. m.) |
+| `docs/entregable_1/Propuesta_ML_Precio_Vivienda.pdf` (y `.pptx`), exportados de Canva | T13 | [x] versión final en main (PR #4) |
 | `docs/entregable_1/Revision_Literatura.pdf`: protocolo, PRISMA, matriz de 26 estudios y síntesis | T09 · T10 | [x] en main |
 | `docs/entregable_1/registro_busquedas.xlsx` y `docs/entregable_1/matriz_literatura.xlsx` | T09 · T10 | [x] en main |
 | `docs/entregable_1/Descripcion_Dataset.pdf` (8 páginas) | T05–T08 | [x] en main |
 | `notebooks/01_procedencia_y_calidad.html`, `notebooks/02_eda.html` y `notebooks/03_piloto_viabilidad.html` | T05–T07 · T12 | [x] en esta rama |
-| Enlace al repositorio con la etiqueta `e1-propuesta` | T15 | [ ] sáb, antes de subir |
-| `Reporte_Gestion_E1.pdf` (si la plataforma lo pide en esta entrega) | T15 | [ ] borrador listo; versión final el sáb |
+| Enlace al repositorio con la etiqueta `e1-propuesta` | T15 | [x] etiqueta creada |
+| `Reporte_Gestion_E1.pdf` (si la plataforma lo pide en esta entrega) | T15 | [x] versión final |
 
 ## 2. Reporte de gestión (20 % de la nota individual)
 
 Se arma el sábado 7 con el estado real del tablero y del repositorio:
 
-- [ ] Captura del tablero completo de Trello (todas las listas).
-- [ ] Tarjetas por integrante (filtro por miembro o por etiqueta de rol) con su estado.
-- [ ] Tabla de tarjetas planeadas vs completadas del Entregable 1, con fecha de cierre.
-- [ ] Bitácora de check-ins: comentarios de la tarjeta T03.
-- [ ] Pull Requests fusionados en GitHub, con autor, revisor y tarjeta asociada.
-- [ ] Historial de `main` (`git log --oneline`): un commit por tarjeta gracias a *Squash and merge*.
-- [ ] Exportar todo a `docs/entregable_1/Reporte_Gestion_E1.pdf`.
+- [x] Captura del tablero completo de Trello (todas las listas).
+- [x] Tarjetas por integrante (filtro por miembro o por etiqueta de rol) con su estado.
+- [x] Tabla de tarjetas planeadas vs completadas del Entregable 1, con fecha de cierre.
+- [x] Bitácora de check-ins: comentarios de la tarjeta T03.
+- [x] Pull Requests fusionados en GitHub, con autor, revisor y tarjeta asociada.
+- [x] Historial de `main` (`git log --oneline`): un commit por tarjeta gracias a *Squash and merge*.
+- [x] Exportar todo a `docs/entregable_1/Reporte_Gestion_E1.pdf`.
 
 ## 3. Coevaluación (10 % de la nota individual)
 
@@ -41,20 +41,21 @@ Se arma el sábado 7 con el estado real del tablero y del repositorio:
 
 ## 5. Cierre en el repositorio
 
-- [ ] Todos los PR del Entregable 1 fusionados con *Squash and merge*.
-- [ ] Etiqueta de la versión entregada:
+- [x] Todos los PR del Entregable 1 fusionados con *Squash and merge*.
+- [x] Etiqueta de la versión entregada:
   ```bash
   git checkout main && git pull
   git tag e1-propuesta
   git push origin e1-propuesta
   ```
-- [ ] Tarjetas del Entregable 1 en **Hecho** y el hito marcado como completo.
+- [x] Tarjetas del Entregable 1 en **Hecho** y el hito marcado como completo.
 
 ## 6. Agenda del sábado 7 de noviembre
 
 | Hora | Actividad | Tarjeta |
 |---|---|---|
-| 10:00 a. m. | Versión final de las diapositivas | T13 |
+| 8:00 a. m. | Exposición en clase | T13 · T14 |
+| 10:00 a. m. | Versión final de las diapositivas (ya cerrada) | T13 |
 | 11:00 a. m. | Ensayo cronometrado 1 (meta ≤ 14:30) | T14 |
 | 12:00 m. | Ajustes y ensayo cronometrado 2 | T14 |
 | 3:00 p. m. | PDF finales, reporte de gestión y coevaluación | T15 |
