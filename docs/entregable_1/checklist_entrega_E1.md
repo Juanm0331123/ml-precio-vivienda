@@ -7,13 +7,13 @@
 
 | Archivo | Tarjeta | Estado |
 |---|---|---|
-| `Propuesta_ML_Precio_Vivienda.pdf` (y `.pptx`) | T13 | [ ] versión final integrada |
-| `Revision_Literatura.pdf`: protocolo, PRISMA, tabla de estudios y síntesis | T09 · T10 | [ ] |
-| `registro_busquedas.xlsx` y matriz de literatura | T09 · T10 | [ ] |
-| `Descripcion_Dataset.pdf` | T05–T08 | [ ] |
-| Notebooks comentados (`01_procedencia_y_calidad`, `02_eda`, `03_piloto_viabilidad`) en HTML o ZIP | T05–T07 · T12 | [ ] |
-| Enlace al repositorio con la etiqueta `e1-propuesta` | T15 | [ ] |
-| `Reporte_Gestion_E1.pdf` (si la plataforma lo pide en esta entrega) | T15 | [ ] |
+| `docs/entregable_1/Propuesta_ML_Precio_Vivienda.pdf` (y `.pptx`), exportados de Canva | T13 | [ ] versión final integrada (sáb 10:00 a. m.) |
+| `docs/entregable_1/Revision_Literatura.pdf`: protocolo, PRISMA, matriz de 26 estudios y síntesis | T09 · T10 | [x] en main |
+| `docs/entregable_1/registro_busquedas.xlsx` y `docs/entregable_1/matriz_literatura.xlsx` | T09 · T10 | [x] en main |
+| `docs/entregable_1/Descripcion_Dataset.pdf` (8 páginas) | T05–T08 | [x] en main |
+| `notebooks/01_procedencia_y_calidad.html`, `notebooks/02_eda.html` y `notebooks/03_piloto_viabilidad.html` | T05–T07 · T12 | [x] en esta rama |
+| Enlace al repositorio con la etiqueta `e1-propuesta` | T15 | [ ] sáb, antes de subir |
+| `Reporte_Gestion_E1.pdf` (si la plataforma lo pide en esta entrega) | T15 | [ ] borrador listo; versión final el sáb |
 
 ## 2. Reporte de gestión (20 % de la nota individual)
 
