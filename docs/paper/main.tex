@@ -293,11 +293,48 @@ In five of the six models, removing the attribute increases the RMSE slightly, b
 
 \section{Complexity Analysis}
 \label{sec:complexity}
-\pending{theoretical and empirical cost of each model (T23).}
+\subsection{Theoretical Complexity}
+
+Table~\ref{tab:complexity} summarizes the asymptotic cost of training and predicting with each model, where $n$ is the number of training observations, $p$ the number of attributes after preprocessing, $T$ the number of trees and $d$ their depth. In each cross-validation fold $n \approx 349$ and $p$ is between 13 and 17, so even the most expensive models train in under a second on a laptop; the analysis matters because it describes how the cost would grow with a city-scale dataset.
+
+\begin{table}[t]
+\caption{Asymptotic Cost of Training and Prediction}
+\label{tab:complexity}
+\centering
+\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Model & Training & Prediction (one house) \\
+\midrule
+OLS & $O(np^2 + p^3)$ & $O(p)$ \\
+Ridge & $O(np^2 + p^3)$ & $O(p)$ \\
+KNN (brute force) & $O(np)$ (stores the data) & $O(np)$ \\
+SVR (RBF kernel) & $O(n^2p)$ to $O(n^3p)$ & $O(n_{\text{sv}}\,p)$ \\
+Random forest & $O(T\,m\,n \log n)$ & $O(T d)$ \\
+XGBoost & $O(T\,d\,p\,n)$ & $O(T d)$ \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+$n_{\text{sv}}$: number of support vectors; $m$: attributes considered at each split. Hyperparameter search multiplies the training cost by the number of candidate configurations and inner folds.
+\end{table}
+
+The linear models are the cheapest to train and the only ones whose prediction does not depend on $n$ or on the number of trees~\cite{hastie2009}. KNN moves all the cost to prediction, because every query is compared with the whole training set. The SVR solves a quadratic program whose cost grows between quadratically and cubically with $n$~\cite{chang2011}, which makes it the least scalable model. The tree ensembles grow linearly with the number of trees; random forest builds independent trees that can be trained in parallel~\cite{breiman2001}, while boosting builds them sequentially~\cite{chen2016}.
+
+\subsection{Empirical Cost}
+
+\pending{median training and prediction times over repeated runs, model size and accuracy--cost Pareto front (T23).}
 
 \section{Discussion}
 \label{sec:discussion}
-\pending{error analysis and attribute impact with SHAP (T24); limitations: data from 1987 and one city, small sample, attribute of unknown origin.}
+\subsection{Attribute Impact and Error Analysis}
+
+\pending{SHAP values of the best tree ensemble compared with the coefficients of the hedonic model, and residuals by price segment (T24).}
+
+\subsection{Limitations}
+
+The results must be read within four limits. First, the data describe one city in 1987, so the study compares methods on a documented benchmark and does not produce prices that apply to current markets. The methodology, in contrast, is transferable: the same pipeline, validation scheme and attribute-impact analysis can be applied to cadastral appraisals or listings from a Colombian city. Second, with 545 sales the differences between models vary considerably from fold to fold, which is why we report intervals and corrected tests rather than single scores; a larger sample could reveal differences that are not detectable here. Third, attribute impact is predictive, not causal: an attribute that weighs heavily in a prediction may be standing in for unobserved characteristics, such as the age or the exact location of the house, which the dataset does not include. Fourth, one attribute, \texttt{furnishingstatus}, has no documented origin; the ablation shows that it does not change the conclusions, but it is kept as a source of uncertainty.
 
 \section{Conclusions}
 \label{sec:conclusions}

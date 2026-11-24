@@ -17,7 +17,9 @@ Paper de la entrega final, en inglés y en formato IEEE de conferencia (`IEEEtra
 | Abstract, Introduction, Related Work, Dataset, Problem Formulation | T27 | Redactadas |
 | Methodology (diseño, preprocesamientos, modelos, métricas y prueba estadística) | T28 | Redactada. Pendiente: espacios de búsqueda de hiperparámetros (T19–T22) y la regla final de selección de P3 |
 | Experiments and Results: selección de variables y ablación de `furnishingstatus` (H3) | T28 | Redactadas con los resultados de T18 |
-| Experiments and Results: comparación de modelos y evaluación en prueba; Complexity Analysis, Discussion, Conclusions | T28 | Pendientes de T22–T25. En el PDF aparecen marcadas en gris como *Pending* |
+| Complexity Analysis: complejidad teórica (tabla O(·) de los seis modelos) | T28 | Redactada |
+| Discussion: limitaciones | T28 | Redactada |
+| Results: comparación de modelos y evaluación en prueba; costo empírico; SHAP y errores; Conclusions | T28 | Pendientes de T22–T25. En el PDF aparecen marcadas en gris como *Pending* |
 
 El abstract tiene una frase pendiente con los resultados principales; se completa en T28.
 
