@@ -18,17 +18,18 @@ Ejemplo::
     prepro = construir_preprocesamiento("P2", escalar=True)
 """
 
-from typing import List
+from typing import List, Optional
 
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import ColumnTransformer, TransformedTargetRegressor
 from sklearn.feature_selection import SelectKBest, mutual_info_regression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, PowerTransformer, RobustScaler, StandardScaler
 
 from src.config import SEMILLA
+from src.datos import MAPA_AMOBLADO, MAPA_BINARIO
 
 # Grupos de columnas de housing_limpio.csv (nombres reales de T06).
 COLUMNA_AREA = "area"
@@ -46,6 +47,39 @@ COMODIDADES = ["guestroom", "basement", "hotwaterheating", "airconditioning"]
 # Selección de variables de P3 con k fijo en el piloto (T11: k ∈ {8, 10, 12, todas}; el ajuste de k es de T19–T22).
 K_SELECCION_PILOTO = 10
 PERCENTILES_WINSORIZACION = (1, 99)
+
+
+class CodificadorBase(BaseEstimator, TransformerMixin):
+    """Codifica variables binarias (``yes``/``no`` -> 1/0) y ``furnishingstatus`` (a 0/1/2) de forma idempotente.
+
+    Si las columnas ya vienen codificadas como enteros desde ``housing_limpio.csv`` (T06), las conserva
+    intactas. Si llegan en formato crudo (``yes``/``no`` y cadenas de amoblado), aplica los mapeos fijos
+    ``MAPA_BINARIO`` y ``MAPA_AMOBLADO``. Al ser mapeos deterministas por fila, no aprende estadísticos
+    ni introduce fuga de información.
+    """
+
+    def fit(self, X, y=None):
+        self.columnas_entrada_ = list(X.columns)
+        return self
+
+    def transform(self, X):
+        X = X.copy()
+        for col in COLUMNAS_BINARIAS:
+            if col in X.columns and not pd.api.types.is_numeric_dtype(X[col]):
+                mapeado = X[col].map(MAPA_BINARIO)
+                if mapeado.isna().any():
+                    raise ValueError(f"Valores inesperados en columna binaria '{col}'")
+                X[col] = mapeado.astype(int)
+        if COLUMNA_AMOBLADO in X.columns and not pd.api.types.is_numeric_dtype(X[COLUMNA_AMOBLADO]):
+            mapeado = X[COLUMNA_AMOBLADO].map(MAPA_AMOBLADO)
+            if mapeado.isna().any():
+                raise ValueError(f"Valores inesperados en '{COLUMNA_AMOBLADO}'")
+            X[COLUMNA_AMOBLADO] = mapeado.astype(int)
+        return X
+
+    def get_feature_names_out(self, input_features=None):
+        nombres = input_features if input_features is not None else getattr(self, "columnas_entrada_", None)
+        return np.asarray(nombres, dtype=object)
 
 
 class Winsorizador(BaseEstimator, TransformerMixin):
@@ -155,7 +189,7 @@ def _informacion_mutua(X, y):
     return mutual_info_regression(X, y, random_state=SEMILLA)
 
 
-def construir_preprocesamiento(p: str, escalar: bool) -> Pipeline:
+def construir_preprocesamiento(p: str, escalar: bool = True, k: Optional[int] = K_SELECCION_PILOTO) -> Pipeline:
     """Devuelve el preprocesamiento P1, P2 o P3 como ``Pipeline`` (sin el modelo).
 
     P3 incluye, en orden: derivadas -> transformaciones -> selección por información mutua (``sel``).
@@ -169,13 +203,32 @@ def construir_preprocesamiento(p: str, escalar: bool) -> Pipeline:
     """
     if p not in ("P1", "P2", "P3"):
         raise ValueError(f"Preprocesamiento desconocido: {p}")
-    pasos: List = []
+    pasos: List = [("codificar", CodificadorBase())]
     if p == "P3":
         pasos.append(("derivar", DerivadorVariables()))
     pasos.append(("columnas", _transformador_columnas(p, escalar)))
     if p == "P3":
-        pasos.append(("sel", SelectKBest(score_func=_informacion_mutua, k=K_SELECCION_PILOTO)))
+        k_sel = "all" if k is None else k
+        pasos.append(("sel", SelectKBest(score_func=_informacion_mutua, k=k_sel)))
     return Pipeline(pasos)
+
+
+def envolver_objetivo(estimador, p: str):
+    """Envuelve un estimador/pipeline con ``TransformedTargetRegressor`` (log/exp) para P2 y P3.
+
+    En P1 devuelve el estimador sin transformar el objetivo (escala original). En P2 y P3 aplica
+    ``np.log`` al ajustar y ``np.exp`` al predecir, garantizando comparabilidad en la escala original.
+    """
+    if p not in ("P1", "P2", "P3"):
+        raise ValueError(f"Preprocesamiento desconocido: {p}")
+    if p == "P1":
+        return estimador
+    return TransformedTargetRegressor(
+        regressor=estimador,
+        func=np.log,
+        inverse_func=np.exp,
+        check_inverse=False,
+    )
 
 
 def nombres_seleccionados(prepro: Pipeline) -> List[str]:
