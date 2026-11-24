@@ -66,7 +66,33 @@ def fig_correlacion(df):
     return rho
 
 
+def fig_ablacion():
+    """Ablación de furnishingstatus (T18): diferencia de RMSE con su IC 95 % corregido, en CAD de 1987.
+
+    Lee la tabla que deja el notebook 04; no vuelve a entrenar nada.
+    """
+    tabla = pd.read_csv(RAIZ / "reports/tables/t18_ablacion_furnishingstatus.csv")
+    nombres = {"OLS (hedónico)": "OLS (hedonic)", "Ridge": "Ridge", "KNN": "KNN", "SVR (RBF)": "SVR",
+               "Random Forest": "Random forest", "XGBoost": "XGBoost"}
+    tabla = tabla.iloc[::-1]  # OLS arriba
+    delta = tabla["delta_rmse_media"] / FACTOR_KAGGLE
+    inf = tabla["ic95_inf"] / FACTOR_KAGGLE
+    sup = tabla["ic95_sup"] / FACTOR_KAGGLE
+    y = np.arange(len(tabla))
+    fig, eje = plt.subplots(figsize=(3.45, 2.0))
+    eje.axvline(0, color="0.55", linewidth=0.8, linestyle="--")
+    eje.errorbar(delta, y, xerr=[delta - inf, sup - delta], fmt="o", color=AZUL, markersize=4,
+                 elinewidth=1, capsize=2)
+    eje.set_yticks(y, [nombres[n] for n in tabla["modelo_nombre"]])
+    eje.set_xlabel(r"$\Delta$RMSE without $-$ with (CAD, 1987)")
+    eje.tick_params(axis="y", length=0)
+    fig.tight_layout(pad=0.4)
+    fig.savefig(AQUI / "fig_ablation_furnishing.pdf")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     df = entrenamiento()
     fig_precio(df)
     print(fig_correlacion(df).round(2).to_string())
+    fig_ablacion()

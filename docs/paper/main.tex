@@ -207,14 +207,89 @@ Models are trained by minimizing the squared error and evaluated, always on the 
 Because the sample is small, generalization is estimated with repeated cross-validation on the training partition, and the sealed test partition provides a single final estimate. The conclusions are predictive, not causal: an attribute with a large impact on the predictions is not necessarily a cause of the price.
 
 % ---------------------------------------------------------------------------
-% Las secciones siguientes se escriben en T28, cuando esten los resultados de T17-T25.
+% T28: lo que depende de T19-T25 sigue marcado con \pending.
 \section{Methodology}
 \label{sec:method}
-\pending{three preprocessing strategies (T17, T18), six models (T19--T21) and nested cross-validation with statistical tests (T22).}
+
+\subsection{Experimental Design}
+
+The experiment is a factorial comparison of three preprocessing strategies and six regression models, that is, 18 pipelines. All of them are evaluated on the 436 training rows with the same repeated stratified 5-fold cross-validation, repeated three times (15 folds), where the strata are the price quintiles. Because every pipeline sees exactly the same folds, the comparisons between pipelines are paired. The sealed test partition (Section~\ref{sec:data}) is not used in this stage.
+
+Every step that learns from the data (scalers, power transformations, winsorization limits and feature selection) is part of a scikit-learn pipeline~\cite{pedregosa2011} and is fitted only on the training part of each fold. This prevents information from the validation part from leaking into the model. Hyperparameters are tuned in an inner cross-validation loop inside each outer fold. \pending{search spaces and inner loop of each model, T19--T22.}
+
+\subsection{Preprocessing Strategies}
+
+The three strategies are cumulative, so that P1~$\rightarrow$~P2 isolates the effect of transforming the variables and P2~$\rightarrow$~P3 isolates the effect of engineering and selecting them.
+
+\textbf{P1 (base).} The six binary attributes are encoded as 0/1 and \texttt{furnishingstatus} is one-hot encoded with one level dropped, since the order of its levels is not documented. The five numeric attributes are standardized for the models that are sensitive to scale (ridge regression, KNN and SVR) and left unchanged for OLS and the tree ensembles. The target stays on its original scale.
+
+\textbf{P2 (transformations).} P1 plus the logarithm of the price as target, applied through a transformed-target regressor so that predictions are returned, and evaluated, on the original price scale. Lot size, the most skewed predictor, receives a Yeo--Johnson transformation~\cite{yeo2000}, and the small integer counts (bedrooms, bathrooms, stories and garage places) are scaled with the median and the interquartile range, which is less sensitive to extreme values.
+
+\textbf{P3 (engineering and robustness).} P2 plus derived attributes, winsorization of lot size and of the derived attributes at the 1st and 99th percentiles of each training fold, and feature selection inside the fold. The derived attributes are four row-wise formulas that do not use sample statistics: total rooms (bedrooms plus bathrooms), bathrooms per bedroom, the number of amenities (recreation room, finished basement, gas water heating and central air conditioning) and the logarithm of lot size. \pending{final selection rule of P3, which follows the comparison in Section~\ref{sec:selection}.}
+
+\subsection{Models}
+
+Six models from four families are compared, from the most restrictive to the most flexible functional form:
+\begin{itemize}
+  \item \textbf{Linear:} OLS, which is the hedonic baseline, and ridge regression.
+  \item \textbf{Instance-based:} $k$-nearest neighbors (KNN).
+  \item \textbf{Kernel:} support vector regression with a radial basis function kernel (SVR).
+  \item \textbf{Tree ensembles:} random forest~\cite{breiman2001} and gradient boosting with XGBoost~\cite{chen2016}.
+\end{itemize}
+Following the recommendation received on the project proposal, the tree ensembles receive the widest hyperparameter search and are the main candidates for the attribute-impact analysis with SHAP. The final model, however, is chosen by the cross-validated comparison and not in advance. \pending{hyperparameter grids, T19--T21.}
+
+\subsection{Metrics and Statistical Comparison}
+
+Models are compared with RMSE, MAE, MAPE and $R^2$, always computed on the original price scale and reported as mean and standard deviation over the 15 folds. Since the folds of repeated cross-validation share training data, the usual paired $t$-test underestimates the variance of the difference between two models. We therefore use the corrected resampled $t$-test of Nadeau and Bengio~\cite{nadeau2003}, which inflates the variance by the factor $1/J + n_{\text{val}}/n_{\text{train}}$, where $J = 15$ is the number of folds and $n_{\text{val}}/n_{\text{train}} = 1/4$ in 5-fold cross-validation. Differences are considered significant at $\alpha = 0.05$.
 
 \section{Experiments and Results}
 \label{sec:results}
-\pending{cross-validated comparison, ablation of \texttt{furnishingstatus}, and final evaluation on the sealed test partition (T22, T25).}
+
+\subsection{Feature Selection}
+\label{sec:selection}
+
+Before fixing P3, we compared three feature-selection methods, each fitted inside every one of the 15 training folds on all the attributes plus the four derived ones: mutual information with the ten best attributes~\cite{kraskov2004}, Lasso with the penalty chosen by inner cross-validation~\cite{tibshirani1996}, and recursive feature elimination with ridge regression keeping ten attributes~\cite{guyon2002}. Five models were then trained with each selection, and with no selection, on the logarithm of the price.
+
+Table~\ref{tab:selection} shows that selecting attributes does not reduce the error on this dataset. Lasso keeps almost every attribute and is the only method that does not make the error worse; mutual information and recursive elimination, which keep a fixed number of attributes, increase the RMSE by 3--7\% with respect to using all of them. Mutual information, which scores each attribute alone, discards binary attributes with a clear hedonic meaning, such as the preferred neighborhood (selected in 0\% of the folds) and the driveway (7\%). The attributes selected by the three methods in at least 73\% of the folds are the logarithm of lot size, stories, bathrooms, the number of amenities and central air conditioning; the finished basement was never selected, since its information is already contained in the number of amenities.
+
+\begin{table}[t]
+\caption{Cross-Validated RMSE by Feature-Selection Method (CAD, 1987)}
+\label{tab:selection}
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & All & Lasso & MI & RFE \\
+\midrule
+OLS (hedonic) & 15,481 & 15,481 & 16,213 & 16,172 \\
+Ridge & 15,451 & 15,446 & 16,205 & 16,139 \\
+SVR & 17,443 & 17,537 & 18,689 & 18,175 \\
+Random forest & 16,253 & 16,282 & 16,857 & 16,801 \\
+XGBoost & 15,757 & 15,866 & 16,634 & 16,345 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+Mean over 15 folds. MI: mutual information ($k=10$); RFE: recursive feature elimination with ridge regression ($k=10$).
+\end{table}
+
+\subsection{Ablation of \texttt{furnishingstatus} (H3)}
+
+To test H3, each of the six models was trained with and without \texttt{furnishingstatus} on the same 15 folds, with the logarithm of the price as target and no feature selection. Fig.~\ref{fig:ablation} reports the paired difference $\Delta\text{RMSE} = \text{RMSE}_{\text{without}} - \text{RMSE}_{\text{with}}$ with its 95\% confidence interval under the corrected $t$-test.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_ablation_furnishing.pdf}
+\caption{Change in cross-validated RMSE when \texttt{furnishingstatus} is removed, with corrected 95\% confidence intervals (Nadeau--Bengio, 15 folds). Positive values mean that the attribute lowers the error.}
+\label{fig:ablation}
+\end{figure}
+
+In five of the six models, removing the attribute increases the RMSE slightly, between 99 CAD for OLS and 266 CAD for random forest, that is, at most 1.6\%. The SVR is the exception, with a change of $-42$ CAD. None of the differences is statistically significant (all $p \ge 0.14$) and every confidence interval contains zero. These results are consistent with H3: the attribute added in the public version does not significantly improve prediction once the eleven original attributes are included. Because the effect is small but mostly in the same direction, we keep the attribute in the main comparison and report this ablation as a robustness check.
+
+\subsection{Model Comparison}
+
+\pending{cross-validated comparison of the 18 pipelines, answer to H1 and H2, and final evaluation of the chosen model and the hedonic baseline on the sealed test partition (T22, T25).}
 
 \section{Complexity Analysis}
 \label{sec:complexity}
