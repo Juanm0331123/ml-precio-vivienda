@@ -1,0 +1,7 @@
+preprocesamiento,modelo,modelo_nombre,mejores_hiperparametros,n_neighbors,p,weights,C,epsilon,gamma
+P1,M3,KNN,"{""n_neighbors"": 11, ""p"": 2, ""weights"": ""distance""}",11.0,2.0,distance,,,
+P2,M3,KNN,"{""n_neighbors"": 5, ""p"": 2, ""weights"": ""uniform""}",5.0,2.0,uniform,,,
+P3,M3,KNN,"{""n_neighbors"": 7, ""p"": 1, ""weights"": ""uniform""}",7.0,1.0,uniform,,,
+P1,M4,SVR (RBF),"{""C"": 500.0, ""epsilon"": 0.2, ""gamma"": 0.001}",,,,500.0,0.2,0.001
+P2,M4,SVR (RBF),"{""C"": 100.0, ""epsilon"": 0.2, ""gamma"": 0.001}",,,,100.0,0.2,0.001
+P3,M4,SVR (RBF),"{""C"": 100.0, ""epsilon"": 0.2, ""gamma"": 0.001}",,,,100.0,0.2,0.001
