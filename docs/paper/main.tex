@@ -213,7 +213,14 @@ Because the sample is small, generalization is estimated with repeated cross-val
 
 \subsection{Experimental Design}
 
-The experiment is a factorial comparison of three preprocessing strategies and six regression models, that is, 18 pipelines. All of them are evaluated on the 436 training rows with the same repeated stratified 5-fold cross-validation, repeated three times (15 folds), where the strata are the price quintiles. Because every pipeline sees exactly the same folds, the comparisons between pipelines are paired. The sealed test partition (Section~\ref{sec:data}) is not used in this stage.
+The experiment is a factorial comparison of three preprocessing strategies and six regression models, that is, 18 pipelines. All of them are evaluated on the 436 training rows with the same repeated stratified 5-fold cross-validation, repeated three times (15 folds), where the strata are the price quintiles. Because every pipeline sees exactly the same folds, the comparisons between pipelines are paired. The sealed test partition (Section~\ref{sec:data}) is not used in this stage. Fig.~\ref{fig:pipeline} summarizes the whole experiment.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_pipeline.pdf}
+\caption{Experimental pipeline. The sealed test set is separated before any modeling and is used only once, in the final evaluation. Every step inside the dashed box is refitted on the training part of each cross-validation fold.}
+\label{fig:pipeline}
+\end{figure*}
 
 Every step that learns from the data (scalers, power transformations, winsorization limits and feature selection) is part of a scikit-learn pipeline~\cite{pedregosa2011} and is fitted only on the training part of each fold. This prevents information from the validation part from leaking into the model. Hyperparameters are tuned in an inner cross-validation loop inside each outer fold. \pending{search spaces and inner loop of each model, T19--T22.}
 
