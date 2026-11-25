@@ -7,6 +7,8 @@
 
 Las diapositivas que dependen de resultados todavía no están listas (T22 a T26). Aquí aparecen marcadas como **Pendiente**, con lo que tienen que mostrar y la tarjeta de donde sale cada cifra. El resto ya tiene su guion completo.
 
+La numeración es la del deck en Canva (16 diapositivas más 3 de respaldo). Las diapositivas 8 a 13 ya tienen plantilla en Canva: un recuadro "Figura pendiente", lo que debe mostrar y el tiempo del guion en las notas del orador.
+
 ## 1. Reparto y tiempos
 
 | Bloque | Diapositivas | Presenta | Tiempo | Duración |
@@ -15,10 +17,10 @@ Las diapositivas que dependen de resultados todavía no están listas (T22 a T26
 | Datos y preprocesamiento | 4–6 | Mauricio | 1:40–5:30 | 3:50 |
 | Modelos, resultados, complejidad e interpretabilidad | 7–12 | Brandon | 5:30–13:15 | 7:45 |
 | Demo en vivo | 13 | Mauricio | 13:15–16:45 | 3:30 |
-| Discusión, reproducibilidad y cierre | 14–16 | Juan Miguel | 16:45–19:30 | 2:45 |
+| Discusión, reproducibilidad y cierre | 14–15 | Juan Miguel | 16:45–19:30 | 2:45 |
 | **Total** | | | | **19:30** |
 
-Las diapositivas 17 (referencias) y 18 a 20 (respaldo para preguntas) no se presentan.
+Las diapositivas 16 (referencias) y 17 a 19 (respaldo para preguntas) no se presentan.
 
 ## 2. Secuencia
 
@@ -37,13 +39,12 @@ Las diapositivas 17 (referencias) y 18 a 20 (respaldo para preguntas) no se pres
 | 11 | **Pendiente.** Qué atributos pesan en la predicción | SHAP del mejor modelo de árboles junto a los coeficientes del hedónico | T24 | Brandon | 10:45–12:15 |
 | 12 | **Pendiente.** Una sola evaluación en la prueba sellada | RMSE, MAE y R² en prueba con IC por *bootstrap*; real vs predicho | T25 | Brandon | 12:15–13:15 |
 | 13 | **Pendiente.** Demo: el precio de una vivienda, explicado | App en vivo con una vivienda típica y una cara; plan B en video | T26 | Mauricio | 13:15–16:45 |
-| 14 | Lo que estos resultados permiten decir | Alcance y limitaciones (1987, una ciudad, n = 545, variable de origen desconocido) | T28 | Juan Miguel | 16:45–17:45 |
-| 15 | Todo se reproduce con un comando | `python reproducir.py`, pruebas automáticas, Trello y GitHub | T29, T31 | Juan Miguel | 17:45–18:30 |
-| 16 | **Pendiente (cifras).** Conclusiones | Tres mensajes de cierre con las cifras finales | T28 | Juan Miguel | 18:30–19:30 |
-| 17 | Referencias | Anexo; no se presenta | T27, T28 | — | — |
-| 18 | Respaldo: procedencia del dataset | Tabla de variables renombradas | T05 | — | — |
-| 19 | Respaldo: hiperparámetros | Espacios de búsqueda de cada modelo | T19–T21 | — | — |
-| 20 | Respaldo: ablación por pliegue | Diagramas de caja de ΔRMSE | T18 | — | — |
+| 14 | Hasta dónde llegan los resultados | Alcance y limitaciones (1987, una ciudad, n = 545, variable de origen desconocido) y, en el mismo cuadro, todo se reproduce con `python reproducir.py`, pruebas automáticas, Trello y GitHub | T28, T29, T31 | Juan Miguel | 16:45–18:30 |
+| 15 | **Pendiente (cifras).** Conclusiones | Tres mensajes de cierre con las cifras finales | T28 | Juan Miguel | 18:30–19:30 |
+| 16 | Referencias | Anexo; no se presenta | T27, T28 | — | — |
+| 17 | Respaldo: procedencia del dataset | Variables renombradas por Kaggle y su significado real | T05 | — | — |
+| 18 | Respaldo: hiperparámetros | Espacios de búsqueda de cada modelo (`reports/figures/deck_respaldo_hiperparametros.png`) | T19–T21 | — | — |
+| 19 | Respaldo: ablación de amoblado | ΔRMSE de cada modelo con su IC 95 % corregido | T18 | — | — |
 
 ## 3. Guion por diapositiva
 
@@ -106,17 +107,15 @@ Se escriben cuando estén los resultados. Lo que tiene que quedar claro en cada 
 
 Para la demo: una vivienda típica (3 habitaciones, 1 baño, 2 pisos, lote de unos 4.600 pies²) y una cara (barrio preferido, aire acondicionado, 2 baños). El contraste muestra cómo cambian los aportes de cada atributo.
 
-### Diapositiva 14 · Juan Miguel · 16:45–17:45
+### Diapositiva 14 · Juan Miguel · 16:45–18:30
 
 Es importante decir hasta dónde llegan estos resultados. Los datos son de una sola ciudad y de 1987, así que comparamos métodos, no producimos precios para hoy. Con 545 ventas, las diferencias entre modelos tienen mucha variabilidad, y por eso reportamos intervalos y pruebas corregidas en lugar de un solo número. La importancia de un atributo es predictiva, no causal. Y una de las variables, el amoblado, no tiene origen documentado; por eso hicimos la ablación.
 
 Lo que sí es transferible es la metodología: el mismo pipeline, la misma validación y el mismo análisis de impacto se pueden aplicar a avalúos catastrales u ofertas inmobiliarias de Cali.
 
-### Diapositiva 15 · Juan Miguel · 17:45–18:30
-
 Todo el experimento se reproduce con un solo comando, `python reproducir.py`, que corre las pruebas y los notebooks en orden. Cada cambio entró por un Pull Request revisado por otro integrante, enlazado a su tarjeta de Trello, y las pruebas corren solas en GitHub. El repositorio y el tablero son públicos.
 
-### Diapositiva 16 · Juan Miguel · 18:30–19:30
+### Diapositiva 15 · Juan Miguel · 18:30–19:30
 
 **Pendiente de cifras.** Estructura del cierre, en tres mensajes:
 
