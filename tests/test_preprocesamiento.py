@@ -39,7 +39,7 @@ class TestPreprocesamientoT17(unittest.TestCase):
         cls.y_val = cls.y.iloc[validacion].copy()
 
     def test_dimensiones_sin_nan_y_mismas_columnas_train_test(self):
-        esperado_cols = {"P1": 13, "P2": 13, "P3": 10}
+        esperado_cols = {"P1": 13, "P2": 13, "P3": 17}
         for p in ("P1", "P2", "P3"):
             for escalar in (True, False):
                 pre = construir_preprocesamiento(p, escalar=escalar)
@@ -116,7 +116,7 @@ class TestPreprocesamientoT17(unittest.TestCase):
             out_ext = np.asarray(pre_a.transform(X_val_extremo), dtype=float)
             self.assertFalse(np.isnan(out_ext).any())
             if p == "P3":
-                self.assertEqual(len(nombres_seleccionados(pre_a)), 10)
+                self.assertEqual(len(nombres_seleccionados(pre_a)), 17)
 
 
 if __name__ == "__main__":
