@@ -1,7 +1,7 @@
 """Figuras de las diapositivas de respaldo de la presentación final (T30).
 
 Desde la raíz del repositorio: python docs/entrega_final/figuras_presentacion.py
-Salida: reports/figures/deck_respaldo_hiperparametros.png (los espacios de búsqueda de T19 a T21).
+Salidas: reports/figures/deck_respaldo_variables.png (variables renombradas, T05) y deck_respaldo_hiperparametros.png (espacios de búsqueda de T19 a T21).
 """
 from pathlib import Path
 
@@ -21,6 +21,53 @@ FILAS = [
     ("Random Forest", "árboles 100–500 · profundidad 6–14 o libre · mínimos por hoja y división · variables por división", "aleatoria, 30 de 900"),
     ("XGBoost", "árboles 100–500 · profundidad 3–6 · tasa 0,01–0,15 · submuestreo · regularización L1 y L2", "aleatoria, 30 de 25 920"),
 ]
+
+
+# Lo que verificó T05 al comparar Kaggle con el archivo original de Anglin y Gençay (1996)
+VARIABLES = [
+    ("price", "precio de venta en dólares canadienses de 1987, multiplicado por 70"),
+    ("area", "tamaño del lote en pies², no el área construida"),
+    ("bathrooms · stories", "baños completos · pisos sin contar el sótano"),
+    ("mainroad", "tiene entrada vehicular (driveway), no que dé a una vía principal"),
+    ("guestroom", "tiene sala de recreación"),
+    ("basement", "tiene sótano completo terminado"),
+    ("hotwaterheating", "usa gas para calentar el agua"),
+    ("airconditioning · parking", "aire acondicionado central · plazas de garaje"),
+    ("prefarea", "está en el barrio preferido de la ciudad"),
+    ("furnishingstatus", "no existe en el original: la agregó Kaggle sin documentar cómo"),
+]
+
+
+def _tabla(filas, encabezado, anchos, salida):
+    """Tabla con el estilo del deck (encabezado azul oscuro y filas alternas)."""
+    fig, eje = plt.subplots(figsize=(11.6, 4.55), dpi=200)
+    eje.axis("off")
+    tabla = eje.table(cellText=[list(f) for f in filas], colLabels=encabezado, cellLoc="left", colLoc="left",
+                      colWidths=anchos, loc="center")
+    tabla.auto_set_font_size(False)
+    tabla.set_fontsize(10.5)
+    tabla.scale(1, 1.9 if len(filas) < 10 else 1.62)
+    for (fila, col), celda in tabla.get_celld().items():
+        celda.set_edgecolor("#E1E5EC")
+        celda.PAD = 0.03
+        if fila == 0:
+            celda.set_facecolor(AZUL_MARINO)
+            celda.get_text().set_color("white")
+            celda.get_text().set_fontweight("bold")
+        else:
+            celda.set_facecolor("#FFFFFF" if fila % 2 else "#F5F6F9")
+            celda.get_text().set_color("#142B45")
+            if col == 0:
+                celda.get_text().set_fontweight("bold")
+    fig.tight_layout(pad=0.2)
+    fig.savefig(salida, facecolor="white", bbox_inches="tight", pad_inches=0.05)
+    plt.close(fig)
+    return salida
+
+
+def tabla_variables():
+    return _tabla(VARIABLES, ["Nombre en Kaggle", "Qué mide en realidad (archivo original)"], [0.25, 0.75],
+                  RAIZ / "reports/figures/deck_respaldo_variables.png")
 
 
 def tabla_hiperparametros():
@@ -52,4 +99,5 @@ def tabla_hiperparametros():
 
 
 if __name__ == "__main__":
+    print(tabla_variables())
     print(tabla_hiperparametros())
