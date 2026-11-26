@@ -9,21 +9,31 @@ Ejecuta:
 6. Generación de figuras en reports/figures/.
 """
 
-import os
-os.environ["MPLCONFIGDIR"] = r"D:\venvs\tmp"
 import json
+import os
+import sys
+import tempfile
+from pathlib import Path
+
+# Configurar directorio temporal portátil para matplotlib
+os.environ.setdefault("MPLCONFIGDIR", tempfile.gettempdir())
+
+# Asegurar que la raíz del repositorio esté en el path para ejecución directa
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
-from src.evaluacion import cargar_entrenamiento, crear_pliegues, FACTOR_KAGGLE
+from src.config import DIR_FIGURAS, DIR_TABLAS
+from src.evaluacion import FACTOR_KAGGLE, cargar_entrenamiento, crear_pliegues
 from src.modelos_no_lineales import (
-    optimizar_hiperparametros,
     evaluar_experimento_cv5x3,
     experimento_impacto_escalado,
+    optimizar_hiperparametros,
 )
 
 # Estilo gráfico consistente con el paper y entregables
@@ -43,11 +53,15 @@ COLORES = {
 }
 
 
-def main():
+def ejecutar_experimento_t20():
+    """Ejecuta todos los experimentos de T20 y genera las tablas y figuras correspondientes."""
+    DIR_TABLAS.mkdir(parents=True, exist_ok=True)
+    DIR_FIGURAS.mkdir(parents=True, exist_ok=True)
+
     print("=== Paso 1: Carga aislada del conjunto de entrenamiento (n=436) ===")
     X, y, evidencia = cargar_entrenamiento()
     print(f"Cargadas {len(X)} observaciones de entrenamiento. Huella partición: {evidencia['sha256_particion'][:12]}...")
-    
+
     pliegues = crear_pliegues(y)
     print(f"Generados {len(pliegues)} pliegues pareados (CV 5×3).")
 
@@ -67,9 +81,9 @@ def main():
             print(f"    -> Mejores parámetros: {params}")
 
     df_busqueda_completa = pd.concat(dfs_busqueda, ignore_index=True)
-    
+
     # Exportar cuadrícula de búsqueda
-    ruta_busqueda = r"D:\ml-precio-vivienda\reports\tables\t20_busqueda_hiperparametros.csv"
+    ruta_busqueda = DIR_TABLAS / "t20_busqueda_hiperparametros.csv"
     df_busqueda_completa.to_csv(ruta_busqueda, index=False)
     print(f"Guardada cuadrícula de búsqueda en {ruta_busqueda}")
 
@@ -85,15 +99,18 @@ def main():
         fila.update(params)
         filas_mejores.append(fila)
     df_mejores = pd.DataFrame(filas_mejores)
-    ruta_mejores = r"D:\ml-precio-vivienda\reports\tables\t20_mejores_hiperparametros.csv"
+    ruta_mejores = DIR_TABLAS / "t20_mejores_hiperparametros.csv"
     df_mejores.to_csv(ruta_mejores, index=False)
     print(f"Guardados mejores hiperparámetros en {ruta_mejores}")
 
     print("\n=== Paso 3: Evaluación pareada en CV repetida 5×3 (T12) ===")
     df_resumen, df_pliegues = evaluar_experimento_cv5x3(X, y, pliegues, mejores_params)
-    
-    ruta_resumen = r"D:\ml-precio-vivienda\reports\tables\t20_resultados.csv"
-    ruta_pliegues = r"D:\ml-precio-vivienda\reports\tables\t20_pliegues.csv"
+
+    # Nota explícita requerida por la metodología (estimación de desarrollo interna vs CV anidada final)
+    df_resumen["nota"] = "Resultado de desarrollo (CV interna): optimista; no es estimación final (T22) ni test sellado (T25)"
+
+    ruta_resumen = DIR_TABLAS / "t20_resultados.csv"
+    ruta_pliegues = DIR_TABLAS / "t20_pliegues.csv"
     df_resumen.to_csv(ruta_resumen, index=False)
     df_pliegues.to_csv(ruta_pliegues, index=False)
     print(f"Guardados resultados agregados en {ruta_resumen}")
@@ -104,18 +121,17 @@ def main():
 
     print("\n=== Paso 4: Experimento de ablación - Justificación del escalado (P1) ===")
     df_escalado = experimento_impacto_escalado(X, y, pliegues)
-    ruta_escalado = r"D:\ml-precio-vivienda\reports\tables\t20_impacto_escalado.csv"
+    ruta_escalado = DIR_TABLAS / "t20_impacto_escalado.csv"
     df_escalado.to_csv(ruta_escalado, index=False)
     print(f"Guardado impacto de escalado en {ruta_escalado}")
     print(df_escalado.to_string(index=False))
 
     print("\n=== Paso 5: Generación de figuras ===")
-    os.makedirs(r"D:\ml-precio-vivienda\reports\figures", exist_ok=True)
 
     # 1. Figura: Impacto de k y ponderación de pesos en KNN (bajo P2)
     df_knn_p2 = df_busqueda_completa[(df_busqueda_completa["modelo"] == "M3") & (df_busqueda_completa["preprocesamiento"] == "P2")].copy()
     df_knn_p2["rmse_cad"] = -df_knn_p2["mean_test_score"] / FACTOR_KAGGLE
-    
+
     fig, ax = plt.subplots(figsize=(7, 4.5))
     for weights_val, marker, color in [("uniform", "o", "#2B5C8F"), ("distance", "s", "#D95F02")]:
         sub = df_knn_p2[(df_knn_p2["param_weights"] == weights_val) & (df_knn_p2["param_p"] == 2)].sort_values("param_n_neighbors")
@@ -133,20 +149,19 @@ def main():
     ax.legend(frameon=True, facecolor="white", edgecolor="#cccccc")
     ax.grid(True, linestyle="--", alpha=0.6)
     plt.tight_layout()
-    ruta_fig1 = r"D:\ml-precio-vivienda\reports\figures\fig_t20_knn_k_weights.png"
+    ruta_fig1 = DIR_FIGURAS / "fig_t20_knn_k_weights.png"
     plt.savefig(ruta_fig1)
     plt.close()
     print(f"Guardada figura 1 en {ruta_fig1}")
 
     # 2. Figura: Mapa de calor de hiperparámetros SVR (C vs gamma) bajo P2
     df_svr_p2 = df_busqueda_completa[(df_busqueda_completa["modelo"] == "M4") & (df_busqueda_completa["preprocesamiento"] == "P2")].copy()
-    # Tomamos el mejor epsilon
     mejor_eps = mejores_params[("P2", "M4")]["epsilon"]
     sub_svr = df_svr_p2[df_svr_p2["param_epsilon"] == mejor_eps].copy()
     sub_svr["rmse_cad"] = -sub_svr["mean_test_score"] / FACTOR_KAGGLE
     pivot_svr = sub_svr.pivot(index="param_C", columns="param_gamma", values="rmse_cad")
 
-    fig, ax = plt.subplots(figsize=(7, 5))
+    fig, ax = plt.subplots(figsize=(7.5, 5))
     sns.heatmap(
         pivot_svr,
         annot=True,
@@ -159,7 +174,7 @@ def main():
     ax.set_xlabel("Parámetro $\\gamma$", fontsize=10)
     ax.set_ylabel("Parámetro de regularización $C$", fontsize=10)
     plt.tight_layout()
-    ruta_fig2 = r"D:\ml-precio-vivienda\reports\figures\fig_t20_svr_heatmap.png"
+    ruta_fig2 = DIR_FIGURAS / "fig_t20_svr_heatmap.png"
     plt.savefig(ruta_fig2)
     plt.close()
     print(f"Guardada figura 2 en {ruta_fig2}")
@@ -188,12 +203,12 @@ def main():
     ax.legend(frameon=True, facecolor="white", edgecolor="#cccccc")
     ax.grid(True, linestyle="--", alpha=0.5, axis="y")
     plt.tight_layout()
-    ruta_fig3 = r"D:\ml-precio-vivienda\reports\figures\fig_t20_comparacion_preprocesamientos.png"
+    ruta_fig3 = DIR_FIGURAS / "fig_t20_comparacion_preprocesamientos.png"
     plt.savefig(ruta_fig3)
     plt.close()
     print(f"Guardada figura 3 en {ruta_fig3}")
 
-    # 4. Figura: Impacto dramático del escalado de variables (P1)
+    # 4. Figura: Impacto del escalado de variables (P1)
     fig, ax = plt.subplots(figsize=(6.5, 4.2))
     df_esc_plot = df_escalado.pivot(index="nombre", columns="escalado_predictoras", values="rmse_cad_media")
     df_esc_err = df_escalado.pivot(index="nombre", columns="escalado_predictoras", values="rmse_cad_std")
@@ -211,12 +226,23 @@ def main():
     ax.legend(frameon=True, facecolor="white", edgecolor="#cccccc")
     ax.grid(True, linestyle="--", alpha=0.5, axis="y")
     plt.tight_layout()
-    ruta_fig4 = r"D:\ml-precio-vivienda\reports\figures\fig_t20_impacto_escalado.png"
+    ruta_fig4 = DIR_FIGURAS / "fig_t20_impacto_escalado.png"
     plt.savefig(ruta_fig4)
     plt.close()
     print(f"Guardada figura 4 en {ruta_fig4}")
 
     print("\n¡Experimento T20 completado con éxito!")
+    return {
+        "busqueda": df_busqueda_completa,
+        "mejores": df_mejores,
+        "resumen": df_resumen,
+        "pliegues": df_pliegues,
+        "escalado": df_escalado,
+    }
+
+
+def main():
+    ejecutar_experimento_t20()
 
 
 if __name__ == "__main__":

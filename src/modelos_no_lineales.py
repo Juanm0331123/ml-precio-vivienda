@@ -46,9 +46,9 @@ REJILLA_KNN: Dict[str, list] = {
 }
 
 REJILLA_SVR: Dict[str, list] = {
-    "C": [0.1, 1.0, 10.0, 50.0, 100.0, 500.0],
-    "gamma": ["scale", "auto", 0.001, 0.01, 0.1],
-    "epsilon": [0.01, 0.05, 0.1, 0.2],
+    "C": [0.1, 1.0, 10.0, 50.0, 100.0, 500.0, 1000.0, 2000.0],
+    "gamma": ["scale", "auto", 0.0001, 0.001, 0.01, 0.1],
+    "epsilon": [0.01, 0.05, 0.1, 0.2, 0.5],
 }
 
 
@@ -150,6 +150,7 @@ def optimizar_hiperparametros(
     prepro_id: str,
     cv_splits: int = 5,
     semilla: int = SEMILLA,
+    n_jobs: int = -1,
 ) -> Tuple[Any, Dict[str, Any], pd.DataFrame]:
     """Ejecuta GridSearchCV sobre el conjunto de ajuste dado y devuelve:
     (mejor_pipeline, mejores_hiperparametros, df_resultados_cv).
@@ -163,7 +164,7 @@ def optimizar_hiperparametros(
         param_grid=grilla,
         scoring="neg_root_mean_squared_error",
         cv=cv,
-        n_jobs=1,
+        n_jobs=n_jobs,
         refit=True,
         return_train_score=True,
     )
