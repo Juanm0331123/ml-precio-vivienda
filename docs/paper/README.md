@@ -15,7 +15,7 @@ Paper de la entrega final, en inglés y en formato IEEE de conferencia (`IEEEtra
 | Sección | Tarjeta | Estado |
 |---|---|---|
 | Abstract, Introduction, Related Work, Dataset, Problem Formulation | T27 | Redactadas |
-| Methodology (diseño, preprocesamientos, modelos, métricas y prueba estadística) | T28 | Redactada. Pendiente: espacios de búsqueda de hiperparámetros (T19–T22) y la regla final de selección de P3 |
+| Methodology (diseño, preprocesamientos, modelos, métricas, prueba estadística, espacios de búsqueda y regla final de P3) | T28 | Redactada. La tabla de espacios de búsqueda se ajusta a la búsqueda final de T22 cuando esté en `main` |
 | Experiments and Results: selección de variables y ablación de `furnishingstatus` (H3) | T28 | Redactadas con los resultados de T18 |
 | Complexity Analysis: complejidad teórica (tabla O(·) de los seis modelos) | T28 | Redactada |
 | Discussion: limitaciones | T28 | Redactada |
