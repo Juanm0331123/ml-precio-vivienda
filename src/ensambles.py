@@ -147,6 +147,7 @@ def optimizar_ensamble(
     n_iter: int = 30,
     cv_splits: int = 5,
     semilla: int = SEMILLA,
+    n_jobs: int = -1,
 ) -> Tuple[Any, Dict[str, Any], pd.DataFrame]:
     """Búsqueda amplia aleatoria (RandomizedSearchCV) con KFold(cv_splits, shuffle=True)."""
     pipeline = crear_pipeline_ensamble(modelo_id, prepro_id)
@@ -160,7 +161,7 @@ def optimizar_ensamble(
         scoring="neg_root_mean_squared_error",
         cv=cv,
         random_state=semilla,
-        n_jobs=1,
+        n_jobs=n_jobs,
         refit=True,
         return_train_score=True,
     )

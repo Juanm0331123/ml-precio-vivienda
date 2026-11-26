@@ -2,6 +2,6 @@ preprocesamiento,modelo,modelo_nombre,mejores_hiperparametros,n_estimators,min_s
 P1,M5,Random Forest,"{""n_estimators"": 200, ""min_samples_split"": 4, ""min_samples_leaf"": 1, ""max_features"": 0.6, ""max_depth"": 14}",200,4.0,1.0,0.6,14,,,,,,
 P2,M5,Random Forest,"{""n_estimators"": 200, ""min_samples_split"": 4, ""min_samples_leaf"": 1, ""max_features"": 0.6, ""max_depth"": 14}",200,4.0,1.0,0.6,14,,,,,,
 P3,M5,Random Forest,"{""n_estimators"": 500, ""min_samples_split"": 4, ""min_samples_leaf"": 2, ""max_features"": 0.8, ""max_depth"": 10}",500,4.0,2.0,0.8,10,,,,,,
-P1,M6,XGBoost,"{""subsample"": 0.7, ""reg_lambda"": 1.0, ""reg_alpha"": 1.0, ""n_estimators"": 200, ""min_child_weight"": 1, ""max_depth"": 5, ""learning_rate"": 0.03, ""colsample_bytree"": 0.8}",200,,,,5,0.7,1.0,1.0,1.0,0.03,0.8
-P2,M6,XGBoost,"{""subsample"": 0.85, ""reg_lambda"": 1.0, ""reg_alpha"": 0.0, ""n_estimators"": 100, ""min_child_weight"": 3, ""max_depth"": 5, ""learning_rate"": 0.05, ""colsample_bytree"": 0.6}",100,,,,5,0.85,1.0,0.0,3.0,0.05,0.6
-P3,M6,XGBoost,"{""subsample"": 0.85, ""reg_lambda"": 3.0, ""reg_alpha"": 0.0, ""n_estimators"": 100, ""min_child_weight"": 3, ""max_depth"": 3, ""learning_rate"": 0.15, ""colsample_bytree"": 0.6}",100,,,,3,0.85,3.0,0.0,3.0,0.15,0.6
+P1,M6,XGBoost,"{""subsample"": 0.85, ""reg_lambda"": 1.0, ""reg_alpha"": 0.0, ""n_estimators"": 100, ""min_child_weight"": 3, ""max_depth"": 5, ""learning_rate"": 0.05, ""colsample_bytree"": 0.6}",100,,,,5,0.85,1.0,0.0,3.0,0.05,0.6
+P2,M6,XGBoost,"{""subsample"": 0.85, ""reg_lambda"": 3.0, ""reg_alpha"": 0.0, ""n_estimators"": 100, ""min_child_weight"": 3, ""max_depth"": 3, ""learning_rate"": 0.15, ""colsample_bytree"": 0.6}",100,,,,3,0.85,3.0,0.0,3.0,0.15,0.6
+P3,M6,XGBoost,"{""subsample"": 0.85, ""reg_lambda"": 1.0, ""reg_alpha"": 0.0, ""n_estimators"": 100, ""min_child_weight"": 3, ""max_depth"": 5, ""learning_rate"": 0.05, ""colsample_bytree"": 0.6}",100,,,,5,0.85,1.0,0.0,3.0,0.05,0.6

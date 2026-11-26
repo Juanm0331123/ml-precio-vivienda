@@ -8,22 +8,33 @@ Ejecuta:
 5. Generación de figuras en reports/figures/.
 """
 
-import os
-os.environ["MPLCONFIGDIR"] = r"D:\venvs\tmp"
 import json
+import os
+import sys
+import tempfile
+from pathlib import Path
+
+# Configurar directorio temporal portátil para matplotlib
+os.environ.setdefault("MPLCONFIGDIR", tempfile.gettempdir())
+
+# Asegurar que la raíz del repositorio esté en el path para ejecución directa
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
-from src.evaluacion import cargar_entrenamiento, crear_pliegues, FACTOR_KAGGLE
+from src.config import DIR_FIGURAS, DIR_TABLAS
+from src.evaluacion import FACTOR_KAGGLE, cargar_entrenamiento, crear_pliegues
 from src.ensambles import (
     crear_pipeline_ensamble,
-    optimizar_ensamble,
     evaluar_ensambles_cv5x3,
     extraer_importancia_caracteristicas,
+    extraer_modelo_base,
+    optimizar_ensamble,
 )
 
 # Estilo gráfico consistente
@@ -33,7 +44,11 @@ plt.rcParams["font.size"] = 10
 plt.rcParams["figure.dpi"] = 200
 
 
-def main():
+def ejecutar_experimento_t21():
+    """Ejecuta todos los experimentos de T21 y genera las tablas y figuras correspondientes."""
+    DIR_TABLAS.mkdir(parents=True, exist_ok=True)
+    DIR_FIGURAS.mkdir(parents=True, exist_ok=True)
+
     print("=== Paso 1: Carga aislada del conjunto de entrenamiento (n=436) ===")
     X, y, evidencia = cargar_entrenamiento()
     print(f"Cargadas {len(X)} filas. Huella: {evidencia['sha256_particion'][:12]}...")
@@ -52,7 +67,7 @@ def main():
     for m_id, m_nombre in modelos:
         for p_id in preprocesamientos:
             print(f"  Optimizando {m_nombre} sobre {p_id}...")
-            best_est, params, df_cv = optimizar_ensamble(X, y, m_id, p_id, n_iter=30)
+            best_est, params, df_cv = optimizar_ensamble(X, y, m_id, p_id, n_iter=30, n_jobs=-1)
             mejores_params[(p_id, m_id)] = params
             mejores_estimadores[(p_id, m_id)] = best_est
             dfs_busqueda.append(df_cv)
@@ -60,7 +75,7 @@ def main():
 
     df_busqueda_completa = pd.concat(dfs_busqueda, ignore_index=True)
 
-    ruta_busqueda = r"D:\ml-precio-vivienda\reports\tables\t21_busqueda_hiperparametros.csv"
+    ruta_busqueda = DIR_TABLAS / "t21_busqueda_hiperparametros.csv"
     df_busqueda_completa.to_csv(ruta_busqueda, index=False)
     print(f"Guardada búsqueda de hiperparámetros en {ruta_busqueda}")
 
@@ -76,15 +91,18 @@ def main():
         fila.update(params)
         filas_mejores.append(fila)
     df_mejores = pd.DataFrame(filas_mejores)
-    ruta_mejores = r"D:\ml-precio-vivienda\reports\tables\t21_mejores_hiperparametros.csv"
+    ruta_mejores = DIR_TABLAS / "t21_mejores_hiperparametros.csv"
     df_mejores.to_csv(ruta_mejores, index=False)
     print(f"Guardados mejores hiperparámetros en {ruta_mejores}")
 
     print("\n=== Paso 3: Evaluación pareada en CV repetida 5×3 (T12) ===")
     df_resumen, df_pliegues = evaluar_ensambles_cv5x3(X, y, pliegues, mejores_params)
 
-    ruta_resumen = r"D:\ml-precio-vivienda\reports\tables\t21_resultados.csv"
-    ruta_pliegues = r"D:\ml-precio-vivienda\reports\tables\t21_pliegues.csv"
+    # Nota explícita metodológica requerida
+    df_resumen["nota"] = "Resultado de desarrollo (CV interna): optimista; no es estimación final (T22) ni test sellado (T25)"
+
+    ruta_resumen = DIR_TABLAS / "t21_resultados.csv"
+    ruta_pliegues = DIR_TABLAS / "t21_pliegues.csv"
     df_resumen.to_csv(ruta_resumen, index=False)
     df_pliegues.to_csv(ruta_pliegues, index=False)
     print(f"Guardados resultados en {ruta_resumen}")
@@ -106,12 +124,11 @@ def main():
     df_imp_xgb["preprocesamiento"] = "P2"
 
     df_importancias = pd.concat([df_imp_rf, df_imp_xgb], ignore_index=True)
-    ruta_imp = r"D:\ml-precio-vivienda\reports\tables\t21_importancia_caracteristicas.csv"
+    ruta_imp = DIR_TABLAS / "t21_importancia_caracteristicas.csv"
     df_importancias.to_csv(ruta_imp, index=False)
     print(f"Guardada importancia de variables en {ruta_imp}")
 
     print("\n=== Paso 5: Generación de figuras ===")
-    os.makedirs(r"D:\ml-precio-vivienda\reports\figures", exist_ok=True)
 
     # 1. Figura: Importancia de variables Random Forest (P2)
     fig, ax = plt.subplots(figsize=(7, 4.5))
@@ -121,7 +138,7 @@ def main():
     ax.set_xlabel("Importancia relativa (%)", fontsize=10)
     ax.grid(True, linestyle="--", alpha=0.5, axis="x")
     plt.tight_layout()
-    ruta_fig1 = r"D:\ml-precio-vivienda\reports\figures\fig_t21_importancia_rf.png"
+    ruta_fig1 = DIR_FIGURAS / "fig_t21_importancia_rf.png"
     plt.savefig(ruta_fig1)
     plt.close()
     print(f"Guardada figura 1 en {ruta_fig1}")
@@ -134,7 +151,7 @@ def main():
     ax.set_xlabel("Importancia relativa (%)", fontsize=10)
     ax.grid(True, linestyle="--", alpha=0.5, axis="x")
     plt.tight_layout()
-    ruta_fig2 = r"D:\ml-precio-vivienda\reports\figures\fig_t21_importancia_xgb.png"
+    ruta_fig2 = DIR_FIGURAS / "fig_t21_importancia_xgb.png"
     plt.savefig(ruta_fig2)
     plt.close()
     print(f"Guardada figura 2 en {ruta_fig2}")
@@ -163,7 +180,7 @@ def main():
     ax.legend(frameon=True, facecolor="white", edgecolor="#cccccc")
     ax.grid(True, linestyle="--", alpha=0.5, axis="y")
     plt.tight_layout()
-    ruta_fig3 = r"D:\ml-precio-vivienda\reports\figures\fig_t21_comparacion_ensambles.png"
+    ruta_fig3 = DIR_FIGURAS / "fig_t21_comparacion_ensambles.png"
     plt.savefig(ruta_fig3)
     plt.close()
     print(f"Guardada figura 3 en {ruta_fig3}")
@@ -193,12 +210,23 @@ def main():
     ax.set_ylabel("RMSE por pliegue (CAD 1987)", fontsize=10)
     ax.grid(True, linestyle="--", alpha=0.5, axis="y")
     plt.tight_layout()
-    ruta_fig4 = r"D:\ml-precio-vivienda\reports\figures\fig_t21_rf_vs_xgb_prepro.png"
+    ruta_fig4 = DIR_FIGURAS / "fig_t21_rf_vs_xgb_prepro.png"
     plt.savefig(ruta_fig4)
     plt.close()
     print(f"Guardada figura 4 en {ruta_fig4}")
 
     print("\n¡Experimento T21 completado con éxito!")
+    return {
+        "busqueda": df_busqueda_completa,
+        "mejores": df_mejores,
+        "resumen": df_resumen,
+        "pliegues": df_pliegues,
+        "importancias": df_importancias,
+    }
+
+
+def main():
+    ejecutar_experimento_t21()
 
 
 if __name__ == "__main__":
