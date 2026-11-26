@@ -36,11 +36,13 @@ La ficha técnica completa (procedencia, genealogía con el dataset original, di
 
 ```
 ml-precio-vivienda/
+├── app/                # aplicación demo interactiva en Streamlit (T26)
 ├── data/
 │   ├── raw/            # datos originales (solo lectura)
 │   └── processed/      # datos limpios y partición train/test (T06)
 ├── notebooks/          # notebooks numerados: 00_plantilla, 01_..., 02_...
 ├── src/                # código reutilizable (config, datos, preprocesamiento, modelos, evaluación)
+├── tests/              # pruebas unitarias (unittest / pytest)
 ├── reports/
 │   ├── figures/        # figuras exportadas por los notebooks (PNG ≥ 200 dpi)
 │   └── tables/         # tablas de resultados (CSV)
@@ -50,6 +52,7 @@ ml-precio-vivienda/
 │   ├── entrega_final/  # plan de la entrega final, retroalimentación y reporte de gestión
 │   ├── paper/          # paper IEEE (LaTeX)
 │   └── diagramas/      # diagramas (draw.io + PNG)
+├── .streamlit/         # configuración local sin telemetría para la demo offline
 ├── .github/            # plantilla de PR y CODEOWNERS
 ├── CONTRIBUTING.md     # flujo de trabajo Trello ↔ GitHub
 └── requirements.txt
@@ -73,6 +76,19 @@ python -m venv .venv
 pip install -r requirements.txt
 jupyter lab
 ```
+
+### Opción C: aplicación demo interactiva (Streamlit, sin conexión)
+
+Con el entorno virtual activado y las dependencias instaladas (`pip install -r requirements.txt`), la demo funciona **sin conexión** para la presentación:
+
+```bash
+# Desde la raíz del repositorio (Windows PowerShell / CMD o macOS/Linux)
+streamlit run app/app.py
+```
+
+- Se abrirá en el navegador local (`http://localhost:8501`).
+- Permite ingresar los 12 atributos de la vivienda (o cargar perfiles de ejemplo), consultar el precio estimado con su intervalo de predicción (80 %, 90 % o 95 %) y revisar la explicación SHAP local de la predicción.
+- Provisionalmente entrena (OLS hedónico) con las 436 filas de entrenamiento en una sola función (`cargar_modelo` en `app/app.py`), lista para cargar `models/modelo_final.joblib` cuando entre la tarjeta **T25**.
 
 Semilla global del proyecto: **5007** (`src/config.py`).
 
