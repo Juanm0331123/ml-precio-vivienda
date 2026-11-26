@@ -20,24 +20,24 @@
 
 Replan del lunes 24 de noviembre: T19 a T22 estaban vencidas y se movieron las fechas que dependen de ellas. Todas las fechas son a las 9 p. m. (hora de Colombia), salvo la entrega.
 
-| Tarjeta | Tarea | Responsable | Depende de | Fecha | Estado al 24 nov |
+| Tarjeta | Tarea | Responsable | Depende de | Fecha | Estado al 26 nov |
 |---|---|---|---|---|---|
 | T16 | Retroalimentación de la propuesta | Juan Miguel | — | mié 11 nov | Hecho |
 | T17 | Pipelines de preprocesamiento P1, P2 y P3 | Mauricio | T06, T12 | vie 20 nov | Hecho |
-| T18 | Ingeniería y selección de variables, ablación de `furnishingstatus` | Mauricio | T17 | vie 20 nov | Hecho |
+| T18 | Ingeniería y selección de variables, ablación de `furnishingstatus` | Mauricio | T17 | vie 20 nov | Hecho (P3 alineado en #29) |
 | T27 | Paper: introducción, trabajos relacionados y datos | Juan Miguel | — | sáb 28 nov | Hecho |
-| T19 | Modelos lineales: OLS hedónico, Ridge, Lasso y ElasticNet | Brandon | T17 | jue 26 nov | En progreso |
-| T20 | KNN y SVR | Brandon | T17 | jue 26 nov | Por empezar |
-| T21 | Ensambles: Random Forest y XGBoost | Brandon | T17 | jue 26 nov | Por empezar |
-| T22 | Validación cruzada anidada y comparación estadística | Brandon | T19–T21 | vie 27 nov | Por empezar |
-| T23 | Análisis de complejidad | Brandon | T22 | dom 29 nov | Por empezar |
-| T24 | Análisis de errores e interpretabilidad (SHAP) | Brandon | T22 | dom 29 nov | Por empezar |
-| T25 | Evaluación final en el conjunto de prueba sellado | Brandon | T22–T24 | dom 29 nov | Por empezar |
+| T19 | Modelos lineales: OLS hedónico, Ridge, Lasso y ElasticNet | Brandon | T17 | jue 26 nov | Hecho (#26) |
+| T20 | KNN y SVR | Brandon | T17 | jue 26 nov | En revisión (#27), falta re-correr P3 |
+| T21 | Ensambles: Random Forest y XGBoost | Brandon | T17 | jue 26 nov | En revisión (#28), falta re-correr P3 |
+| T22 | Validación cruzada anidada y comparación estadística | Brandon | T19–T21 | vie 27 nov | En progreso (dentro del #30, sin PR propio) |
+| T23 | Análisis de complejidad | Brandon | T22 | dom 29 nov | En revisión (#30), cambios pedidos |
+| T24 | Análisis de errores e interpretabilidad (SHAP) | Brandon | T22 | dom 29 nov | En revisión (#31), cambios pedidos |
+| T25 | Evaluación final en el conjunto de prueba sellado | Brandon | T22–T24 | dom 29 nov | En revisión (#32), cambios pedidos |
 | T26 | Demo: aplicación de predicción | Mauricio | T25 | mar 1 dic | Por empezar |
 | T28 | Paper: metodología, resultados, discusión y conclusiones | Juan Miguel | T22–T25 | mié 2 dic | En progreso |
-| T29 | Reproducibilidad y limpieza del repositorio | Juan Miguel | todas | mié 2 dic | En revisión (base) |
-| T30 | Presentación final y ensayo de la demo | Juan Miguel | T26, T28 | jue 3 dic | En progreso |
-| T31 | Entrega final, reporte de gestión y coevaluación | Juan Miguel | T27–T30 | sáb 5 dic | En progreso |
+| T29 | Reproducibilidad y limpieza del repositorio | Juan Miguel | todas | mié 2 dic | En revisión (#20, base) |
+| T30 | Presentación final y ensayo de la demo | Juan Miguel | T26, T28 | jue 3 dic | En revisión (#21, storyboard) |
+| T31 | Entrega final, reporte de gestión y coevaluación | Juan Miguel | T27–T30 | sáb 5 dic | En revisión (#22, checklist) |
 
 La ruta crítica es T19–T21 → T22 → T25 → T26 y T28. El piloto (T12) ya entrena los seis modelos con P1, P2 y P3 en `src/evaluacion.py` y `src/modelos.py`, así que T19 a T21 parten de ahí y agregan la búsqueda de hiperparámetros.
 
