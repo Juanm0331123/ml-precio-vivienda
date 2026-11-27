@@ -16,8 +16,12 @@ statsmodels>=0.14
 xgboost>=2.0
 lightgbm>=4.0
 
-# Interpretabilidad (entrega final)
+# Interpretabilidad y serialización (entrega final)
 shap>=0.44
+joblib>=1.3
+
+# Aplicación demo interactiva (T26)
+streamlit>=1.35
 
 # Notebooks y exportación
 jupyter>=1.0
