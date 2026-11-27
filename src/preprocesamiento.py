@@ -40,11 +40,11 @@ COLUMNA_AMOBLADO = "furnishingstatus"
 CODIGOS_AMOBLADO = [0, 1, 2]  # unfurnished, semi-furnished, furnished (src.datos.MAPA_AMOBLADO)
 COLUMNAS_PREDICTORAS = COLUMNAS_NUMERICAS + COLUMNAS_BINARIAS + [COLUMNA_AMOBLADO]
 
-# Variables derivadas de P3 (fórmulas fijas por fila: no usan estadísticos de la muestra).
-COLUMNAS_DERIVADAS = ["area_por_dormitorio", "n_comodidades", "area_x_prefarea", "area_x_airconditioning"]
+# Variables derivadas de P3 alineadas con T18 (fórmulas fijas por fila: no usan estadísticos de la muestra).
+COLUMNAS_DERIVADAS = ["habitaciones_totales", "banos_por_habitacion", "n_comodidades", "log_area"]
 COMODIDADES = ["guestroom", "basement", "hotwaterheating", "airconditioning"]
 
-# Selección de variables de P3 con k fijo en el piloto (T11: k ∈ {8, 10, 12, todas}; el ajuste de k es de T19–T22).
+# En T12 (piloto) se usó k=10 con MI; tras T18, P3 conserva todas las variables por defecto (k=None).
 K_SELECCION_PILOTO = 10
 PERCENTILES_WINSORIZACION = (1, 99)
 
@@ -116,11 +116,12 @@ class Winsorizador(BaseEstimator, TransformerMixin):
 
 
 class DerivadorVariables(BaseEstimator, TransformerMixin):
-    """Agrega las variables derivadas de P3 como columnas nuevas (sin quitar las originales).
+    """Agrega las 4 variables derivadas de P3 alineadas con T18 como columnas nuevas (sin quitar las originales).
 
-    - ``area_por_dormitorio = area / bedrooms`` (``bedrooms >= 1`` según T06, no hay división por cero).
-    - ``n_comodidades``: suma de guestroom, basement, hotwaterheating y airconditioning.
-    - ``area_x_prefarea`` y ``area_x_airconditioning``: interacciones hedónicas de diseño (T11, 3.4).
+    - ``habitaciones_totales = bedrooms + bathrooms``: capacidad funcional total de la vivienda.
+    - ``banos_por_habitacion = bathrooms / bedrooms``: densidad sanitaria (``bedrooms >= 1`` según T06).
+    - ``n_comodidades``: suma de guestroom, basement, hotwaterheating y airconditioning (0 a 4).
+    - ``log_area = np.log(area)``: logaritmo natural del tamaño del lote.
 
     Son fórmulas por fila: no aprenden nada, así que no pueden filtrar información entre pliegues.
     """
@@ -131,14 +132,19 @@ class DerivadorVariables(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         X = X.copy()
-        X["area_por_dormitorio"] = X["area"] / X["bedrooms"]
+        if (X["bedrooms"] <= 0).any():
+            raise ValueError("bedrooms debe ser >= 1 para calcular banos_por_habitacion")
+        if (X["area"] <= 0).any():
+            raise ValueError("area debe ser > 0 para calcular log_area")
+        X["habitaciones_totales"] = X["bedrooms"] + X["bathrooms"]
+        X["banos_por_habitacion"] = X["bathrooms"] / X["bedrooms"]
         X["n_comodidades"] = X[COMODIDADES].sum(axis=1)
-        X["area_x_prefarea"] = X["area"] * X["prefarea"]
-        X["area_x_airconditioning"] = X["area"] * X["airconditioning"]
+        X["log_area"] = np.log(X["area"].astype(float))
         return X
 
     def get_feature_names_out(self, input_features=None):
-        return np.asarray(list(self.columnas_entrada_) + COLUMNAS_DERIVADAS, dtype=object)
+        base = list(input_features) if input_features is not None else list(self.columnas_entrada_)
+        return np.asarray(base + COLUMNAS_DERIVADAS, dtype=object)
 
 
 def _codificador_amoblado() -> OneHotEncoder:
@@ -189,17 +195,20 @@ def _informacion_mutua(X, y):
     return mutual_info_regression(X, y, random_state=SEMILLA)
 
 
-def construir_preprocesamiento(p: str, escalar: bool = True, k: Optional[int] = K_SELECCION_PILOTO) -> Pipeline:
+def construir_preprocesamiento(p: str, escalar: bool = True, k: Optional[int] = None) -> Pipeline:
     """Devuelve el preprocesamiento P1, P2 o P3 como ``Pipeline`` (sin el modelo).
 
-    P3 incluye, en orden: derivadas -> transformaciones -> selección por información mutua (``sel``).
-    Cada paso se ajusta únicamente con las filas que recibe ``fit``.
+    P3 incluye, en orden: derivadas T18 -> transformaciones (winsorización y escalado) y, solo si se
+    indica ``k``, selección por información mutua (``sel``). Tras T18, por defecto ``k=None`` (sin
+    recorte fijo por información mutua). Cada paso se ajusta únicamente con las filas que recibe ``fit``.
 
     Parameters
     ----------
     p : {"P1", "P2", "P3"}
     escalar : bool
         Si el modelo que sigue es sensible a la escala de las predictoras.
+    k : int or None, default=None
+        Si es entero, aplica ``SelectKBest(mutual_info_regression, k=k)`` al final de P3.
     """
     if p not in ("P1", "P2", "P3"):
         raise ValueError(f"Preprocesamiento desconocido: {p}")
@@ -207,9 +216,8 @@ def construir_preprocesamiento(p: str, escalar: bool = True, k: Optional[int] = 
     if p == "P3":
         pasos.append(("derivar", DerivadorVariables()))
     pasos.append(("columnas", _transformador_columnas(p, escalar)))
-    if p == "P3":
-        k_sel = "all" if k is None else k
-        pasos.append(("sel", SelectKBest(score_func=_informacion_mutua, k=k_sel)))
+    if p == "P3" and k is not None:
+        pasos.append(("sel", SelectKBest(score_func=_informacion_mutua, k=k)))
     return Pipeline(pasos)
 
 
@@ -232,8 +240,10 @@ def envolver_objetivo(estimador, p: str):
 
 
 def nombres_seleccionados(prepro: Pipeline) -> List[str]:
-    """Nombres de las columnas que conserva la selección de P3 (para dejar evidencia de la regla)."""
+    """Nombres de las columnas que conserva P3 (con o sin paso ``sel``)."""
     if "sel" not in prepro.named_steps:
+        if "derivar" in prepro.named_steps:
+            return list(prepro.get_feature_names_out())
         return []
     nombres = Pipeline(prepro.steps[:-1]).get_feature_names_out()
     return list(np.asarray(nombres)[prepro.named_steps["sel"].get_support()])
@@ -242,5 +252,5 @@ def nombres_seleccionados(prepro: Pipeline) -> List[str]:
 DESCRIPCION = {
     "P1": "Base: one-hot de furnishingstatus, StandardScaler en Ridge/KNN/SVR, objetivo en escala original",
     "P2": "P1 + log(price), Yeo-Johnson en area, RobustScaler en conteos (Ridge/KNN/SVR)",
-    "P3": "P2 + variables derivadas, 2 interacciones, winsorización 1-99 % (+ StandardScaler en derivadas) y selección por información mutua (k=10)",
+    "P3": "P2 + derivadas T18 (habitaciones_totales, banos_por_habitacion, n_comodidades, log_area), winsorización 1-99 % (+ StandardScaler en derivadas), sin recorte fijo MI",
 }
