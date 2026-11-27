@@ -36,11 +36,13 @@ La ficha técnica completa (procedencia, genealogía con el dataset original, di
 
 ```
 ml-precio-vivienda/
+├── app/                # aplicación demo interactiva en Streamlit (T26)
 ├── data/
 │   ├── raw/            # datos originales (solo lectura)
 │   └── processed/      # datos limpios y partición train/test (T06)
 ├── notebooks/          # notebooks numerados: 00_plantilla, 01_..., 02_...
 ├── src/                # código reutilizable (config, datos, preprocesamiento, modelos, evaluación)
+├── tests/              # pruebas unitarias (unittest / pytest)
 ├── reports/
 │   ├── figures/        # figuras exportadas por los notebooks (PNG ≥ 200 dpi)
 │   └── tables/         # tablas de resultados (CSV)
@@ -51,6 +53,7 @@ ml-precio-vivienda/
 │   ├── paper/          # paper IEEE (LaTeX)
 │   └── diagramas/      # diagramas (draw.io + PNG)
 ├── tests/              # pruebas (pytest)
+├── .streamlit/         # configuración de la demo sin telemetría
 ├── .github/            # plantilla de PR, CODEOWNERS y pruebas automáticas
 ├── CONTRIBUTING.md     # flujo de trabajo Trello ↔ GitHub
 ├── reproducir.py       # regenera todo el experimento con un comando
@@ -100,6 +103,16 @@ Los notebooks se corren en orden numérico, porque cada uno usa lo que deja el a
 ### Pruebas automáticas
 
 Cada push y cada Pull Request corre las pruebas en GitHub Actions ([`.github/workflows/pruebas.yml`](.github/workflows/pruebas.yml)).
+
+### Demo interactiva (Streamlit, sin conexión)
+
+Con las dependencias instaladas, desde la raíz del repositorio:
+
+```bash
+streamlit run app/app.py
+```
+
+Se abre en `http://localhost:8501`. Permite ingresar los 12 atributos de la vivienda (o cargar perfiles de ejemplo), ver el precio estimado con su intervalo de predicción (80 %, 90 % o 95 %) y la explicación SHAP de esa predicción. Mientras no exista `models/modelo_final.joblib` (T25), entrena el OLS hedónico P2 con las 436 filas de entrenamiento.
 
 ## Licencia y cita
 
