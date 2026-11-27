@@ -33,7 +33,7 @@ Replan del lunes 24 de noviembre: T19 a T22 estaban vencidas y se movieron las f
 | T23 | Análisis de complejidad | Brandon | T22 | dom 29 nov | En revisión (#30), cambios pedidos |
 | T24 | Análisis de errores e interpretabilidad (SHAP) | Brandon | T22 | dom 29 nov | En revisión (#31), cambios pedidos |
 | T25 | Evaluación final en el conjunto de prueba sellado | Brandon | T22–T24 | dom 29 nov | En revisión (#32), cambios pedidos |
-| T26 | Demo: aplicación de predicción | Mauricio | T25 | mar 1 dic | Por empezar |
+| T26 | Demo: aplicación de predicción | Mauricio | T25 | mar 1 dic | Hecho (#33) |
 | T28 | Paper: metodología, resultados, discusión y conclusiones | Juan Miguel | T22–T25 | mié 2 dic | En progreso |
 | T29 | Reproducibilidad y limpieza del repositorio | Juan Miguel | todas | mié 2 dic | En revisión (#20, base) |
 | T30 | Presentación final y ensayo de la demo | Juan Miguel | T26, T28 | jue 3 dic | En revisión (#21, storyboard) |

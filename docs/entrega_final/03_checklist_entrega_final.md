@@ -6,18 +6,15 @@
 
 ## 1. Lo que se sube a UAO Virtual
 
-Solo lo que pide la guía, más un archivo de texto con los enlaces, como en el Entregable 1.
+Máximo 5 archivos (con `LEEME.txt` dentro del ZIP del código):
 
 | Archivo | Tarjeta | Estado |
 |---|---|---|
-| Paper IEEE en PDF (`docs/paper/main.pdf`, versión final) | T27 · T28 | [ ] |
-| Diapositivas finales en PDF, exportadas de Canva | T30 | [ ] |
-| ZIP con los archivos para correr el experimento (código, datos, notebooks, `requirements.txt`, `reproducir.py` y README) | T29 | [ ] |
+| `Paper_ML_Precio_Vivienda.pdf` (versión final de `docs/paper/main.pdf`) | T27 · T28 | [ ] |
+| `Presentacion_ML_Precio_Vivienda.pdf` (exportada de Canva) | T30 | [ ] |
+| `Codigo_ML_Precio_Vivienda.zip` (código, datos, notebooks, `requirements.txt`, `reproducir.py`, README y `LEEME.txt` adentro) | T29 · T31 | [ ] |
 | `Reporte_Gestion_Final.pdf` | T31 | [ ] |
 | `Coevaluacion_Final.xlsx` con las seis calificaciones | T31 | [ ] |
-| `LEEME.txt` con el enlace al repositorio (etiqueta `v1.0-final`) y al tablero de Trello | T31 | [ ] |
-
-El nombre del ZIP lleva los apellidos del equipo: `EntregaFinal_LeonGomez_MozoTeran_TobarSanchez.zip`.
 
 ## 2. Paper (guía del curso)
 
