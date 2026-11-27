@@ -12,8 +12,6 @@
 
 \graphicspath{{figures/}}
 
-% Marca visible de lo que todavia depende de los experimentos (T22-T25). Se quita en T28.
-\newcommand{\pending}[1]{\textcolor{gray}{\textit{[Pending: #1]}}}
 
 \begin{document}
 
@@ -27,7 +25,7 @@ Universidad Aut\'onoma de Occidente, Cali, Colombia}}
 
 % ---------------------------------------------------------------------------
 \begin{abstract}
-House prices drive mortgage lending, property taxation and household wealth, and they are still commonly estimated with linear hedonic regression. This paper compares the hedonic model with regularized, instance-based, kernel and tree-ensemble regressors on a classical benchmark: 545 house sales from Windsor, Canada, described by twelve structural and location attributes. We first verify the provenance of the public version of the data against the original econometric source, and then evaluate three preprocessing strategies and six models under repeated nested cross-validation, with a sealed test partition used only once. Models are compared on prediction error, computational cost and interpretability, where SHAP values are used to measure the impact of each attribute on the predictions. \pending{main quantitative results and conclusion, T22--T25.} All code, data and results are publicly available.
+House prices drive mortgage lending, property taxation and household wealth, and they are still commonly estimated with linear hedonic regression. This paper compares the hedonic model with regularized, instance-based, kernel and tree-ensemble regressors on a classical benchmark: 545 house sales from Windsor, Canada, described by twelve structural and location attributes. We first verify the provenance of the public version of the data against the original econometric source, and then evaluate three preprocessing strategies and six models under repeated nested cross-validation, with a sealed test partition used only once. Models are compared on prediction error, computational cost and interpretability, where SHAP values are used to measure the impact of each attribute on the predictions. The hedonic model with the logarithm of the price obtains the lowest cross-validated error (RMSE of 15,397~CAD of 1987, $R^2 = 0.66$); random forest and XGBoost are statistically tied with it in cross-validation and less accurate on the test partition, and both model families attribute most of the predicted price to lot size, bathrooms and central air conditioning. The hedonic model is also the cheapest to train and the easiest to interpret. All code, data and results are publicly available.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -207,26 +205,291 @@ Models are trained by minimizing the squared error and evaluated, always on the 
 Because the sample is small, generalization is estimated with repeated cross-validation on the training partition, and the sealed test partition provides a single final estimate. The conclusions are predictive, not causal: an attribute with a large impact on the predictions is not necessarily a cause of the price.
 
 % ---------------------------------------------------------------------------
-% Las secciones siguientes se escriben en T28, cuando esten los resultados de T17-T25.
 \section{Methodology}
 \label{sec:method}
-\pending{three preprocessing strategies (T17, T18), six models (T19--T21) and nested cross-validation with statistical tests (T22).}
+
+\subsection{Experimental Design}
+
+The experiment is a factorial comparison of three preprocessing strategies and six regression models, that is, 18 pipelines. All of them are evaluated on the 436 training rows with the same repeated stratified 5-fold cross-validation, repeated three times (15 folds), where the strata are the price quintiles. Because every pipeline sees exactly the same folds, the comparisons between pipelines are paired. The sealed test partition (Section~\ref{sec:data}) is not used in this stage. Fig.~\ref{fig:pipeline} summarizes the whole experiment.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_pipeline.pdf}
+\caption{Experimental pipeline. The sealed test set is separated before any modeling and is used only once, in the final evaluation. Every step inside the dashed box is refitted on the training part of each cross-validation fold.}
+\label{fig:pipeline}
+\end{figure*}
+
+Every step that learns from the data (scalers, power transformations, winsorization limits and feature selection) is part of a scikit-learn pipeline~\cite{pedregosa2011} and is fitted only on the training part of each fold. This prevents information from the validation part from leaking into the model. Hyperparameters are tuned by an inner 5-fold cross-validation inside each of the 15 outer folds, that is, by nested cross-validation~\cite{cawley2010}: the search only sees the training part of the outer fold, so the outer validation error estimates the performance of the whole tuning procedure and not of a configuration chosen after looking at it. Table~\ref{tab:search} lists the search space of each model.
+
+\subsection{Preprocessing Strategies}
+
+The three strategies are cumulative, so that P1~$\rightarrow$~P2 isolates the effect of transforming the variables and P2~$\rightarrow$~P3 isolates the effect of engineering and selecting them.
+
+\textbf{P1 (base).} The six binary attributes are encoded as 0/1 and \texttt{furnishingstatus} is one-hot encoded with one level dropped, since the order of its levels is not documented. The five numeric attributes are standardized for the models that are sensitive to scale (ridge regression, KNN and SVR) and left unchanged for OLS and the tree ensembles. The target stays on its original scale.
+
+\textbf{P2 (transformations).} P1 plus the logarithm of the price as target, applied through a transformed-target regressor so that predictions are returned, and evaluated, on the original price scale. Lot size, the most skewed predictor, receives a Yeo--Johnson transformation~\cite{yeo2000}, and the small integer counts (bedrooms, bathrooms, stories and garage places) are scaled with the median and the interquartile range, which is less sensitive to extreme values.
+
+\textbf{P3 (engineering and robustness).} P2 plus derived attributes, winsorization of lot size and of the derived attributes at the 1st and 99th percentiles of each training fold, and an optional feature-selection step inside the fold. The derived attributes are four row-wise formulas that do not use sample statistics: total rooms (bedrooms plus bathrooms), bathrooms per bedroom, the number of amenities (recreation room, finished basement, gas water heating and central air conditioning) and the logarithm of lot size. The selection step is set by the comparison in Section~\ref{sec:selection}: since keeping ten attributes by mutual information or by recursive elimination increased the error, and lasso kept almost every attribute, the final P3 keeps all original and derived attributes (17 columns after encoding) and does not apply a fixed cut.
+
+\subsection{Models}
+
+Six models from four families are compared, from the most restrictive to the most flexible functional form:
+\begin{itemize}
+  \item \textbf{Linear:} OLS, which is the hedonic baseline, and ridge regression~\cite{hastie2009}. Lasso~\cite{tibshirani1996} and the elastic net were also explored during development; they performed like ridge and are not included in the main comparison.
+  \item \textbf{Instance-based:} $k$-nearest neighbors (KNN).
+  \item \textbf{Kernel:} support vector regression with a radial basis function kernel (SVR).
+  \item \textbf{Tree ensembles:} random forest~\cite{breiman2001} and gradient boosting with XGBoost~\cite{chen2016}.
+\end{itemize}
+Following the recommendation received on the project proposal, the tree ensembles receive the widest hyperparameter search and are the main candidates for the attribute-impact analysis with SHAP. The final model, however, is chosen by the cross-validated comparison and not in advance. The SVR also standardizes the target, or its logarithm, inside each fold, because its penalty and margin parameters are not meant for prices of the order of $10^6$.
+
+\begin{table}[!t]
+\caption{Hyperparameter Search Spaces of the Inner Loop}
+\label{tab:search}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.15\columnwidth}>{\raggedright\arraybackslash}p{0.17\columnwidth}>{\raggedright\arraybackslash}p{0.62\columnwidth}@{}}
+\toprule
+Model & Search & Values \\
+\midrule
+OLS & -- & none \\
+Ridge & grid, 9 & $\alpha \in \{0.01, 0.1, 1, 3.16, 10, 31.6, 100, 316, 1000\}$ \\
+KNN & grid, 28 & $k \in \{3, 5, 7, 9, 11, 15, 21\}$; uniform or distance weights; Manhattan or Euclidean distance \\
+SVR & grid, 112 & $C \in \{1, 10, 50, 100, 500, 1000, 2000\}$; $\gamma \in \{\text{scale}, 10^{-4}, 10^{-3}, 10^{-2}\}$; $\varepsilon \in \{0.05, 0.1, 0.2, 0.5\}$ \\
+Random forest & random, 15 of 900 & trees $\in \{100, 200, 300, 500\}$; depth $\in \{6, 8, 10, 14, \text{none}\}$; min.\ split $\in \{2, 4, 8\}$; min.\ leaf $\in \{1, 2, 4\}$; features per split $\in \{\sqrt{p}, \log_2 p, 0.6, 0.8, 1.0\}$ \\
+XGBoost & random, 15 of 5{,}184 & trees $\in \{100, 200, 300\}$; depth $\in \{3, 4, 5, 6\}$; learning rate $\in \{0.01, 0.03, 0.05, 0.1\}$; row and column subsampling $\in \{0.7, 0.85, 1\}$ and $\{0.6, 0.8, 1\}$; L2 $\in \{0.5, 1, 3, 5\}$; L1 $\in \{0, 0.1, 1\}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Metrics and Statistical Comparison}
+
+Models are compared with RMSE, MAE, MAPE and $R^2$, always computed on the original price scale and reported as mean and standard deviation over the 15 folds. Since the folds of repeated cross-validation share training data, the usual paired $t$-test underestimates the variance of the difference between two models. We therefore use the corrected resampled $t$-test of Nadeau and Bengio~\cite{nadeau2003}, which inflates the variance by the factor $1/J + n_{\text{val}}/n_{\text{train}}$, where $J = 15$ is the number of folds and $n_{\text{val}}/n_{\text{train}} = 1/4$ in 5-fold cross-validation. When one pipeline is compared with several others, the $p$-values are adjusted with the Holm procedure~\cite{holm1979}. Differences are considered significant at $\alpha = 0.05$. On the sealed test partition, the uncertainty of each metric is estimated with 95\% percentile bootstrap intervals over 5{,}000 resamples of the 109 houses~\cite{efron1993}.
 
 \section{Experiments and Results}
 \label{sec:results}
-\pending{cross-validated comparison, ablation of \texttt{furnishingstatus}, and final evaluation on the sealed test partition (T22, T25).}
+
+\subsection{Feature Selection}
+\label{sec:selection}
+
+Before fixing P3, we compared three feature-selection methods, each fitted inside every one of the 15 training folds on all the attributes plus the four derived ones: mutual information with the ten best attributes~\cite{kraskov2004}, Lasso with the penalty chosen by inner cross-validation~\cite{tibshirani1996}, and recursive feature elimination with ridge regression keeping ten attributes~\cite{guyon2002}. Five models were then trained with each selection, and with no selection, on the logarithm of the price.
+
+Table~\ref{tab:selection} shows that selecting attributes does not reduce the error on this dataset. Lasso keeps almost every attribute and is the only method that does not make the error worse; mutual information and recursive elimination, which keep a fixed number of attributes, increase the RMSE by 3--7\% with respect to using all of them. Mutual information, which scores each attribute alone, discards binary attributes with a clear hedonic meaning, such as the preferred neighborhood (selected in 0\% of the folds) and the driveway (7\%). The attributes selected by the three methods in at least 73\% of the folds are the logarithm of lot size, stories, bathrooms, the number of amenities and central air conditioning; the finished basement was never selected, since its information is already contained in the number of amenities.
+
+\begin{table}[t]
+\caption{Cross-Validated RMSE by Feature-Selection Method (CAD, 1987)}
+\label{tab:selection}
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & All & Lasso & MI & RFE \\
+\midrule
+OLS (hedonic) & 15,481 & 15,481 & 16,213 & 16,172 \\
+Ridge & 15,451 & 15,446 & 16,205 & 16,139 \\
+SVR & 17,443 & 17,537 & 18,689 & 18,175 \\
+Random forest & 16,253 & 16,282 & 16,857 & 16,801 \\
+XGBoost & 15,757 & 15,866 & 16,634 & 16,345 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+Mean over 15 folds. MI: mutual information ($k=10$); RFE: recursive feature elimination with ridge regression ($k=10$).
+\end{table}
+
+\subsection{Ablation of \texttt{furnishingstatus} (H3)}
+
+To test H3, each of the six models was trained with and without \texttt{furnishingstatus} on the same 15 folds, with the logarithm of the price as target and no feature selection. Fig.~\ref{fig:ablation} reports the paired difference $\Delta\text{RMSE} = \text{RMSE}_{\text{without}} - \text{RMSE}_{\text{with}}$ with its 95\% confidence interval under the corrected $t$-test.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_ablation_furnishing.pdf}
+\caption{Change in cross-validated RMSE when \texttt{furnishingstatus} is removed, with corrected 95\% confidence intervals (Nadeau--Bengio, 15 folds). Positive values mean that the attribute lowers the error.}
+\label{fig:ablation}
+\end{figure}
+
+In five of the six models, removing the attribute increases the RMSE slightly, between 99 CAD for OLS and 266 CAD for random forest, that is, at most 1.6\%. The SVR is the exception, with a change of $-42$ CAD. None of the differences is statistically significant (all $p \ge 0.14$) and every confidence interval contains zero. These results are consistent with H3: the attribute added in the public version does not significantly improve prediction once the eleven original attributes are included. Because the effect is small but mostly in the same direction, we keep the attribute in the main comparison and report this ablation as a robustness check.
+
+\subsection{Model Comparison}
+
+Table~\ref{tab:cv} and Fig.~\ref{fig:cv} summarize the nested cross-validation of the 18 pipelines. The best pipeline is the hedonic model with the logarithm of the price (OLS with P2), with an RMSE of 15,397~CAD (95\% CI 14,353--16,441) and $R^2 = 0.66$. The differences among the top pipelines are small compared with their fold-to-fold variability: OLS with P3, ridge with P2 and P3, SVR with P2, XGBoost with P1 and random forest with P1 are all within 300~CAD of the best. Table~\ref{tab:ttest} compares the best pipeline of each model with OLS~P2 using the corrected $t$-test: no model is significantly better or worse than the hedonic baseline except KNN, which is clearly worse (+1,615~CAD, Holm-adjusted $p = 0.02$).
+
+\begin{table}[t]
+\caption{Nested Cross-Validated RMSE by Model and Preprocessing (CAD, 1987)}
+\label{tab:cv}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Model & P1 & P2 & P3 & MAPE (\%) & $R^2$ \\
+\midrule
+\csname @@input\endcsname tables/tab_cv.tex
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+Mean over the 15 outer folds; the best preprocessing of each model is in bold, and MAPE and $R^2$ refer to that preprocessing.
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_cv_rmse.pdf}
+\caption{Nested cross-validated RMSE of the 18 pipelines, ordered from best to worst, with 95\% confidence intervals over the 15 outer folds. Color indicates the preprocessing strategy.}
+\label{fig:cv}
+\end{figure}
+
+\begin{table}[t]
+\caption{Corrected Paired $t$-Tests against the Best Pipeline (OLS, P2)}
+\label{tab:ttest}
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Best pipeline of each model & $\Delta$RMSE (CAD) & $p$ & $p_{\text{Holm}}$ \\
+\midrule
+\csname @@input\endcsname tables/tab_ttest.tex
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+$\Delta$RMSE is the mean paired difference over the 15 folds (positive: worse than OLS P2). Holm adjustment over the 17 comparisons with OLS P2.
+\end{table}
+
+The preprocessing strategies affect the model families in opposite directions. For the linear models and the SVR, modeling the logarithm of the price (P2) lowers the RMSE by about 400~CAD with respect to P1, and the engineered attributes of P3 add nothing on top of P2. For the tree ensembles the best strategy is P1: since trees are invariant to monotone transformations of the attributes, P2 only changes the target, and averaging on the logarithmic scale and exponentiating slightly increases their error. KNN is the only model for which P2 increases the error, because the robust scaling of P2 changes the relative weight of the attributes in its distance.
+
+\textbf{H1.} No tree ensemble achieves a lower cross-validated RMSE than the hedonic model: the best ensemble, XGBoost with P1, is 190~CAD above OLS~P2 ($p = 0.52$), and random forest with P1 is 281~CAD above ($p = 0.51$). The evidence therefore does not support H1. \textbf{H2.} Modeling the logarithm of the price reduces the MAPE of all the linear and distance-based models: from 18.2\% to 16.7\% for OLS, from 18.1\% to 16.7\% for ridge, from 17.3\% to 16.6\% for SVR and from 17.8\% to 17.6\% for KNN. H2 is supported, although the reduction for KNN is marginal.
+
+\subsection{Final Evaluation on the Sealed Test Partition}
+
+The model chosen by cross-validation, OLS with P2, was refitted on the 436 training houses and evaluated once on the 109 sealed test houses, together with the best configuration of each tree ensemble. Table~\ref{tab:test} reports the results with 95\% bootstrap intervals and Fig.~\ref{fig:test} compares predicted and actual prices for the hedonic model. Its test RMSE, 14,066~CAD, is slightly lower than the cross-validated estimate, which indicates that nested cross-validation was not optimistic. The ensembles have a higher error on the test set (16,442 and 17,367~CAD); a paired $t$-test on the squared errors of the 109 houses gives $p = 0.02$ for XGBoost and $p = 0.03$ for random forest against the hedonic model, so the test partition confirms the conclusion on H1. The largest errors are concentrated in the most expensive houses, where the sample has few observations.
+
+\begin{table}[t]
+\caption{Results on the Sealed Test Partition (109 Houses, CAD, 1987)}
+\label{tab:test}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Pipeline & RMSE & MAE & $R^2$ \\
+\midrule
+\csname @@input\endcsname tables/tab_test.tex
+\bottomrule
+\end{tabular}}
+
+\smallskip
+\raggedright
+95\% percentile bootstrap intervals in brackets (5,000 resamples).
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_test.pdf}
+\caption{Actual versus predicted price of the 109 sealed test houses for the hedonic model with P2. The dashed line marks perfect prediction.}
+\label{fig:test}
+\end{figure}
 
 \section{Complexity Analysis}
 \label{sec:complexity}
-\pending{theoretical and empirical cost of each model (T23).}
+\subsection{Theoretical Complexity}
+
+Table~\ref{tab:complexity} summarizes the asymptotic cost of training and predicting with each model, where $n$ is the number of training observations, $p$ the number of attributes after preprocessing, $T$ the number of trees and $d$ their depth. In each cross-validation fold $n \approx 349$ and $p$ is between 13 and 17, so even the most expensive models train in under a second on a laptop; the analysis matters because it describes how the cost would grow with a city-scale dataset.
+
+\begin{table}[t]
+\caption{Asymptotic Cost of Training and Prediction}
+\label{tab:complexity}
+\centering
+\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Model & Training & Prediction (one house) \\
+\midrule
+OLS & $O(np^2 + p^3)$ & $O(p)$ \\
+Ridge & $O(np^2 + p^3)$ & $O(p)$ \\
+KNN (brute force) & $O(np)$ (stores the data) & $O(np)$ \\
+SVR (RBF kernel) & $O(n^2p)$ to $O(n^3p)$ & $O(n_{\text{sv}}\,p)$ \\
+Random forest & $O(T\,m\,n \log n)$ & $O(T d)$ \\
+XGBoost & $O(T\,d\,p\,n)$ & $O(T d)$ \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+$n_{\text{sv}}$: number of support vectors; $m$: attributes considered at each split. Hyperparameter search multiplies the training cost by the number of candidate configurations and inner folds.
+\end{table}
+
+The linear models are the cheapest to train and the only ones whose prediction does not depend on $n$ or on the number of trees~\cite{hastie2009}. KNN moves all the cost to prediction, because every query is compared with the whole training set. The SVR solves a quadratic program whose cost grows between quadratically and cubically with $n$~\cite{chang2011}, which makes it the least scalable model. The tree ensembles grow linearly with the number of trees; random forest builds independent trees that can be trained in parallel~\cite{breiman2001}, while boosting builds them sequentially~\cite{chen2016}.
+
+\subsection{Empirical Cost}
+
+Table~\ref{tab:cost} reports the median training time per fold over repeated runs, the time to predict one validation fold, the number of fitted parameters or nodes and the size of the serialized model, for the best pipeline of each model; Fig.~\ref{fig:pareto} relates training time to the cross-validated error of all 18 pipelines. The measurements agree with the theoretical analysis. The linear models train in tens of milliseconds and are described by 14 coefficients; KNN trains almost instantly but stores the whole training set; and random forest is about an order of magnitude slower than the other models, with about 44,000 nodes and a serialized size close to 800~kB. The accuracy--cost Pareto front is formed only by linear models: OLS with P1 is the fastest configuration and OLS with P2 is the most accurate one, so no other pipeline offers a better error at any cost.
+
+\begin{table}[t]
+\caption{Empirical Cost of the Best Pipeline of Each Model}
+\label{tab:cost}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Pipeline & Train (ms) & Predict (ms) & Parameters & Size (kB) \\
+\midrule
+\csname @@input\endcsname tables/tab_cost.tex
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+Median training time per fold and prediction time for one validation fold, measured on the same CPU; parameters are coefficients, stored values, support vectors or tree nodes.
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_pareto.pdf}
+\caption{Cross-validated RMSE versus median training time of the 18 pipelines (blue: linear; yellow: KNN; purple: SVR; green: tree ensembles). The dashed line is the accuracy--cost Pareto front.}
+\label{fig:pareto}
+\end{figure}
 
 \section{Discussion}
 \label{sec:discussion}
-\pending{error analysis and attribute impact with SHAP (T24); limitations: data from 1987 and one city, small sample, attribute of unknown origin.}
+\subsection{Attribute Impact and Error Analysis}
+
+To measure the impact of each attribute on the predictions, we compared the standardized coefficients of the hedonic model with the mean absolute SHAP values~\cite{lundberg2017} of XGBoost, the best tree ensemble, both fitted on the training partition. Table~\ref{tab:shap} shows that the two models agree on what matters most: lot size, bathrooms and central air conditioning are the three most influential attributes in both, and the Spearman correlation between the two rankings over the 13 encoded attributes is 0.80 ($p = 0.001$). The main disagreement is the number of garage places, which ranks fourth for XGBoost and tenth for the hedonic model, a sign of a nonlinear or interaction effect that the linear specification does not capture. The furnishing status ranks in the middle for both models, which is consistent with the small and non-significant effect found in the ablation.
+
+\begin{table}[t]
+\caption{Attribute Impact: Hedonic Coefficients versus SHAP (XGBoost)}
+\label{tab:shap}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{OLS (P2)} & \multicolumn{2}{c}{XGBoost (P1)} \\
+Attribute & Rank & $|\beta^{*}|$ & Rank & Mean $|\text{SHAP}|$ \\
+\midrule
+\csname @@input\endcsname tables/tab_shap.tex
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright
+$|\beta^{*}|$: absolute standardized coefficient. Mean $|\text{SHAP}|$ in CAD of 1987. The six attributes with the highest SHAP impact are shown.
+\end{table}
+
+The out-of-fold residuals of the four best pipelines are right-skewed (skewness between 0.9 and 1.1) and their absolute value grows with the predicted price (Spearman $\rho \approx 0.30$, $p < 0.001$), that is, the errors are heteroscedastic and larger for expensive houses. This pattern is shared by the linear and the tree-based models, which suggests that it comes from the data, few expensive houses and unobserved attributes such as age and exact location, rather than from the functional form of the model.
+
+\subsection{Limitations}
+
+The results must be read within four limits. First, the data describe one city in 1987, so the study compares methods on a documented benchmark and does not produce prices that apply to current markets. The methodology, in contrast, is transferable: the same pipeline, validation scheme and attribute-impact analysis can be applied to cadastral appraisals or listings from a Colombian city. Second, with 545 sales the differences between models vary considerably from fold to fold, which is why we report intervals and corrected tests rather than single scores; a larger sample could reveal differences that are not detectable here. Third, attribute impact is predictive, not causal: an attribute that weighs heavily in a prediction may be standing in for unobserved characteristics, such as the age or the exact location of the house, which the dataset does not include. Fourth, one attribute, \texttt{furnishingstatus}, has no documented origin; the ablation shows that it does not change the conclusions, but it is kept as a source of uncertainty.
 
 \section{Conclusions}
 \label{sec:conclusions}
-\pending{answers to H1--H3 and future work.}
+This paper compared the linear hedonic model with regularized, instance-based, kernel and tree-ensemble regressors for predicting house prices on the Windsor data, after verifying the provenance of its public version. Under nested cross-validation with corrected statistical tests, no machine learning model outperformed the semi-logarithmic hedonic model: the tree ensembles were statistically tied with it in cross-validation and had a higher error on the sealed test partition, so H1 is not supported. Modeling the logarithm of the price reduced the relative error of the linear and distance-based models, supporting H2, and the attribute added in the public version did not significantly improve prediction, consistent with H3. The hedonic model and XGBoost attribute most of the predicted price to the same three attributes, lot size, bathrooms and central air conditioning, and the hedonic model is also the cheapest to train and the easiest to explain. On small, structured datasets with near-multiplicative effects, a well-specified hedonic model therefore remains a strong benchmark that more flexible models must beat with proper validation. Future work should repeat the comparison on a larger and current dataset, such as cadastral appraisals or listings from a Colombian city, where location and age attributes are available and nonlinear models may have more room to improve on the hedonic baseline.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
