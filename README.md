@@ -52,21 +52,21 @@ ml-precio-vivienda/
 │   ├── entrega_final/  # plan de la entrega final, retroalimentación y reporte de gestión
 │   ├── paper/          # paper IEEE (LaTeX)
 │   └── diagramas/      # diagramas (draw.io + PNG)
-├── .streamlit/         # configuración local sin telemetría para la demo offline
-├── .github/            # plantilla de PR y CODEOWNERS
+├── tests/              # pruebas (pytest)
+├── .streamlit/         # configuración de la demo sin telemetría
+├── .github/            # plantilla de PR, CODEOWNERS y pruebas automáticas
 ├── CONTRIBUTING.md     # flujo de trabajo Trello ↔ GitHub
+├── reproducir.py       # regenera todo el experimento con un comando
+├── LICENSE             # MIT (los datos conservan su licencia)
+├── CITATION.cff        # cómo citar el repositorio y los datos
 └── requirements.txt
 ```
 
-## Cómo ejecutar
+## Cómo reproducir
 
-### Opción A: Google Colab (sin instalar nada)
+Todo el experimento se regenera desde los datos de `data/raw/` con código. La semilla global es **5007** (`src/config.py`) y el conjunto de prueba sellado (T06) solo se usa en la evaluación final.
 
-1. Entrar a https://colab.research.google.com → **File → Open notebook → GitHub**.
-2. Escribir `Juanm0331123/ml-precio-vivienda` y abrir el notebook deseado.
-3. Ejecutar las celdas. La primera clona el repositorio e instala las dependencias.
-
-### Opción B: local
+### Opción A: local, con un solo comando
 
 ```bash
 git clone https://github.com/Juanm0331123/ml-precio-vivienda.git
@@ -74,23 +74,49 @@ cd ml-precio-vivienda
 python -m venv .venv
 # Windows: .venv\Scripts\activate    |    macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-jupyter lab
+python reproducir.py
 ```
 
-### Opción C: aplicación demo interactiva (Streamlit, sin conexión)
+`reproducir.py` hace, en orden:
 
-Con el entorno virtual activado y las dependencias instaladas (`pip install -r requirements.txt`), la demo funciona **sin conexión** para la presentación:
+1. Corre las pruebas (`pytest`).
+2. Ejecuta los notebooks numerados (`01_`, `02_`, …) de principio a fin y guarda sus salidas. Cada notebook vuelve a escribir sus figuras en `reports/figures/` y sus tablas en `reports/tables/`.
+3. Regenera las figuras del paper (`docs/paper/figures/`).
+
+Si algo falla, se detiene en ese paso. Otras opciones:
 
 ```bash
-# Desde la raíz del repositorio (Windows PowerShell / CMD o macOS/Linux)
+python reproducir.py --sin-pruebas   # salta pytest
+python reproducir.py --solo 04       # solo los notebooks que empiezan por 04
+```
+
+Para compilar el paper, ver [`docs/paper/README.md`](docs/paper/README.md).
+
+### Opción B: Google Colab (sin instalar nada)
+
+1. Entrar a https://colab.research.google.com → **File → Open notebook → GitHub**.
+2. Escribir `Juanm0331123/ml-precio-vivienda` y abrir el notebook deseado.
+3. Ejecutar las celdas. La primera clona el repositorio e instala las dependencias.
+
+Los notebooks se corren en orden numérico, porque cada uno usa lo que deja el anterior.
+
+### Pruebas automáticas
+
+Cada push y cada Pull Request corre las pruebas en GitHub Actions ([`.github/workflows/pruebas.yml`](.github/workflows/pruebas.yml)).
+
+### Demo interactiva (Streamlit, sin conexión)
+
+Con las dependencias instaladas, desde la raíz del repositorio:
+
+```bash
 streamlit run app/app.py
 ```
 
-- Se abrirá en el navegador local (`http://localhost:8501`).
-- Permite ingresar los 12 atributos de la vivienda (o cargar perfiles de ejemplo), consultar el precio estimado con su intervalo de predicción (80 %, 90 % o 95 %) y revisar la explicación SHAP local de la predicción.
-- Provisionalmente entrena (OLS hedónico) con las 436 filas de entrenamiento en una sola función (`cargar_modelo` en `app/app.py`), lista para cargar `models/modelo_final.joblib` cuando entre la tarjeta **T25**.
+Se abre en `http://localhost:8501`. Permite ingresar los 12 atributos de la vivienda (o cargar perfiles de ejemplo), ver el precio estimado con su intervalo de predicción (80 %, 90 % o 95 %) y la explicación SHAP de esa predicción. Mientras no exista `models/modelo_final.joblib` (T25), entrena el OLS hedónico P2 con las 436 filas de entrenamiento.
 
-Semilla global del proyecto: **5007** (`src/config.py`).
+## Licencia y cita
+
+El código y los documentos del equipo están bajo licencia MIT ([`LICENSE`](LICENSE)). Los datos conservan su licencia: `Housing.csv` es CC0 (Kaggle) y el archivo original de Windsor viene del paquete AER de R (GPL-2 | GPL-3); ver [`data/README.md`](data/README.md). Para citar el repositorio y los datos, ver [`CITATION.cff`](CITATION.cff).
 
 ## Entregables y fechas
 

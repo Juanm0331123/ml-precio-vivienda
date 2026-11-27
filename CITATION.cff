@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "Si usas este repositorio, cítalo así. Los datos tienen su propia cita en 'references'."
+title: "Predicción del precio de vivienda con aprendizaje automático frente al modelo hedónico"
+type: software
+authors:
+  - family-names: "León Gómez"
+    given-names: "Juan Miguel"
+  - family-names: "Mozo Terán"
+    given-names: "Mauricio José"
+  - family-names: "Tobar Sánchez"
+    given-names: "Brandon Eduardo"
+repository-code: "https://github.com/Juanm0331123/ml-precio-vivienda"
+license: MIT
+date-released: "2026-12-05"
+references:
+  - type: article
+    title: "Semiparametric estimation of a hedonic price function"
+    authors:
+      - family-names: "Anglin"
+        given-names: "Paul M."
+      - family-names: "Gençay"
+        given-names: "Ramazan"
+    journal: "Journal of Applied Econometrics"
+    volume: 11
+    issue: 6
+    start: 633
+    end: 648
+    year: 1996
+  - type: data
+    title: "Housing Prices Dataset"
+    authors:
+      - name: "Yasser H."
+    url: "https://www.kaggle.com/datasets/yasserh/housing-prices-dataset"
+    license: CC0-1.0
