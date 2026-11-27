@@ -87,10 +87,12 @@ class PruebasPiloto(unittest.TestCase):
         r = pipeline_interno(clone(construir_pipeline("P2", "M1")).fit(self.X.iloc[ajuste], self.y.iloc[ajuste]))
         self.assertIn("prepro", r.named_steps)
 
-    def test_p3_incluye_seleccion_k_fijo(self):
+    def test_p3_sin_recorte_fijo_mi_por_defecto(self):
         pre = construir_preprocesamiento("P3", escalar=False)
-        self.assertIsInstance(pre.named_steps["sel"], SelectKBest)
-        self.assertEqual(pre.named_steps["sel"].k, 10)
+        self.assertNotIn("sel", pre.named_steps)
+        pre_k = construir_preprocesamiento("P3", escalar=False, k=10)
+        self.assertIsInstance(pre_k.named_steps["sel"], SelectKBest)
+        self.assertEqual(pre_k.named_steps["sel"].k, 10)
 
     # --- D. Ausencia de fuga ---------------------------------------------------------------------
     def test_winsorizador_aprende_solo_del_ajuste(self):
