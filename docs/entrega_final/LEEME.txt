@@ -1,0 +1,22 @@
+Predicción del precio de vivienda con aprendizaje automático
+Aprendizaje Automático · Maestría en Ciencia de Datos e IA · UAO · 2026-2
+Juan Miguel León Gómez · Mauricio José Mozo Terán · Brandon Eduardo Tobar Sánchez
+
+Repositorio (código, datos, notebooks y resultados):
+https://github.com/Juanm0331123/ml-precio-vivienda
+
+Tablero de Trello (gestión del proyecto):
+https://trello.com/b/5UQEZmsC/proyecto-ml-predicci%C3%B3n-del-precio-de-vivienda
+
+Cómo correr el experimento (Python 3.12):
+  pip install -r requirements.txt
+  python reproducir.py
+Demo:
+  streamlit run app/app.py
+
+Archivos de la entrega:
+  Paper_ML_Precio_Vivienda.pdf        Paper IEEE en inglés
+  Presentacion_ML_Precio_Vivienda.pdf Diapositivas de la exposición
+  Codigo_ML_Precio_Vivienda.zip       Archivos para correr el experimento (este LEEME va adentro)
+  Reporte_Gestion_Final.pdf           Reporte de Trello y GitHub
+  Coevaluacion_Final.xlsx             Coevaluación del equipo

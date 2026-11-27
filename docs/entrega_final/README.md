@@ -49,6 +49,18 @@ La ruta crítica es T19–T21 → T22 → T25 → T26 y T28. El piloto (T12) ya 
 | `02_storyboard_presentacion_final.md` | T30 | Storyboard, reparto de tiempos y guion de la presentación de 20 minutos |
 | [`03_checklist_entrega_final.md`](03_checklist_entrega_final.md) | T31 | Lista de verificación de la entrega: archivos, paper, reproducibilidad, reporte y coevaluación |
 | [`Coevaluacion_Final.xlsx`](Coevaluacion_Final.xlsx) | T31 | Plantilla de coevaluación (cada integrante califica a sus dos compañeros de 1 a 5) |
-| `Reporte_Gestion_Final.pdf` | T31 | Se genera el día de la entrega |
+| [`Reporte_Gestion_Final.pdf`](Reporte_Gestion_Final.pdf) | T31 | Reporte de Trello y GitHub al corte del 26 de noviembre |
+| [`Paper_ML_Precio_Vivienda.pdf`](Paper_ML_Precio_Vivienda.pdf) | T27 · T28 | Copia del paper IEEE (`docs/paper/main.pdf`) para subir a UAO Virtual |
+| [`LEEME.txt`](LEEME.txt) | T31 | Enlaces al repositorio y al tablero, cómo correr el experimento y lista de archivos de la entrega |
+
+## Qué se sube a UAO Virtual (Entrega 2, cierra el viernes 27 de noviembre a las 6:29 p. m.)
+
+Máximo 5 archivos:
+
+1. `Paper_ML_Precio_Vivienda.pdf`.
+2. `Presentacion_ML_Precio_Vivienda.pdf`, descargado de Canva (Compartir → Descargar → PDF estándar).
+3. `Codigo_ML_Precio_Vivienda.zip`: el ZIP de `main` desde GitHub (Code → Download ZIP) cuando estén fusionados los PR, con `LEEME.txt` adentro.
+4. `Reporte_Gestion_Final.pdf`.
+5. `Coevaluacion_Final.xlsx` con las seis calificaciones.
 
 El paper vive en [`../paper/`](../paper/).
