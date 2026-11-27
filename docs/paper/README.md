@@ -15,13 +15,13 @@ Paper de la entrega final, en inglés y en formato IEEE de conferencia (`IEEEtra
 | Sección | Tarjeta | Estado |
 |---|---|---|
 | Abstract, Introduction, Related Work, Dataset, Problem Formulation | T27 | Redactadas |
-| Methodology (diseño, preprocesamientos, modelos, métricas, prueba estadística, espacios de búsqueda y regla final de P3) | T28 | Redactada. La tabla de espacios de búsqueda se ajusta a la búsqueda final de T22 cuando esté en `main` |
-| Experiments and Results: selección de variables y ablación de `furnishingstatus` (H3) | T28 | Redactadas con los resultados de T18 |
-| Complexity Analysis: complejidad teórica (tabla O(·) de los seis modelos) | T28 | Redactada |
-| Discussion: limitaciones | T28 | Redactada |
-| Results: comparación de modelos y evaluación en prueba; costo empírico; SHAP y errores; Conclusions | T28 | Pendientes de T22–T25. En el PDF aparecen marcadas en gris como *Pending* |
+| Methodology (diseño, CV anidada, preprocesamientos, modelos, espacios de búsqueda, métricas y pruebas) | T28 | Redactada |
+| Experiments and Results: selección de variables, ablación (H3), comparación de los 18 pipelines (H1, H2) y prueba sellada | T28 | Redactadas con los resultados de T18 y T22 a T25 |
+| Complexity Analysis: complejidad teórica y costo empírico con frente de Pareto | T28 | Redactada con T23 |
+| Discussion: impacto de los atributos (SHAP contra el hedónico), residuos y limitaciones | T28 | Redactada con T24 |
+| Conclusions | T28 | Redactadas |
 
-El abstract tiene una frase pendiente con los resultados principales; se completa en T28.
+Las filas de P3 de la CV anidada salen de correr `src/ejecutar_t22.py` (rama de T22) solo para P3 con el P3 que quedó en `main` después del #29. Cuando entre la corrida completa de T22, se regeneran las tablas y figuras con `python docs/paper/figures/make_result_figures.py` y se vuelve a compilar.
 
 ## Cómo compilar
 
@@ -29,6 +29,7 @@ Desde la raíz del repositorio:
 
 ```bash
 python docs/paper/figures/make_figures.py
+python docs/paper/figures/make_result_figures.py
 cd docs/paper
 pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```
