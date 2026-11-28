@@ -46,7 +46,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import joblib
 import matplotlib
 matplotlib.use("Agg")
-import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -58,7 +57,7 @@ from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 
-from src.config import DIR_FIGURAS, DIR_TABLAS, SEMILLA
+from src.config import DIR_FIGURAS, DIR_MODELOS, DIR_TABLAS, SEMILLA, RAIZ
 from src.evaluacion import (
     FACTOR_KAGGLE,
     calcular_metricas,
@@ -93,6 +92,11 @@ COLORES_MODELOS = {
     "M5_P1": "#2A9D8F",
     "M3_P1": "#3D5A80",
 }
+
+def _rel(ruta) -> Path:
+    """Ruta relativa a la raíz del repositorio, para no imprimir rutas del equipo local."""
+    return Path(ruta).resolve().relative_to(RAIZ)
+
 
 def ajustar_y_predecir_pipeline(
     prepro_id: str,
@@ -205,12 +209,12 @@ def ejecutar_t25():
 
     ruta_tabla_test = DIR_TABLAS / "t25_metricas_conjunto_prueba.csv"
     df_test_metricas.to_csv(ruta_tabla_test, index=False)
-    print(f"[OK] Tabla de métricas en prueba guardada en: {ruta_tabla_test}")
+    print(f"[OK] Tabla de métricas en prueba guardada en: {_rel(ruta_tabla_test)}")
 
     df_bootstrap = pd.DataFrame(filas_bootstrap).sort_values(by="rmse_test_cad").reset_index(drop=True)
     ruta_tabla_boot = DIR_TABLAS / "t25_bootstrap_ic_prueba.csv"
     df_bootstrap.to_csv(ruta_tabla_boot, index=False)
-    print(f"[OK] Tabla de intervalos bootstrap guardada en: {ruta_tabla_boot}")
+    print(f"[OK] Tabla de intervalos bootstrap guardada en: {_rel(ruta_tabla_boot)}")
 
     # 3. Guardar predicciones fila por fila de los 6 modelos líderes
     modelos_lideres = ["M1_P2", "M2_P2", "M4_P2", "M5_P1", "M6_P1", "M3_P1"]
@@ -224,7 +228,7 @@ def ejecutar_t25():
 
     ruta_tabla_preds = DIR_TABLAS / "t25_predicciones_prueba.csv"
     df_preds_test.to_csv(ruta_tabla_preds, index=False)
-    print(f"[OK] Tabla de predicciones individuales guardada en: {ruta_tabla_preds}")
+    print(f"[OK] Tabla de predicciones individuales guardada en: {_rel(ruta_tabla_preds)}")
 
     # 4. Comparación CV Anidada (T22) vs Prueba Sellada (T25)
     print("\n--- Comparando CV Anidada (T22) frente a Prueba Sellada (T25) ---")
@@ -246,7 +250,7 @@ def ejecutar_t25():
 
     ruta_tabla_comp = DIR_TABLAS / "t25_comparacion_cv_vs_prueba.csv"
     df_comp.to_csv(ruta_tabla_comp, index=False)
-    print(f"[OK] Tabla comparativa CV vs Prueba guardada en: {ruta_tabla_comp}")
+    print(f"[OK] Tabla comparativa CV vs Prueba guardada en: {_rel(ruta_tabla_comp)}")
 
     # Mostrar resumen en consola de los modelos líderes
     print("\n" + "-" * 75)
@@ -314,7 +318,7 @@ def ejecutar_t25():
     df_h1 = pd.DataFrame(filas_h1)
     ruta_tabla_h1 = DIR_TABLAS / "t25_contraste_hipotesis_h1.csv"
     df_h1.to_csv(ruta_tabla_h1, index=False)
-    print(f"[OK] Tabla de contrastación de H1 guardada en: {ruta_tabla_h1}")
+    print(f"[OK] Tabla de contrastación de H1 guardada en: {_rel(ruta_tabla_h1)}")
 
     # 6. Serialización del modelo final seleccionado (OLS Hedónico P2)
     print("\n--- Serializando el modelo final seleccionado (OLS Hedónico P2) en models/modelo_final.joblib ---")
@@ -324,11 +328,10 @@ def ejecutar_t25():
     else:
         modelo_exportar = modelo_final
 
-    dir_modelos = Path("models")
-    dir_modelos.mkdir(parents=True, exist_ok=True)
-    ruta_modelo_final = dir_modelos / "modelo_final.joblib"
+    DIR_MODELOS.mkdir(parents=True, exist_ok=True)
+    ruta_modelo_final = DIR_MODELOS / "modelo_final.joblib"
     joblib.dump(modelo_exportar, ruta_modelo_final)
-    print(f"[OK] Modelo final serializado con éxito en: {ruta_modelo_final}")
+    print(f"[OK] Modelo final serializado con éxito en: {_rel(ruta_modelo_final)}")
 
     # =========================================================================
     # GENERACIÓN DE FIGURAS FORMATO IEEE (300 DPI)
@@ -366,7 +369,7 @@ def ejecutar_t25():
     ruta_fig1 = DIR_FIGURAS / "fig_t25_predicho_vs_real_prueba.png"
     plt.savefig(ruta_fig1, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig1}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig1)}")
 
     # FIGURA 2: Comparación RMSE CV Anidada vs Test
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -413,7 +416,7 @@ def ejecutar_t25():
     ruta_fig2 = DIR_FIGURAS / "fig_t25_comparacion_cv_vs_prueba.png"
     plt.savefig(ruta_fig2, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig2}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig2)}")
 
     # FIGURA 3: Densidad KDE de Residuos en Prueba
     fig, ax = plt.subplots(figsize=(9, 5.5))
@@ -437,7 +440,7 @@ def ejecutar_t25():
     ruta_fig3 = DIR_FIGURAS / "fig_t25_distribucion_residuos_prueba.png"
     plt.savefig(ruta_fig3, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig3}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig3)}")
 
     # FIGURA 4: Comparación Multimétrica de Modelos en Prueba
     fig, axes = plt.subplots(1, 3, figsize=(14, 4.5))
@@ -473,7 +476,7 @@ def ejecutar_t25():
     ruta_fig4 = DIR_FIGURAS / "fig_t25_comparacion_metricas_test.png"
     plt.savefig(ruta_fig4, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig4}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig4)}")
 
     print("\n" + "=" * 80)
     print("EJECUCIÓN DE T25 COMPLETADA CON ÉXITO")
