@@ -1,0 +1,7 @@
+modelo_id,modelo_nombre,familia,costo_entrenamiento_teorico,costo_inferencia_unitaria,memoria_teorica,factores_determinantes,comportamiento_muestra_pequena
+M1,OLS (hedónico),Lineal,O(n · p² + p³),O(p),O(p²),"n observaciones, p variables (solución analítica cerrada)",Instantáneo (microsegundos); invarianza al valor de hiperparámetros
+M2,Ridge,Lineal Regularizado,O(n · p² + p³),O(p),O(p²),"n observaciones, p variables; penalización L2 (alpha)",Solución cerrada exacta con matriz invertible; costo idéntico a OLS
+M3,KNN,Basado en Instancias,O(1) o O(n · p log n),O(n · p) o O(p log n),O(n · p),"n datos almacenados, métrica de distancia (p), vecinos (k)","Ajuste nulo, pero inferencia lenta por búsqueda de distancias"
+M4,SVR (RBF),Kernel,O(n² · p) a O(n³),O(n_sv · p),O(n_sv · p + caché),"n_sv vectores de soporte, regularización C, radio gamma, epsilon",Costo superlineal; escala con el número de vectores soporte activos
+M5,Random Forest,Ensambles (Bagging),O(T · m · n log n),O(T · max_depth),O(T · n_nodos),"T árboles, m variables candidatas, profundidad, min_samples_leaf",Costo moderado a alto por construir cientos de árboles profundos
+M6,XGBoost,Ensambles (Boosting),O(K · d · n · p),O(K · d),O(K · n_nodos),"K rondas de boosting, d profundidad máxima, histogramas de corte",Secuencial altamente optimizado en C++; requiere podado de árboles
