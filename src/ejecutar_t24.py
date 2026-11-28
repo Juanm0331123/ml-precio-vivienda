@@ -57,7 +57,7 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 
-from src.config import DIR_FIGURAS, DIR_TABLAS, SEMILLA
+from src.config import DIR_FIGURAS, DIR_TABLAS, SEMILLA, RAIZ
 from src.evaluacion import FACTOR_KAGGLE, cargar_entrenamiento, crear_pliegues
 from src.preprocesamiento import construir_preprocesamiento
 
@@ -85,6 +85,11 @@ NOMBRES_VARIABLES = {
 }
 
 # Hiperparámetros óptimos consolidados de T19-T22
+def _rel(ruta) -> Path:
+    """Ruta relativa a la raíz del repositorio, para no imprimir rutas del equipo local."""
+    return Path(ruta).resolve().relative_to(RAIZ)
+
+
 def _cargar_hp_t22(modelo_id: str, prepro_id: str, defaults: dict) -> dict:
     ruta = DIR_TABLAS / "t22_pliegues_anidados.csv"
     if ruta.exists():
@@ -272,12 +277,12 @@ def analizar_residuos_por_cuartil(y_real: np.ndarray, y_pred: np.ndarray, modelo
     df_cuartiles = pd.DataFrame(filas)
     ruta_tab = DIR_TABLAS / "t24_residuos_por_cuartil.csv"
     df_cuartiles.to_csv(ruta_tab, index=False)
-    print(f"  [Tabla Residuos por Cuartil] {ruta_tab}")
+    print(f"  [Tabla Residuos por Cuartil] {_rel(ruta_tab)}")
     
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5.2), dpi=300)
     
     datos_box = [df_res[df_res["cuartil"] == q]["error"].values for q in ["Q1 (Bajo)", "Q2 (Medio-Bajo)", "Q3 (Medio-Alto)", "Q4 (Alto)"]]
-    bp = ax1.boxplot(datos_box, patch_artist=True, labels=["Q1 (Bajo)", "Q2 (Med-Bajo)", "Q3 (Med-Alto)", "Q4 (Alto)"])
+    bp = ax1.boxplot(datos_box, patch_artist=True, tick_labels=["Q1 (Bajo)", "Q2 (Med-Bajo)", "Q3 (Med-Alto)", "Q4 (Alto)"])
     colores_box = ["#4a6fa5", "#16697a", "#e07a5f", "#d62728"]
     for patch, col in zip(bp["boxes"], colores_box):
         patch.set_facecolor(col)
@@ -305,12 +310,14 @@ def analizar_residuos_por_cuartil(y_real: np.ndarray, y_pred: np.ndarray, modelo
     ruta_fig = DIR_FIGURAS / "fig_t24_residuos_por_cuartil.png"
     plt.savefig(ruta_fig, dpi=300)
     plt.close()
-    print(f"  [Figura Residuos por Cuartil] {ruta_fig}")
+    print(f"  [Figura Residuos por Cuartil] {_rel(ruta_fig)}")
     return df_cuartiles
 
 
 def generar_pdp_ice(modelo_ajustado, X_trans: pd.DataFrame, nombres_columnas: list) -> None:
     """Genera Partial Dependence Plots (PDP) y curvas ICE para los atributos principales (T24)."""
+    # scikit-learn no acepta columnas enteras en PDP; el modelo da lo mismo con flotantes
+    X_trans = X_trans.astype(float)
     indices_top = []
     features_top = []
     for f in ["area", "bathrooms", "stories", "airconditioning"]:
@@ -351,7 +358,7 @@ def generar_pdp_ice(modelo_ajustado, X_trans: pd.DataFrame, nombres_columnas: li
     ruta_fig = DIR_FIGURAS / "fig_t24_pdp_ice.png"
     plt.savefig(ruta_fig, dpi=300)
     plt.close()
-    print(f"  [Figura PDP / ICE] {ruta_fig}")
+    print(f"  [Figura PDP / ICE] {_rel(ruta_fig)}")
 
 
 def ejecutar_t24():
@@ -386,7 +393,7 @@ def ejecutar_t24():
     df_residuos_resumen = pd.DataFrame(estadisticas_residuos)
     ruta_tabla_residuos = DIR_TABLAS / "t24_analisis_residuos.csv"
     df_residuos_resumen.to_csv(ruta_tabla_residuos, index=False)
-    print(f"\n[OK] Tabla de residuos guardada en: {ruta_tabla_residuos}")
+    print(f"\n[OK] Tabla de residuos guardada en: {_rel(ruta_tabla_residuos)}")
 
     # 4. Detección y caracterización de casos extremos (outliers de predicción)
     print("\n--- Identificando casos extremos de predicción (Top Over/Under predicted) ---")
@@ -412,7 +419,7 @@ def ejecutar_t24():
     df_extremos = pd.concat([top_subpredichas, top_sobrepredichas])
     ruta_tabla_extremos = DIR_TABLAS / "t24_casos_extremos_residuos.csv"
     df_extremos.to_csv(ruta_tabla_extremos)
-    print(f"[OK] Tabla de casos extremos guardada en: {ruta_tabla_extremos}")
+    print(f"[OK] Tabla de casos extremos guardada en: {_rel(ruta_tabla_extremos)}")
 
     # 5. Ajuste de modelos finales sobre entrenamiento completo para SHAP
     print("\n--- Entrenando modelos en conjunto completo (n=436) para TreeExplainer ---")
@@ -491,7 +498,7 @@ def ejecutar_t24():
 
     ruta_tabla_shap = DIR_TABLAS / "t24_shap_importancias_globales.csv"
     df_importancias.to_csv(ruta_tabla_shap, index=False)
-    print(f"[OK] Tabla de importancia global SHAP guardada en: {ruta_tabla_shap}")
+    print(f"[OK] Tabla de importancia global SHAP guardada en: {_rel(ruta_tabla_shap)}")
 
     # 8. Contraste: Coeficientes Hedónicos (OLS P2) vs SHAP (XGBoost P1)
     print("\n--- Comparando Coeficientes Hedónicos OLS P2 vs SHAP XGBoost ---")
@@ -524,7 +531,7 @@ def ejecutar_t24():
 
     ruta_tabla_contraste = DIR_TABLAS / "t24_comparacion_coeficientes_vs_shap.csv"
     df_contraste.to_csv(ruta_tabla_contraste, index=False)
-    print(f"[OK] Tabla comparativa OLS vs SHAP guardada en: {ruta_tabla_contraste}")
+    print(f"[OK] Tabla comparativa OLS vs SHAP guardada en: {_rel(ruta_tabla_contraste)}")
 
     # 9. Selección y análisis de 4 casos locales representativos
     print("\n--- Seleccionando 4 arquetipos de vivienda para explicación local ---")
@@ -578,7 +585,7 @@ def ejecutar_t24():
     df_casos_locales = pd.DataFrame(filas_casos_locales)
     ruta_tabla_locales = DIR_TABLAS / "t24_casos_locales_shap.csv"
     df_casos_locales.to_csv(ruta_tabla_locales, index=False)
-    print(f"[OK] Tabla de casos locales guardada en: {ruta_tabla_locales}")
+    print(f"[OK] Tabla de casos locales guardada en: {_rel(ruta_tabla_locales)}")
 
     # =========================================================================
     # GENERACIÓN DE FIGURAS FORMATO IEEE
@@ -646,7 +653,7 @@ def ejecutar_t24():
     ruta_fig_residuos = DIR_FIGURAS / "fig_t24_diagnostico_residuos.png"
     plt.savefig(ruta_fig_residuos, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig_residuos}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig_residuos)}")
 
     # FIGURA 2: Beeswarm Summary Plot (SHAP)
     fig = plt.figure(figsize=(10, 6.5))
@@ -657,7 +664,7 @@ def ejecutar_t24():
     ruta_fig_beeswarm = DIR_FIGURAS / "fig_t24_shap_summary_beeswarm.png"
     plt.savefig(ruta_fig_beeswarm, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig_beeswarm}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig_beeswarm)}")
 
     # FIGURA 3: Importancia Global de Barras (XGBoost vs Random Forest)
     fig, ax = plt.subplots(figsize=(10, 6.5))
@@ -683,7 +690,7 @@ def ejecutar_t24():
     ruta_fig_barras = DIR_FIGURAS / "fig_t24_shap_importancia_barras.png"
     plt.savefig(ruta_fig_barras, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig_barras}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig_barras)}")
 
     # FIGURA 4: Curvas de Dependencia SHAP (2x3)
     fig, axes = plt.subplots(2, 3, figsize=(15, 9.5))
@@ -724,7 +731,7 @@ def ejecutar_t24():
     ruta_fig_dependencia = DIR_FIGURAS / "fig_t24_shap_dependencia_atributos.png"
     plt.savefig(ruta_fig_dependencia, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig_dependencia}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig_dependencia)}")
 
     # FIGURA 5: Explicación Local de 4 Arquetipos de Vivienda (2x2)
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
@@ -775,7 +782,7 @@ def ejecutar_t24():
     ruta_fig_locales = DIR_FIGURAS / "fig_t24_shap_explicacion_local_casos.png"
     plt.savefig(ruta_fig_locales, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig_locales}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig_locales)}")
 
     # FIGURA 6: Concordancia Coeficientes Hedónicos (OLS) vs SHAP (XGBoost)
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 6))
@@ -815,7 +822,7 @@ def ejecutar_t24():
     ruta_fig_contraste = DIR_FIGURAS / "fig_t24_coeficientes_hedonicos_vs_shap.png"
     plt.savefig(ruta_fig_contraste, dpi=300)
     plt.close()
-    print(f"[OK] Figura guardada: {ruta_fig_contraste}")
+    print(f"[OK] Figura guardada: {_rel(ruta_fig_contraste)}")
 
     print("\n" + "=" * 80)
     
