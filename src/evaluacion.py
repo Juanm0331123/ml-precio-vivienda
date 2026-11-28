@@ -10,6 +10,7 @@ dólares canadienses de 1987 × 70, T05), sin redondear antes de agregar.
 """
 
 import hashlib
+import scipy.stats as stats
 import time
 import traceback
 from typing import Dict, Iterable, List, Optional, Tuple
@@ -80,15 +81,22 @@ def crear_pliegues(y: pd.Series, n_splits: int = N_SPLITS, n_repeticiones: int =
 
 # ----------------------------------------------------------------------------- métricas
 def calcular_metricas(y_real, y_pred) -> Dict[str, float]:
-    """RMSE, MAE, MAPE (%) y R² en la escala de ``y_real``. R² puede ser negativo fuera de muestra."""
+    """RMSE, MAE, MAPE (%), R² y RMSLE en la escala de ``y_real``. R² puede ser negativo fuera de muestra."""
     y_real, y_pred = np.asarray(y_real, dtype=float), np.asarray(y_pred, dtype=float)
     error = y_real - y_pred
     ss_res, ss_tot = np.sum(error**2), np.sum((y_real - y_real.mean()) ** 2)
+    
+    # RMSLE protegiendo contra valores no positivos
+    y_r_clip = np.clip(y_real, a_min=0, a_max=None)
+    y_p_clip = np.clip(y_pred, a_min=0, a_max=None)
+    rmsle = float(np.sqrt(np.mean((np.log1p(y_r_clip) - np.log1p(y_p_clip)) ** 2)))
+
     return {
         "rmse": float(np.sqrt(np.mean(error**2))),
         "mae": float(np.mean(np.abs(error))),
         "mape": float(100 * np.mean(np.abs(error / y_real))),
         "r2": float(1 - ss_res / ss_tot),
+        "rmsle": rmsle,
     }
 
 
@@ -170,3 +178,104 @@ def curva_aprendizaje(X: pd.DataFrame, y: pd.Series, pliegues, prepro_id: str, m
             filas.append({"preprocesamiento": prepro_id, "modelo": modelo_id, "n_ajuste": int(n), "pliegue": k,
                           "rmse_ajuste": float(-ent[i, k]), "rmse_validacion": float(-val[i, k])})
     return pd.DataFrame(filas)
+
+
+# =============================================================================
+# Herramientas de Inferencia Estadística y Comparación de Modelos (Tarjeta T22)
+# =============================================================================
+
+def calcular_intervalo_confianza(valores: Iterable[float], nivel: float = 0.95) -> Dict[str, float]:
+    """Calcula media, desviación estándar, error estándar e intervalo de confianza t-Student (95%).
+    
+    Parameters
+    ----------
+    valores : array-like
+        Muestra de métricas a través de los pliegues pareados.
+    nivel : float, default=0.95
+        Nivel de confianza bilateral.
+    """
+    arr = np.asarray(valores, dtype=float)
+    n = len(arr)
+    media = float(np.mean(arr))
+    desv = float(np.std(arr, ddof=1)) if n > 1 else 0.0
+    error_estandar = desv / np.sqrt(n) if n > 1 else 0.0
+    
+    if n > 1:
+        t_crit = float(stats.t.ppf((1 + nivel) / 2, df=n - 1))
+        margen = t_crit * error_estandar
+    else:
+        margen = 0.0
+
+    return {
+        "media": media,
+        "desv": desv,
+        "error_estandar": error_estandar,
+        "ic_inf": media - margen,
+        "ic_sup": media + margen,
+    }
+
+
+def prueba_t_corregida_nadeau_bengio(
+    diferencias: Iterable[float],
+    n_ajuste: int = 348,
+    n_val: int = 88,
+) -> Dict[str, float]:
+    """Prueba t corregida para validación cruzada repetida (Nadeau & Bengio, 2003).
+    
+    La prueba t pareada estándar subestima severamente la varianza muestral debido
+    al solapamiento de datos entre pliegues de entrenamiento, inflando el error tipo I.
+    Nadeau & Bengio demostraron que corrigiendo la varianza con el factor (1/J + n_val/n_ajuste),
+    se obtiene un estimador consistente y no optimista.
+    
+    Parameters
+    ----------
+    diferencias : array-like
+        Diferencias pareadas métrica(A) - métrica(B) en cada pliegue j in {1, ..., J}.
+    n_ajuste : int, default=348
+        Número de observaciones promedio en el conjunto de ajuste de cada pliegue.
+    n_val : int, default=88
+        Número de observaciones promedio en el conjunto de validación de cada pliegue.
+    """
+    d = np.asarray(diferencias, dtype=float)
+    J = len(d)
+    media_d = float(np.mean(d))
+    var_d = float(np.var(d, ddof=1)) if J > 1 else 0.0
+    
+    # Factor de corrección de varianza
+    factor_correccion = (1.0 / J) + (float(n_val) / float(n_ajuste))
+    var_corregida = factor_correccion * var_d
+    error_estandar_corregido = np.sqrt(var_corregida) if var_corregida > 0 else 1e-12
+    
+    t_stat = media_d / error_estandar_corregido
+    df = J - 1
+    p_valor = float(2.0 * stats.t.sf(np.abs(t_stat), df=df))
+
+    return {
+        "diferencia_media": media_d,
+        "desv_diferencias": np.sqrt(var_d),
+        "error_estandar_corregido": float(error_estandar_corregido),
+        "t_estadistico": float(t_stat),
+        "grados_libertad": int(df),
+        "p_valor": p_valor,
+        "significativo_al_5pct": bool(p_valor < 0.05),
+    }
+
+
+def prueba_friedman_ranking(df_pliegues: pd.DataFrame, metrica: str = "rmse_cad") -> Tuple[float, float, pd.DataFrame]:
+    """Prueba no paramétrica de Friedman para comparar múltiples algoritmos pareados (Demšar, 2006).
+    
+    Calcula el ranking de cada modelo dentro de cada pliegue (1 = menor error) y evalúa
+    si la distribución de rangos medios difiere de una distribución aleatoria.
+    """
+    pivot = df_pliegues.pivot(index="pliegue", columns="modelo_id_completo", values=metrica)
+    # Ranking por fila: menor métrica = rango 1
+    rankings = pivot.rank(axis=1, ascending=True)
+    ranking_medio = rankings.mean().reset_index()
+    ranking_medio.columns = ["modelo_id_completo", "ranking_medio"]
+    ranking_medio = ranking_medio.sort_values("ranking_medio").reset_index(drop=True)
+
+    # Prueba de Friedman vía scipy
+    args = [pivot[col].values for col in pivot.columns]
+    res_friedman = stats.friedmanchisquare(*args)
+    
+    return float(res_friedman.statistic), float(res_friedman.pvalue), ranking_medio

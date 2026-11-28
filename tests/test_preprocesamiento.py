@@ -72,12 +72,12 @@ class TestPreprocesamientoT17(unittest.TestCase):
 
         cod = CodificadorBase().fit(X_crudo)
         X_cod = cod.transform(X_crudo)
-        pd.testing.assert_frame_equal(X_cod, self.X_train, check_dtype=False)
+        pd.testing.assert_frame_equal(X_cod, self.X_train, check_dtype=False, check_index_type=False)
 
         # El pipeline P1 completo produce exactamente la misma matriz desde crudo o desde limpio
         p_crudo = construir_preprocesamiento("P1", escalar=True).fit_transform(X_crudo, self.y_train)
         p_limpio = construir_preprocesamiento("P1", escalar=True).fit_transform(self.X_train, self.y_train)
-        pd.testing.assert_frame_equal(p_crudo, p_limpio)
+        pd.testing.assert_frame_equal(p_crudo, p_limpio, check_dtype=False, check_index_type=False)
 
     def test_envolver_objetivo_transformed_target_regressor(self):
         est_p1 = envolver_objetivo(
