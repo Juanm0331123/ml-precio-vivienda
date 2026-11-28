@@ -42,7 +42,7 @@ from sklearn.model_selection import StratifiedKFold, validation_curve, KFold
 # Asegurar acceso a la raíz del proyecto
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from src.config import DIR_FIGURAS, DIR_TABLAS, SEMILLA
+from src.config import DIR_FIGURAS, DIR_TABLAS, SEMILLA, RAIZ
 from src.evaluacion import FACTOR_KAGGLE, cargar_entrenamiento, crear_pliegues
 from src.modelos import MODELOS, construir_pipeline, pipeline_interno
 
@@ -74,6 +74,11 @@ MEJORES_HIPERPARAMETROS = {
     ("P2", "M6"): {"n_estimators": 100, "learning_rate": 0.05, "max_depth": 5, "subsample": 0.85, "colsample_bytree": 0.60, "reg_alpha": 0.0, "reg_lambda": 1.0, "min_child_weight": 3, "n_jobs": 1, "random_state": SEMILLA, "tree_method": "hist"},
     ("P3", "M6"): {"n_estimators": 100, "learning_rate": 0.15, "max_depth": 3, "subsample": 0.85, "colsample_bytree": 0.60, "reg_alpha": 0.0, "reg_lambda": 3.0, "min_child_weight": 3, "n_jobs": 1, "random_state": SEMILLA, "tree_method": "hist"},
 }
+
+
+def _rel(ruta) -> Path:
+    """Ruta relativa a la raíz del repositorio, para no imprimir rutas del equipo local."""
+    return Path(ruta).resolve().relative_to(RAIZ)
 
 
 def extraer_pipeline_scikit(estimador: Any):
@@ -302,7 +307,7 @@ def generar_curvas_validacion(X, y):
     df_curvas = pd.DataFrame(filas_curvas)
     ruta_tab = DIR_TABLAS / "t23_curvas_validacion.csv"
     df_curvas.to_csv(ruta_tab, index=False)
-    print(f"  [Tabla Curvas Validacion] {ruta_tab}")
+    print(f"  [Tabla Curvas Validacion] {_rel(ruta_tab)}")
 
     fig, axes = plt.subplots(1, 3, figsize=(16, 4.8), dpi=300)
 
@@ -345,7 +350,7 @@ def generar_curvas_validacion(X, y):
     ruta_fig = DIR_FIGURAS / "fig_t23_curvas_validacion.png"
     plt.savefig(ruta_fig, dpi=300)
     plt.close()
-    print(f"  [Figura Curvas Validacion] {ruta_fig}")
+    print(f"  [Figura Curvas Validacion] {_rel(ruta_fig)}")
     return df_curvas
 
 
@@ -380,13 +385,13 @@ def ejecutar_analisis_complejidad_t23(forzar_recalculo: bool = False) -> Dict[st
     # 2. Generar tabla de complejidad teórica
     df_teorica = generar_tabla_complejidad_teorica()
     df_teorica.to_csv(ruta_tabla_teorica, index=False)
-    print(f"-> Guardada tabla teórica en: {ruta_tabla_teorica}")
+    print(f"-> Guardada tabla teórica en: {_rel(ruta_tabla_teorica)}")
 
     # 3. Registrar hardware
     hardware = registrar_entorno_hardware()
     with open(ruta_json_hardware, "w", encoding="utf-8") as f:
         json.dump(hardware, f, indent=2)
-    print(f"-> Guardado entorno de hardware en: {ruta_json_hardware}")
+    print(f"-> Guardado entorno de hardware en: {_rel(ruta_json_hardware)}")
 
     # 4. Cargar datos de entrenamiento (respetando aislamiento del test sellado n=109)
     X, y, evidencia = cargar_entrenamiento()
@@ -500,7 +505,7 @@ def ejecutar_analisis_complejidad_t23(forzar_recalculo: bool = False) -> Dict[st
     df_empirica = pd.DataFrame(registros_empiricos)
     df_empirica = df_empirica.sort_values("tiempo_ajuste_mediana_s", ascending=True).reset_index(drop=True)
     df_empirica.to_csv(ruta_tabla_empirica, index=False)
-    print(f"-> Guardada tabla empírica en: {ruta_tabla_empirica}")
+    print(f"-> Guardada tabla empírica en: {_rel(ruta_tabla_empirica)}")
 
     # 6. Curvas de aprendizaje y escalabilidad en función de n
     print("-> Computando curvas de escalabilidad frente al tamaño muestral n...")
@@ -553,7 +558,7 @@ def ejecutar_analisis_complejidad_t23(forzar_recalculo: bool = False) -> Dict[st
 
     df_escalabilidad = pd.DataFrame(registros_escalabilidad)
     df_escalabilidad.to_csv(ruta_tabla_escalabilidad, index=False)
-    print(f"-> Guardada tabla de escalabilidad en: {ruta_tabla_escalabilidad}")
+    print(f"-> Guardada tabla de escalabilidad en: {_rel(ruta_tabla_escalabilidad)}")
 
     # 7. Generación de Figuras Oficiales
     print("-> Generando figuras de alta resolución en reports/figures/...")
@@ -629,7 +634,7 @@ def generar_figuras_complejidad(df_empirica: pd.DataFrame, df_escalabilidad: pd.
     ruta_fig1 = DIR_FIGURAS / "fig_t23_tradeoff_rmse_vs_tiempo_entrenamiento.png"
     plt.savefig(ruta_fig1, dpi=300)
     plt.close()
-    print(f"  [Figura 1] {ruta_fig1}")
+    print(f"  [Figura 1] {_rel(ruta_fig1)}")
 
     # -------------------------------------------------------------------------
     # Figura 2: Trade-off RMSE vs Latencia de Inferencia por Lote (109 filas)
@@ -668,7 +673,7 @@ def generar_figuras_complejidad(df_empirica: pd.DataFrame, df_escalabilidad: pd.
     ruta_fig2 = DIR_FIGURAS / "fig_t23_tradeoff_rmse_vs_latencia_inferencia.png"
     plt.savefig(ruta_fig2, dpi=300)
     plt.close()
-    print(f"  [Figura 2] {ruta_fig2}")
+    print(f"  [Figura 2] {_rel(ruta_fig2)}")
 
     # -------------------------------------------------------------------------
     # Figura 3: Curvas de Escalabilidad y Aprendizaje frente al tamaño muestral n
@@ -712,7 +717,7 @@ def generar_figuras_complejidad(df_empirica: pd.DataFrame, df_escalabilidad: pd.
     ruta_fig3 = DIR_FIGURAS / "fig_t23_curvas_escalabilidad_n.png"
     plt.savefig(ruta_fig3, dpi=300)
     plt.close()
-    print(f"  [Figura 3] {ruta_fig3}")
+    print(f"  [Figura 3] {_rel(ruta_fig3)}")
 
     # -------------------------------------------------------------------------
     # Figura 4: Comparación de Recursos y Parámetros
@@ -742,7 +747,7 @@ def generar_figuras_complejidad(df_empirica: pd.DataFrame, df_escalabilidad: pd.
     ruta_fig4 = DIR_FIGURAS / "fig_t23_comparacion_recursos_modelos.png"
     plt.savefig(ruta_fig4, dpi=300)
     plt.close()
-    print(f"  [Figura 4] {ruta_fig4}")
+    print(f"  [Figura 4] {_rel(ruta_fig4)}")
 
 
 def main():
