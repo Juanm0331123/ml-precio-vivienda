@@ -13,5 +13,6 @@ Todos los notebooks parten de `00_plantilla_notebook.ipynb`. Esa plantilla trae 
 | `06_knn_svr.ipynb` | T20 | Brandon |
 | `07_ensambles.ipynb` | T21 | Brandon |
 | `08_cv_anidada_comparacion.ipynb` | T22 | Brandon |
+| `09_complejidad.ipynb` | T23 | Brandon |
 
 Antes de abrir un PR: *Kernel → Restart & Run All* sin errores. Las salidas se conservan para que el docente pueda leer el notebook sin ejecutarlo.
