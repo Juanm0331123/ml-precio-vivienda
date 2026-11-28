@@ -45,7 +45,7 @@ from joblib import Parallel, delayed
 from scipy import stats
 from sklearn.model_selection import GridSearchCV, KFold, RandomizedSearchCV
 
-from src.config import DIR_FIGURAS, DIR_TABLAS, SEMILLA
+from src.config import DIR_FIGURAS, DIR_TABLAS, SEMILLA, RAIZ
 from src.evaluacion import (
     FACTOR_KAGGLE,
     calcular_intervalo_confianza,
@@ -75,6 +75,11 @@ COLORES_FAMILIA = {
     "kernel": "#EE6C4D",
     "árboles": "#2A9D8F",
 }
+
+
+def _rel(ruta) -> Path:
+    """Ruta relativa a la raíz del repositorio, para no imprimir rutas del equipo local."""
+    return Path(ruta).resolve().relative_to(RAIZ)
 
 
 def obtener_prefijo_pipeline(pipeline_base: Any) -> str:
@@ -251,7 +256,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
     ruta_pliegues = DIR_TABLAS / "t22_pliegues_anidados.csv"
 
     if not forzar_recalculo and ruta_pliegues.exists():
-        print(f"Cargando resultados previos de CV anidada desde {ruta_pliegues}...")
+        print(f"Cargando resultados previos de CV anidada desde {_rel(ruta_pliegues)}...")
         df_pliegues = pd.read_csv(ruta_pliegues)
     else:
         print("=== Paso 1: Carga aislada del conjunto de entrenamiento (n=436) ===")
@@ -296,7 +301,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
 
         df_pliegues = pd.DataFrame(todas_filas_pliegues)
         df_pliegues.to_csv(ruta_pliegues, index=False)
-        print(f"\nGuardados resultados por pliegue externo en {ruta_pliegues}")
+        print(f"\nGuardados resultados por pliegue externo en {_rel(ruta_pliegues)}")
 
     print("\n=== Paso 3: Agregación de métricas y cálculo de Intervalos de Confianza (95%) ===")
     filas_resumen = []
@@ -325,7 +330,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
     df_tabla_maestra = pd.DataFrame(filas_resumen).sort_values("rmse_cad_media").reset_index(drop=True)
     ruta_maestra = DIR_TABLAS / "t22_tabla_maestra_metricas.csv"
     df_tabla_maestra.to_csv(ruta_maestra, index=False)
-    print(f"Guardada tabla maestra de métricas en {ruta_maestra}")
+    print(f"Guardada tabla maestra de métricas en {_rel(ruta_maestra)}")
 
     print("\nTop 5 Pipelines según RMSE medio en CV anidada (CAD 1987):")
     print(df_tabla_maestra[["pipeline_nombre", "rmse_cad_media", "rmse_cad_std", "mae_cad_media", "mape_media", "r2_media", "rmsle_media"]].head(5).to_string(index=False))
@@ -336,7 +341,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
     ruta_ranking = DIR_TABLAS / "t22_ranking_modelos.csv"
     df_ranking.to_csv(ruta_ranking, index=False)
     print(f"Prueba de Friedman: Chi2 = {stat_friedman:.4f}, p-valor = {p_friedman:.4e}")
-    print(f"Guardado ranking de algoritmos en {ruta_ranking}")
+    print(f"Guardado ranking de algoritmos en {_rel(ruta_ranking)}")
 
     # 4.2 Pruebas t pareadas corregidas de Nadeau & Bengio contra el mejor modelo
     mejor_modelo_id = df_tabla_maestra.iloc[0]["modelo_id_completo"]
@@ -372,7 +377,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
 
     ruta_t = DIR_TABLAS / "t22_pruebas_estadisticas_t_corregida.csv"
     df_pruebas_t.to_csv(ruta_t, index=False)
-    print(f"Guardadas pruebas t corregidas en {ruta_t}")
+    print(f"Guardadas pruebas t corregidas en {_rel(ruta_t)}")
 
     print("\n=== Paso 5: Generación de Figuras para el Paper IEEE (T28) ===")
 
@@ -416,7 +421,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
     ruta_fig1 = DIR_FIGURAS / "fig_t22_comparacion_rmse_ic.png"
     plt.savefig(ruta_fig1)
     plt.close()
-    print(f"Guardada figura 1 en {ruta_fig1}")
+    print(f"Guardada figura 1 en {_rel(ruta_fig1)}")
 
     # 2. Figura: Ranking Medio de Algoritmos (Prueba de Friedman)
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -434,7 +439,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
     ruta_fig2 = DIR_FIGURAS / "fig_t22_ranking_modelos.png"
     plt.savefig(ruta_fig2)
     plt.close()
-    print(f"Guardada figura 2 en {ruta_fig2}")
+    print(f"Guardada figura 2 en {_rel(ruta_fig2)}")
 
     # 3. Figura: Matriz de p-valores Nadeau-Bengio pareados (18x18)
     n_pips = len(df_tabla_maestra)
@@ -469,7 +474,7 @@ def ejecutar_experimento_t22(forzar_recalculo: bool = False) -> Dict[str, Any]:
     ruta_fig3 = DIR_FIGURAS / "fig_t22_matriz_pvalores_nadeau_bengio.png"
     plt.savefig(ruta_fig3)
     plt.close()
-    print(f"Guardada figura 3 en {ruta_fig3}")
+    print(f"Guardada figura 3 en {_rel(ruta_fig3)}")
 
     print("\n¡Validación Cruzada Anidada T22 completada con éxito total!")
     return {
