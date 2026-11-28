@@ -16,6 +16,7 @@ env/
 
 # --- Modelos y artefactos pesados (se regeneran con el código) ---
 models/*.joblib
+!models/modelo_final.joblib
 models/*.pkl
 *.h5
 

@@ -65,6 +65,36 @@ def cargar_entrenamiento(ruta_limpios=RUTA_DATOS_LIMPIOS, ruta_particion=RUTA_PA
     X, y = df[COLUMNAS_PREDICTORAS].copy(), df["price"].copy()
     return X, y, evidencia
 
+def cargar_prueba(ruta_limpios=RUTA_DATOS_LIMPIOS, ruta_particion=RUTA_PARTICION) -> Tuple[pd.DataFrame, pd.Series, Dict]:
+    """Carga el conjunto de prueba sellado (n=109, T06) para la evaluación final (Tarjeta T25).
+
+    Se abre exclusivamente una única vez tras haber completado el diseño, selección de
+    hiperparámetros (T19-T22), análisis de complejidad (T23) e interpretabilidad (T24).
+    Verifica que las 109 filas correspondan exactamente a los identificadores de prueba
+    sellados en T06 y que no exista contaminación con filas de entrenamiento.
+    """
+    particion = pd.read_csv(ruta_particion)
+    ids_prueba = set(particion.loc[particion["conjunto"] == "prueba", "id"])
+    ids_entrenamiento = set(particion.loc[particion["conjunto"] == "entrenamiento", "id"])
+
+    ids_en_orden = pd.read_csv(ruta_limpios, usecols=["id"])["id"]
+    lineas_entrenamiento = [pos + 1 for pos, i in enumerate(ids_en_orden) if i in ids_entrenamiento]
+    df = pd.read_csv(ruta_limpios, skiprows=lineas_entrenamiento).set_index("id")
+
+    assert set(df.index) == ids_prueba, "El conjunto cargado no coincide con la partición de prueba de T06"
+    assert not (set(df.index) & ids_entrenamiento), "Se mezclaron filas del conjunto de entrenamiento"
+    assert df.isna().sum().sum() == 0, "Se esperaban 0 valores faltantes"
+
+    evidencia = {
+        "n_prueba_cargado": int(len(df)),
+        "n_entrenamiento_en_particion": int(len(ids_entrenamiento)),
+        "sha256_particion": huella_sha256(ruta_particion),
+        "sha256_housing_limpio": huella_sha256(ruta_limpios),
+        "semilla": SEMILLA,
+    }
+    X, y = df[COLUMNAS_PREDICTORAS].copy(), df["price"].copy()
+    return X, y, evidencia
+
 
 # ----------------------------------------------------------------------------- pliegues
 def crear_pliegues(y: pd.Series, n_splits: int = N_SPLITS, n_repeticiones: int = N_REPETICIONES, semilla: int = SEMILLA) -> List[Tuple[np.ndarray, np.ndarray]]:

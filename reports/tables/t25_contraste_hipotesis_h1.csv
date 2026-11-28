@@ -1,0 +1,3 @@
+contraste,rmse_ml_cad,rmse_ols_cad,diferencia_rmse_cad,t_stat_pareada,p_valor_t_pareada,wilcoxon_stat,p_valor_wilcoxon,conclusion_h1
+XGBoost P1 vs OLS Hedónico P2,16147.48265521325,14065.92337158865,2081.5592836246014,2.130896896171788,0.035366598810592245,1980.0,0.0020968793712975967,No respalda H1 (el OLS hedónico tiene menor RMSE que XGBoost en prueba)
+Random Forest P1 vs OLS Hedónico P2,16442.41121761341,14065.92337158865,2376.487846024762,2.1513732024122456,0.03367525623846201,2231.0,0.020486271422737158,No respalda H1 (el OLS hedónico tiene menor RMSE que Random Forest en prueba)
